@@ -6,7 +6,7 @@ import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class RisalnaPlosca extends JPanel{
+public class MenijskaPlosca extends JPanel{
 	
 	private int x;
 	private int y;
@@ -15,7 +15,7 @@ public class RisalnaPlosca extends JPanel{
 	
 	private JButton balance;
 	
-	public RisalnaPlosca(int x, int y, int width, int height, Color color) {
+	public MenijskaPlosca(int x, int y, int width, int height, Color color) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -30,6 +30,7 @@ public class RisalnaPlosca extends JPanel{
 		this.balance.setBorder(null); //znebimo se obrobe gumba
 		this.balance.setFocusable(false); //znebimo se obrobe button icon
 		
+		//potrebno je dodati actionListener -> ob pritisku se spremeni stanje
 	}
 	
 	public int vrniX() {

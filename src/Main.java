@@ -2,16 +2,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
-public class Main {
+public class Main{
 	
 	final static int RAZMERJE = 8;
 	
-
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Okno okno = new Okno("Spending app");
 		
-		RisalnaPlosca stranskiMeni = new RisalnaPlosca(
+		MenijskaPlosca stranskiMeni = new MenijskaPlosca(
 				okno.getX(), 
 				okno.getY(),
 				okno.getWidth(), 
@@ -19,7 +19,7 @@ public class Main {
 				Color.DARK_GRAY
 		);
 		
-		RisalnaPlosca vsebina = new RisalnaPlosca(
+		VsebinskaPlosca vsebina = new VsebinskaPlosca(
 				okno.getX(), 
 				okno.getY(),
 				okno.getWidth(), 
@@ -38,9 +38,10 @@ public class Main {
 		stranskiMeni.add(stranskiMeni.vrniBalance());
 		okno.add(stranskiMeni, BorderLayout.WEST);
 		okno.add(vsebina, BorderLayout.EAST);
-		//okno.pack();
+		
 		okno.setVisible(true);
-
+		
+		
 	}
 
 }
