@@ -44,7 +44,12 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 	public void run(){
 		running = true;
 		while(running) {
-			System.out.println("Dela");
+			/*if(state == States.BALANCE) {
+				System.out.println("Balance");
+			}else {
+				System.out.println("Add");
+			}*/
+			
 			//running = ;
 			if(Thread.interrupted()) {
 				return;

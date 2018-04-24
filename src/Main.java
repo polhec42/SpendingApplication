@@ -11,14 +11,6 @@ public class Main{
 		// TODO Auto-generated method stub
 		Okno okno = new Okno("Spending app");
 		
-		MenijskaPlosca stranskiMeni = new MenijskaPlosca(
-				okno.getX(), 
-				okno.getY(),
-				okno.getWidth(), 
-				okno.getHeight(),
-				Color.DARK_GRAY
-		);
-		
 		VsebinskaPlosca vsebina = new VsebinskaPlosca(
 				okno.getX(), 
 				okno.getY(),
@@ -26,6 +18,16 @@ public class Main{
 				okno.getHeight(),
 				Color.LIGHT_GRAY
 		);
+		
+		MenijskaPlosca stranskiMeni = new MenijskaPlosca(
+				okno.getX(), 
+				okno.getY(),
+				okno.getWidth(), 
+				okno.getHeight(),
+				Color.DARK_GRAY, 
+				vsebina
+		);
+		
 		stranskiMeni.setPreferredSize(new Dimension(
 				stranskiMeni.vrniWidth()/RAZMERJE,
 				stranskiMeni.vrniHeight()/RAZMERJE
@@ -36,10 +38,13 @@ public class Main{
 				(RAZMERJE-1)*vsebina.vrniHeight()/RAZMERJE		
 		));
 		stranskiMeni.add(stranskiMeni.vrniBalance());
+		stranskiMeni.add(stranskiMeni.vrniAdd());
 		okno.add(stranskiMeni, BorderLayout.WEST);
 		okno.add(vsebina, BorderLayout.EAST);
 		
 		okno.setVisible(true);
+		
+		
 		
 		
 	}
