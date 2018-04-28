@@ -37,7 +37,7 @@ public class MenijskaPlosca extends JPanel implements ActionListener{
 		//this.add = new JButton(new ImageIcon("resources/add.png"));
 		
 		//this.balance.addActionListener(this);
-		
+		//this.add.addActionListener(this);
 		
 	}
 	
@@ -46,6 +46,7 @@ public class MenijskaPlosca extends JPanel implements ActionListener{
 		button.setBackground(color); //nastavimo barvo
 		button.setBorder(null); //znebimo se obrobe gumba
 		button.setFocusable(false); //znebimo se obrobe button icon
+		button.addActionListener(this);
 	}
 	
 	

@@ -16,7 +16,8 @@ public class Main{
 				okno.getY(),
 				okno.getWidth(), 
 				okno.getHeight(),
-				Color.LIGHT_GRAY
+				Color.LIGHT_GRAY,
+				okno
 		);
 		
 		MenijskaPlosca stranskiMeni = new MenijskaPlosca(
@@ -43,6 +44,7 @@ public class Main{
 		okno.add(vsebina, BorderLayout.EAST);
 		
 		okno.setVisible(true);
+		
 		
 		
 		
