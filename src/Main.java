@@ -2,9 +2,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
+import javax.swing.BoxLayout;
+import javax.swing.border.EmptyBorder;
+
 public class Main{
 	
-	final static int RAZMERJE = 8;
+	final static int RAZMERJE = 16;
 	
 	
 	public static void main(String[] args) {
@@ -14,8 +17,8 @@ public class Main{
 		VsebinskaPlosca vsebina = new VsebinskaPlosca(
 				okno.getX(), 
 				okno.getY(),
-				okno.getWidth(), 
-				okno.getHeight(),
+				(RAZMERJE-3)*okno.getWidth()/RAZMERJE, 
+				(RAZMERJE-3)*okno.getHeight()/RAZMERJE,
 				Color.LIGHT_GRAY,
 				okno
 		);
@@ -30,18 +33,20 @@ public class Main{
 		);
 		
 		stranskiMeni.setPreferredSize(new Dimension(
-				stranskiMeni.vrniWidth()/RAZMERJE,
-				stranskiMeni.vrniHeight()/RAZMERJE
+				stranskiMeni.vrniWidth()/(RAZMERJE/2),
+				stranskiMeni.vrniHeight()/(RAZMERJE)
 				
-		));
+		));/*
 		vsebina.setPreferredSize(new Dimension(
-				(RAZMERJE-1)*vsebina.vrniWidth()/RAZMERJE,
-				(RAZMERJE-1)*vsebina.vrniHeight()/RAZMERJE		
-		));
+				(RAZMERJE-2)*vsebina.vrniWidth()/RAZMERJE,
+				(RAZMERJE-2)*vsebina.vrniHeight()/RAZMERJE		
+		));*/
+		
 		stranskiMeni.add(stranskiMeni.vrniBalance());
 		stranskiMeni.add(stranskiMeni.vrniAdd());
-		okno.add(stranskiMeni, BorderLayout.WEST);
-		okno.add(vsebina, BorderLayout.EAST);
+		vsebina.setBorder(new EmptyBorder(10, 10, 10, 10));
+		okno.add(stranskiMeni, BorderLayout.LINE_START);
+		okno.add(vsebina, BorderLayout.CENTER);
 		
 		okno.setVisible(true);
 		

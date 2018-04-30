@@ -1,10 +1,4 @@
 import java.awt.*;
-import java.awt.Taskbar.State;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.SimpleFileVisitor;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class VsebinskaPlosca extends JPanel implements Runnable{
@@ -23,6 +17,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 	private boolean running;
 	
 	private BalancePlosca balancePlosca;
+    private AddPlosca addPlosca;
 	
 	private Okno okno;
 	
@@ -43,6 +38,14 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		this.balancePlosca = new BalancePlosca(this.x, this.y, this.width, this.height, Color.BLACK);
 		this.balancePlosca.add(this.balancePlosca.vrniButton());
 		
+        this.addPlosca = new AddPlosca(this.x, this.y, this.width, this.height, color);
+        this.addPlosca.nastaviVelikost(this.width, this.height);
+        this.addPlosca.setLayout(new GridLayout(6, 2));
+        this.addPlosca.add(this.addPlosca.vrniExpenseButton());
+        this.addPlosca.add(this.addPlosca.vrniIncomeButton());
+        this.addPlosca.add(this.addPlosca.vrniList());
+        //this.addPlosca.add(this.addPlosca.vrniAdd());
+        this.addPlosca.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		/*
 		* Starting learning threads -> I will be using two threads:
 		* - Main thread
@@ -58,14 +61,20 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		thread.start();
 	}
 	
+	@Override
 	public void run(){
 		running = true;
 		while(running) {
 			if(state == States.BALANCE) {
 				System.out.println("Balance");
+                self.removeAll(); //odstranimo prejšnje komponente
+                self.add(self.balancePlosca);
+                self.okno.validate();
+                self.okno.repaint();
 			}else{
 				System.out.println("Add");
-				self.add(this.balancePlosca);
+                self.removeAll(); //odstranimo prejšnje komponente 
+				self.add(self.addPlosca);
 				//Po spremembi GUI-ja je potrebno okno validatat in znova repaintat
 				//Spremembe so tako uveljavljene
 				self.okno.validate();
