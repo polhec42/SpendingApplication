@@ -1,6 +1,9 @@
 import java.awt.Color;
+import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.plaf.synth.SynthInternalFrameUI;
 
 public class BalancePlosca extends JPanel{
 	
@@ -10,6 +13,7 @@ public class BalancePlosca extends JPanel{
 	private int height;
 	
 	private JButton button;
+	private JLabel walletBalance;
 	
 	public BalancePlosca(int x, int y, int width, int height, Color color) {
 		this.x = x;
@@ -19,7 +23,32 @@ public class BalancePlosca extends JPanel{
 		
 		setBackground(color);
 		this.button = new JButton("Deluje");
+		//JLabel() ima tudi konstruktor, ki omogoèa aligment teksta
+		this.walletBalance = new JLabel("Wallet Balance", SwingConstants.CENTER);
+		izpisIzBaze();
 	}
+	
+	public void izpisIzBaze() {
+		Test.createNewTable();
+    	Test test = new Test();
+    	test.insert("Kosilo", "4.5.2018", "Wallet", 1.86, "Euro", "Hrana", "Expense");
+    	test.insert("Zdravilo", "5.5.2018", "Wallet", 5.00, "Euro", "Zdavje", "Expense");
+    	test.selectAll();
+    	
+    	ArrayList<Transakcija> list = test.vrniTransakcijeIzRacuna("Wallet");
+    	for(int i = 0; i < list.size(); i++) {
+    		System.out.printf("%s: %f\n", list.get(i).getDescription(), list.get(i).getAmount());
+    	}
+    	test.deleteTable("transactions");
+	}
+	
+	public void nastaviWalletBalance(String text) {
+		this.walletBalance.setText(text);
+	}
+	
+	public void nastaviVelikost(int w, int h){
+        this.setPreferredSize(new Dimension(w, h));
+    }
 	
 	public int vrniX() {
 		return this.x;
@@ -35,6 +64,9 @@ public class BalancePlosca extends JPanel{
 	}
 	public JButton vrniButton() {
 		return this.button;
+	}
+	public JLabel vrniWalletBalance() {
+		return this.walletBalance;
 	}
 	
 }

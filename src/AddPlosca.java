@@ -1,8 +1,11 @@
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class AddPlosca extends JPanel{
+public class AddPlosca extends JPanel implements ActionListener{
 	
 	private int x;
 	private int y;
@@ -33,7 +36,7 @@ public class AddPlosca extends JPanel{
         String[] options = {"1", "2", "3", "4", "5"};
         this.list = new JComboBox(options);
         this.list.setSelectedIndex(0);
-        
+        this.list.addActionListener(this);
         //this.add = new JButton("Add");
         //nastaviGumb(this.add, color);
         
@@ -77,5 +80,10 @@ public class AddPlosca extends JPanel{
     public JButton vrniAdd(){
         return this.add;
     }
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		
+	}
     
 }
