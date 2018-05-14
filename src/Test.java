@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.Locale.Category;
 
 public class Test {
- 
+	
+    public static String url = "jdbc:sqlite:C:\\Users\\Uporabnik\\Documents\\Dokumenti DELL XPS13\\Eclipse_Workspace\\SpendingApp\\resources\\test.db";
+
     /**
      * Connect to a sample database
      *
@@ -33,7 +35,6 @@ public class Test {
     }
     
     public static void createNewTable() {
-        String url = "jdbc:sqlite:C:\\Users\\Uporabnik\\Documents\\Dokumenti DELL XPS13\\Eclipse_Workspace\\SpendingApp\\resources\\test.db";
         String sql = "CREATE TABLE IF NOT EXISTS transactions (\n"
                 + "	id integer PRIMARY KEY,\n"
                 + "	description text NOT NULL,\n"
@@ -52,6 +53,51 @@ public class Test {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+    
+    public static void createTableCategory() {
+    	String sql = "CREATE TABLE IF NOT EXISTS categories (\n"
+                + "	id integer PRIMARY KEY,\n"
+                + "	description text NOT NULL \n"
+                + ");";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+                Statement stmt = conn.createStatement()) {
+            // create a new table
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void newCategory(String description) {
+    	 String sql = "INSERT INTO categories(description) VALUES(?)";
+    	 
+         try (Connection conn = this.connect();
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             pstmt.setString(1, description);
+             pstmt.executeUpdate();
+         } catch (SQLException e) {
+             System.out.println(e.getMessage());
+         }
+    }
+    
+    public ArrayList<String> vrniKategorije() {
+    	String sql = "SELECT id, description FROM categories";
+        ArrayList<String> kategorije = new ArrayList<>();
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+            
+            // loop through the result set
+            while (rs.next()) {
+               kategorije.add(rs.getString("description"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return kategorije;
     }
     
     private Connection connect() {
@@ -125,8 +171,8 @@ public class Test {
             System.out.println(e.getMessage());
         }
     }
-    public void deleteData(int id) {
-        String sql = "DELETE FROM transactions WHERE id = ?";
+    public void deleteData(String table, int id) {
+        String sql = "DELETE FROM '"+table+"' WHERE id = ?";
  
         try (Connection conn = this.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -198,7 +244,7 @@ public class Test {
     	test.selectAll();
     	test.update(2, "Antibiotik", 6.40);
     	test.selectAll();
-    	test.deleteData(1);
+    	test.deleteData("transactions", 1);
     	test.deleteTable("transactions");
     	test.selectAll();
     	

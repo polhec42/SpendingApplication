@@ -13,14 +13,15 @@ public class Main{
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Okno okno = new Okno("Spending app");
-		
+		Test test = new Test();
 		VsebinskaPlosca vsebina = new VsebinskaPlosca(
 				okno.getX(), 
 				okno.getY(),
 				(RAZMERJE-3)*okno.getWidth()/RAZMERJE, 
 				(RAZMERJE-3)*okno.getHeight()/RAZMERJE,
 				Color.LIGHT_GRAY,
-				okno
+				okno, 
+				test
 		);
 		
 		MenijskaPlosca stranskiMeni = new MenijskaPlosca(

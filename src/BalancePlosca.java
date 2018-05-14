@@ -15,11 +15,14 @@ public class BalancePlosca extends JPanel{
 	private JButton button;
 	private JLabel walletBalance;
 	
-	public BalancePlosca(int x, int y, int width, int height, Color color) {
+	private Test test;
+	
+	public BalancePlosca(int x, int y, int width, int height, Color color, Test test) {
 		this.x = x;
 		this.y = y; 
 		this.width = width;
 		this.height = height;
+		this.test = test;
 		
 		setBackground(color);
 		this.button = new JButton("Deluje");
@@ -30,16 +33,21 @@ public class BalancePlosca extends JPanel{
 	
 	public void izpisIzBaze() {
 		Test.createNewTable();
-    	Test test = new Test();
+    	
     	test.insert("Kosilo", "4.5.2018", "Wallet", 1.86, "Euro", "Hrana", "Expense");
     	test.insert("Zdravilo", "5.5.2018", "Wallet", 5.00, "Euro", "Zdavje", "Expense");
     	test.selectAll();
     	
+    	double znesek = 0;
+    	
     	ArrayList<Transakcija> list = test.vrniTransakcijeIzRacuna("Wallet");
     	for(int i = 0; i < list.size(); i++) {
+    		znesek += list.get(i).getAmount();
     		System.out.printf("%s: %f\n", list.get(i).getDescription(), list.get(i).getAmount());
     	}
     	test.deleteTable("transactions");
+    	
+    	nastaviWalletBalance(Double.toString(znesek));
 	}
 	
 	public void nastaviWalletBalance(String text) {

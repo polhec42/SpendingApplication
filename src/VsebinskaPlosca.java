@@ -20,13 +20,16 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
     private AddPlosca addPlosca;
 	
 	private Okno okno;
+	private Test test;
 	
-	public VsebinskaPlosca(int x, int y, int width, int height, Color color, Okno okno) {
+	public VsebinskaPlosca(int x, int y, int width, int height, Color color, Okno okno, Test test) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.okno = okno;
+		this.test = test;
+		
 		setBackground(color);
 				
 		this.state = States.BALANCE;
@@ -35,7 +38,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		 * 
 		 * 
 		 */
-		this.balancePlosca = new BalancePlosca(this.x, this.y, this.width, this.height, color);
+		this.balancePlosca = new BalancePlosca(this.x, this.y, this.width, this.height, color, this.test);
 		this.balancePlosca.nastaviVelikost(this.width, this.height);
 		this.balancePlosca.setLayout(new GridLayout(6, 2));
 		this.balancePlosca.add(this.balancePlosca.vrniButton());
@@ -44,15 +47,16 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 	        	this.balancePlosca.add(new JLabel());
 	    }
         
-		this.addPlosca = new AddPlosca(this.x, this.y, this.width, this.height, color);
+		this.addPlosca = new AddPlosca(this.x, this.y, this.width, this.height, color, okno, this.test);
         this.addPlosca.nastaviVelikost(this.width, this.height);
         this.addPlosca.setLayout(new GridLayout(6, 2));
         this.addPlosca.add(this.addPlosca.vrniExpenseButton());
         this.addPlosca.add(this.addPlosca.vrniIncomeButton());
         this.addPlosca.add(this.addPlosca.vrniList());
+        this.addPlosca.add(this.addPlosca.vrniCategoryButton());
         //This chunk of code is used to fill addPlosca with empty elements
         //it has fixed the layout issues
-        for(int i = 0; i < 9; i++) {
+        for(int i = 0; i < 8; i++) {
         	this.addPlosca.add(new JLabel());
         }
         
