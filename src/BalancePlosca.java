@@ -14,6 +14,8 @@ public class BalancePlosca extends JPanel{
 	
 	private JButton button;
 	private JLabel walletBalance;
+	private JLabel bankBalance;
+	private JLabel cryptoBalance;
 	
 	private Test test;
 	
@@ -28,16 +30,20 @@ public class BalancePlosca extends JPanel{
 		this.button = new JButton("Deluje");
 		//JLabel() ima tudi konstruktor, ki omogoèa aligment teksta
 		this.walletBalance = new JLabel("Wallet Balance", SwingConstants.CENTER);
+		this.bankBalance = new JLabel("Bank Balance", SwingConstants.CENTER);
+		this.cryptoBalance = new JLabel("Crypto Balance", SwingConstants.CENTER);
 		izpisIzBaze();
 	}
 	
 	public void izpisIzBaze() {
+		/*
 		Test.createNewTable();
     	
     	test.insert("Kosilo", "4.5.2018", "Wallet", 1.86, "Euro", "Hrana", "Expense");
     	test.insert("Zdravilo", "5.5.2018", "Wallet", 5.00, "Euro", "Zdavje", "Expense");
+
     	test.selectAll();
-    	
+    	*/
     	double znesek = 0;
     	
     	ArrayList<Transakcija> list = test.vrniTransakcijeIzRacuna("Wallet");
@@ -45,13 +51,13 @@ public class BalancePlosca extends JPanel{
     		znesek += list.get(i).getAmount();
     		System.out.printf("%s: %f\n", list.get(i).getDescription(), list.get(i).getAmount());
     	}
-    	test.deleteTable("transactions");
+    	//test.deleteTable("transactions");
     	
     	nastaviWalletBalance(Double.toString(znesek));
 	}
 	
 	public void nastaviWalletBalance(String text) {
-		this.walletBalance.setText(text);
+		this.walletBalance.setText("Wallet: " + text);
 	}
 	
 	public void nastaviVelikost(int w, int h){
@@ -75,6 +81,12 @@ public class BalancePlosca extends JPanel{
 	}
 	public JLabel vrniWalletBalance() {
 		return this.walletBalance;
+	}
+	public JLabel vrniBankBalance() {
+		return this.bankBalance;
+	}
+	public JLabel vrniCryptoBalance() {
+		return this.cryptoBalance;
 	}
 	
 }

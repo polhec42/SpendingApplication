@@ -45,10 +45,11 @@ public class Main{
 		
 		stranskiMeni.add(stranskiMeni.vrniBalance());
 		stranskiMeni.add(stranskiMeni.vrniAdd());
-		vsebina.setBorder(new EmptyBorder(10, 10, 10, 10));
-		okno.add(stranskiMeni, BorderLayout.LINE_START);
+		vsebina.setBorder(new EmptyBorder(10, 15, 10, 10));
+		//tko RES nevem zakaj je tuki treba 15
+		okno.add(stranskiMeni, BorderLayout.WEST);
 		okno.add(vsebina, BorderLayout.CENTER);
-		
+		okno.pack();
 		okno.setVisible(true);
 		
 		

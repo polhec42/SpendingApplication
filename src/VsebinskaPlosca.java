@@ -1,5 +1,9 @@
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.GroupLayout.SequentialGroup;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 public class VsebinskaPlosca extends JPanel implements Runnable{
 	
@@ -18,7 +22,9 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 	
 	private BalancePlosca balancePlosca;
     private AddPlosca addPlosca;
-	
+	private SeznamTransakcij seznamTransakcij;
+    private JPanel panel;
+    
 	private Okno okno;
 	private Test test;
 	
@@ -39,14 +45,41 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		 * 
 		 */
 		this.balancePlosca = new BalancePlosca(this.x, this.y, this.width, this.height, color, this.test);
-		this.balancePlosca.nastaviVelikost(this.width, this.height);
+		this.balancePlosca.nastaviVelikost(this.width/2, this.height);
+		
 		this.balancePlosca.setLayout(new GridLayout(6, 2));
 		this.balancePlosca.add(this.balancePlosca.vrniButton());
+		this.balancePlosca.add(new JLabel());
 		this.balancePlosca.add(this.balancePlosca.vrniWalletBalance());
-		for(int i = 0; i < 10; i++) {
+		this.balancePlosca.add(new JLabel());
+		this.balancePlosca.add(this.balancePlosca.vrniBankBalance());
+		this.balancePlosca.add(new JLabel());
+		this.balancePlosca.add(this.balancePlosca.vrniCryptoBalance());
+
+		for(int i = 0; i < 5; i++) {
 	        	this.balancePlosca.add(new JLabel());
 	    }
-        
+		/*
+		 * Test za Layoute
+		 * 
+		this.panel = new JPanel();
+		this.panel.setPreferredSize(new Dimension(this.width/2, this.height));
+		this.panel.setBorder(BorderFactory.createLineBorder(Color.RED));
+		*/
+		//nevem zakaj moram višino poveèat za 35 -> I need to check this later
+		this.seznamTransakcij = new SeznamTransakcij(this.x + this.width/6 - 10, 10, this.width/2, this.height, this.test);
+		this.seznamTransakcij.nastaviVelikost(this.width/2, this.height);
+		
+		this.seznamTransakcij.setLayout(new BorderLayout());
+		this.seznamTransakcij.add(this.seznamTransakcij.vrniIzberiButton(), BorderLayout.SOUTH);
+
+		this.seznamTransakcij.setBorder(BorderFactory.createLineBorder(Color.RED));
+		Border border = seznamTransakcij.getBorder();
+	    Border margin = new EmptyBorder(10,10,10,10);
+	    seznamTransakcij.setBorder(new CompoundBorder(border, margin));
+		this.seznamTransakcij.add(this.seznamTransakcij.vrniScroll(), BorderLayout.CENTER);
+		this.seznamTransakcij.add(this.seznamTransakcij.vrniLabel(), BorderLayout.NORTH);
+		
 		this.addPlosca = new AddPlosca(this.x, this.y, this.width, this.height, color, okno, this.test);
         this.addPlosca.nastaviVelikost(this.width, this.height);
         this.addPlosca.setLayout(new GridLayout(6, 2));
@@ -83,14 +116,13 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		running = true;
 		while(running) {
 			if(state == States.BALANCE) {
-				
-				System.out.println("Balance");
-                self.removeAll(); //odstranimo prejsnje komponente
+				self.removeAll(); //odstranimo prejsnje komponente
+                self.setLayout(new GridLayout(1,2));
                 self.add(self.balancePlosca);
+                self.add(self.seznamTransakcij);
                 self.okno.validate();
                 self.okno.repaint();
 			}else{
-				System.out.println("Add");
                 self.removeAll(); //odstranimo prejsnje komponente 
 				self.add(self.addPlosca);
 				//Po spremembi GUI-ja je potrebno okno validatat in znova repaintat

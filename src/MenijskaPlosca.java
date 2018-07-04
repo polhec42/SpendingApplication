@@ -22,16 +22,16 @@ public class MenijskaPlosca extends JPanel implements ActionListener{
 		//setPreferredSize(new Dimension(this.sirina, this.visina));
 		setBackground(color);
 		
-		/*this.balance = new JButton(new ImageIcon("resources/euro-currency-symbol.png"));
-		*/
+		this.balance = new JButton(new ImageIcon("resources/euro-currency-symbol.png"));
+		
         //Mac OS X verzija
-        this.balance = new JButton("Balance");
+        //this.balance = new JButton("Balance");
         nastaviGumb(this.balance, color);
 		
-		/*this.add = new JButton(new ImageIcon("resources/add.png"));
-        */
+		this.add = new JButton(new ImageIcon("resources/add.png"));
+        
         //Mac OS X verzija
-        this.add = new JButton("Add");
+        //this.add = new JButton("Add");
 		nastaviGumb(this.add, color);
 		 
 		//potrebno je dodati actionListener -> ob pritisku se spremeni stanje

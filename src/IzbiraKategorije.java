@@ -57,7 +57,7 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener{
 			data[i] = kategorije.get(i);
 		}
 		this.area = new JList<String>(data);
-		
+		this.area.setPreferredSize(new Dimension(this.width, 60));
 		this.vertical = new JScrollPane(area);
 		vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
