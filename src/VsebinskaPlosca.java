@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.Taskbar.State;
+
 import javax.swing.*;
 import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.border.Border;
@@ -17,6 +19,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 	private JButton balance;
 	
 	States state;
+	States previous;
 	
 	private boolean running;
 	
@@ -39,6 +42,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		setBackground(color);
 				
 		this.state = States.BALANCE;
+		
 		/*
 		 * Dodajanje BalancePlosca na vsebinsko plosco.
 		 * 
@@ -87,9 +91,12 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
         this.addPlosca.add(this.addPlosca.vrniIncomeButton());
         this.addPlosca.add(this.addPlosca.vrniList());
         this.addPlosca.add(this.addPlosca.vrniCategoryButton());
+        this.addPlosca.add(this.addPlosca.vrniAmountField());
+        this.addPlosca.add(this.addPlosca.vrniCurrencyField());
+        this.addPlosca.add(this.addPlosca.vrniDateField());
         //This chunk of code is used to fill addPlosca with empty elements
         //it has fixed the layout issues
-        for(int i = 0; i < 8; i++) {
+        for(int i = 0; i < 5; i++) {
         	this.addPlosca.add(new JLabel());
         }
         
@@ -110,19 +117,25 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		Thread thread = new Thread(this);
 		thread.start();
 	}
-	
+	/*
+	 * Dodajam atribut (States) previous, ki skrbi, da se UI posodobi, samo ob
+	 * spremembi stanja (Balance -> Add ali Add -> Balance)
+	 * */
 	@Override
 	public void run(){
+		
 		running = true;
 		while(running) {
-			if(state == States.BALANCE) {
+			if(state == States.BALANCE && (previous == null || previous == States.ADD)) {
+				previous = States.BALANCE;
 				self.removeAll(); //odstranimo prejsnje komponente
                 self.setLayout(new GridLayout(1,2));
                 self.add(self.balancePlosca);
                 self.add(self.seznamTransakcij);
                 self.okno.validate();
                 self.okno.repaint();
-			}else{
+			}else if(state == States.ADD && previous == States.BALANCE){
+				previous = States.ADD;
                 self.removeAll(); //odstranimo prejsnje komponente 
 				self.add(self.addPlosca);
 				//Po spremembi GUI-ja je potrebno okno validatat in znova repaintat

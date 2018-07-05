@@ -22,6 +22,10 @@ public class AddPlosca extends JPanel implements ActionListener{
     private JButton add;
     private JButton categoryButton;
     
+    private JTextField amountField;
+    private JTextField currencyField;
+    private JTextField dateField;
+    
     private JComboBox list;
     
     private Okno okno;
@@ -42,8 +46,6 @@ public class AddPlosca extends JPanel implements ActionListener{
         
         this.expenseButton = new JButton("Expense");
         nastaviGumb(this.expenseButton, color);
-		
-
         
         this.incomeButton = new JButton("Income");
         nastaviGumb(this.incomeButton, color);    
@@ -51,16 +53,26 @@ public class AddPlosca extends JPanel implements ActionListener{
         this.categoryButton = new JButton("Category");
         nastaviGumb(this.categoryButton, color);
         
-        String[] options = {"1", "2", "3", "4", "5"};
+        /*
+         * Drop down menu
+         * */
+        String[] options = {"Technology", "Gift", "Food"};
         this.list = new JComboBox(options);
         this.list.setSelectedIndex(0);
         this.list.addActionListener(this);
-        //this.add = new JButton("Add");
-        //nastaviGumb(this.add, color);
+        //
+        
+        this.amountField = new JTextField(20);
+        this.currencyField = new JTextField(10);
+        this.dateField = new JTextField(20);
         
         this.categoryButton.addActionListener(this);
         this.expenseButton.addActionListener(this);
         this.incomeButton.addActionListener(this);
+        
+        this.amountField.addActionListener(this);
+        this.currencyField.addActionListener(this);
+        this.dateField.addActionListener(this);
 	}
     
     public void nastaviGumb(JButton button, Color color) {
@@ -102,6 +114,16 @@ public class AddPlosca extends JPanel implements ActionListener{
     public JButton vrniCategoryButton() {
     	return this.categoryButton;
     }
+    public JTextField vrniAmountField() {
+    	return this.amountField;
+    }
+    public JTextField vrniCurrencyField() {
+    	return this.currencyField;
+    }
+    public JTextField vrniDateField() {
+    	return this.dateField;
+    }
+    
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(this.categoryButton == e.getSource()) {
@@ -111,7 +133,8 @@ public class AddPlosca extends JPanel implements ActionListener{
 					0,
 					pomoznoOkno.getWidth(),
 					pomoznoOkno.getHeight(),
-					this.test
+					this.test,
+					this
 					);
 			
 			izbiraKategorije.nastaviVelikost(
@@ -120,8 +143,9 @@ public class AddPlosca extends JPanel implements ActionListener{
 			
 			izbiraKategorije.setLayout(new BorderLayout());
 			izbiraKategorije.add(izbiraKategorije.vrniScroll(), BorderLayout.CENTER);
-			izbiraKategorije.add(izbiraKategorije.getLabel(), BorderLayout.PAGE_START);
 			izbiraKategorije.add(izbiraKategorije.vrniButton(), BorderLayout.PAGE_END);
+			izbiraKategorije.add(izbiraKategorije.vrniTextField(), BorderLayout.PAGE_START);
+			
 			/*for(int i = 0; i < 3; i++) {
 		        	izbiraKategorije.add(new JLabel());
 		    }*/

@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -8,11 +10,12 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class IzbiraKategorije extends JPanel implements ListSelectionListener{
+public class IzbiraKategorije extends JPanel implements ListSelectionListener, ActionListener{
 	
 	private int x;
 	private int y;
@@ -22,17 +25,21 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener{
 	private JButton button;
 	private JList<String> area;
 	private JLabel label;
+	private JTextField novaKategorija;
 	
 	private JScrollPane vertical;
 	
 	private Test test;
 	
-	public IzbiraKategorije(int x, int y, int width, int height, Test test) {
+	private AddPlosca addPlosca;
+	
+	public IzbiraKategorije(int x, int y, int width, int height, Test test, AddPlosca addPlosca) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.test = test;
+		this.addPlosca = addPlosca;
 		
 		this.label = new JLabel("Empty", SwingConstants.CENTER);
 		this.label.setPreferredSize(new Dimension(this.width, 50));
@@ -49,19 +56,22 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener{
 		
 		ArrayList<String> kategorije = test.vrniKategorije();
 		System.out.println(kategorije);
-		/*
-		String[] data = {"one", "two", "three", "four"};
-		*/
+		
 		String[] data = new String[kategorije.size()];
 		for(int i = 0; i < kategorije.size(); i++) {
 			data[i] = kategorije.get(i);
 		}
+		
 		this.area = new JList<String>(data);
 		this.area.setPreferredSize(new Dimension(this.width, 60));
 		this.vertical = new JScrollPane(area);
 		vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
+		this.novaKategorija = new JTextField(20);
+		
 		area.addListSelectionListener(this);
+		this.button.addActionListener(this);
+		this.novaKategorija.addActionListener(this);
 	}
 	public void nastaviVelikost(int w, int h){
         this.setPreferredSize(new Dimension(w, h));
@@ -72,6 +82,22 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener{
 		button.setBackground(color); //nastavimo barvo
 		button.setBorder(null); //znebimo se obrobe gumba
 		button.setFocusable(false); //znebimo se obrobe button icon
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == this.button) {
+			/*
+			 * To trenutno doda kategorijo med možnosti dropdown menija in jo tudi izbere
+			 * Uporabno bo, ko bom dodal možnost, da uporabnik dodaja svoje kategorije
+			 * - pri tem moram poskrbeti da se nova kategorija zapiše v bazo
+			 * */
+			this.addPlosca.vrniList().addItem(this.novaKategorija.getText());
+			this.addPlosca.vrniList().setSelectedItem(this.novaKategorija.getText());
+			
+			//dodaj funkcionalnosti za dodajanje kategorije v bazo
+		}
 	}
 	
 	public void valueChanged(ListSelectionEvent e) {
@@ -85,7 +111,8 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener{
 	        //Selection, enable the fire button.
 	            this.button.setEnabled(true);
 	        }
-	        label.setText(this.area.getSelectedValue().toString());
+	        //Ko uporabnik izbere možnost, se ta enostavno zapiše v JTextField
+	        novaKategorija.setText(this.area.getSelectedValue().toString());
 	    }
 	}
 	public JLabel getLabel() {
@@ -129,5 +156,9 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener{
 	public JScrollPane vrniScroll() {
 		return this.vertical;
 	}
+	public JTextField vrniTextField() {
+		return this.novaKategorija;
+	}
+	
 	
 }

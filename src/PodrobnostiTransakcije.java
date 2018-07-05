@@ -36,7 +36,7 @@ public class PodrobnostiTransakcije extends JPanel{
 				{"Opis", transakcije.get(selectedIndex).getDescription()},
 				{"Datum", transakcije.get(selectedIndex).getDate()},
 				{"Raèun", transakcije.get(selectedIndex).getAccount()},
-				{"Kolièina", transakcije.get(selectedIndex).getAmount() + " " + transakcije.get(selectedIndex).getCurrency()},
+				{"Cena", transakcije.get(selectedIndex).getAmount() + " " + transakcije.get(selectedIndex).getCurrency()},
 				{"Kategorija", transakcije.get(selectedIndex).getCategory()},
 				{"Tip", transakcije.get(selectedIndex).getType()}
 		};
