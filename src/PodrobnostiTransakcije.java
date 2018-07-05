@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -8,24 +10,35 @@ public class PodrobnostiTransakcije extends JPanel{
 	private int y;
 	private int width;
 	private int height;
-	
-	private JLabel label = new JLabel("To je polje");
+
 	private JTable table;
 	
 	private Test test;
 	
-	public PodrobnostiTransakcije(int x, int y, int width, int height, Test test) {
+	public PodrobnostiTransakcije(int x, int y, int width, int height, Test test, int selectedIndex, String transactionCategory) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.test = test;
 		
-		String[] coloumnHeader = {"Atribut", "Opis"};
+		String[] coloumnHeader = {"Atribut", "Vrednost"};
+		
+		/*
+		 * selectedIndex = indeks izbrane transakcije
+		 * transactionCategory = kategorija, po kateri smo pri seznamu 
+		 * 						v Balance oknu filtrirali transakcije
+		 * To dvoje rabim, da lahko sedaj prikažem in umestim podrobnost transakcije
+		 * */
+		ArrayList<Transakcija> transakcije = test.vrniTransakcijeIzRacuna(transactionCategory);
+		
 		Object[][] data = {
-				{"Spol", "Moški"},
-				{"Starost", "63"},
-				{"Višina", "182"}
+				{"Opis", transakcije.get(selectedIndex).getDescription()},
+				{"Datum", transakcije.get(selectedIndex).getDate()},
+				{"Raèun", transakcije.get(selectedIndex).getAccount()},
+				{"Kolièina", transakcije.get(selectedIndex).getAmount() + " " + transakcije.get(selectedIndex).getCurrency()},
+				{"Kategorija", transakcije.get(selectedIndex).getCategory()},
+				{"Tip", transakcije.get(selectedIndex).getType()}
 		};
 		
 		this.table = new JTable(data, coloumnHeader);
@@ -67,12 +80,5 @@ public class PodrobnostiTransakcije extends JPanel{
 	public void setHeight(int height) {
 		this.height = height;
 	}
-	
-	public JLabel getLabel() {
-		return this.label;
-	}
-	
-	
-	
 	
 }

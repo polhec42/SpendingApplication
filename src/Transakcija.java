@@ -85,4 +85,10 @@ public class Transakcija {
 		this.type = type;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("%s %s %s %.2f %s %s %s%n", this.description, 
+				this.date, this.account, this.amount, this.currency, 
+				this.category, this.type);
+	}
 }

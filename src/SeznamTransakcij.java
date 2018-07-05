@@ -5,11 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -28,6 +32,8 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 	
 	private JScrollPane vertical;
 	
+	private String transactionCategory = "Wallet";
+	
 	public SeznamTransakcij(int x, int y, int width, int height, Test test) {
 		this.x = x;
 		this.y = y;
@@ -37,7 +43,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		
 		//this.setBounds(this.x, this.y, this.width, this.height);
 		
-		ArrayList<Transakcija> kategorije = test.vrniTransakcijeIzRacuna("Wallet");
+		ArrayList<Transakcija> kategorije = test.vrniTransakcijeIzRacuna(transactionCategory);
 		
 		String[] data = new String[kategorije.size()];
 		for(int i = 0; i < kategorije.size(); i++) {
@@ -145,13 +151,17 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 			PomoznoOkno okence = new PomoznoOkno("Podrobnosti");
 			PodrobnostiTransakcije podrobnostiTransakcije = new PodrobnostiTransakcije(
 					0, 0, okence.getWidth(), okence.getHeight(),
-					this.test
-					);
+					this.test,
+					this.area.getSelectedIndex(),
+					transactionCategory
+			);
 			
 			podrobnostiTransakcije.setLayout(new BorderLayout());
-			podrobnostiTransakcije.add(podrobnostiTransakcije.getTable(), BorderLayout.PAGE_START);
-			podrobnostiTransakcije.add(podrobnostiTransakcije.getLabel(), BorderLayout.PAGE_END);
+			podrobnostiTransakcije.add(podrobnostiTransakcije.getTable(), BorderLayout.CENTER);
+		    Border border = new EmptyBorder(10,10,10,10);
+		    podrobnostiTransakcije.setBorder(border);
 			okence.add(podrobnostiTransakcije);
+			okence.pack();
 			okence.setVisible(true);
 		}
 	}
