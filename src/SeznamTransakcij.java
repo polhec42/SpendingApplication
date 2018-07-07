@@ -84,6 +84,18 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		// TODO Auto-generated method stub
 		return new Dimension(this.width, this.height);
 	}*/
+	
+	public void posodobiTransakcije() {
+		
+		ArrayList<Transakcija> kategorije = test.vrniTransakcijeIzRacuna(transactionCategory);
+		//Spraznimo ves data in ga znova spišimo
+		this.listModel.removeAllElements();
+		
+		for(int i = 0; i < kategorije.size(); i++) {
+			this.listModel.addElement(kategorije.get(i).getDescription());
+		}
+	}
+	
 	public DefaultListModel vrniDefaultListModel() {
 		return this.listModel;
 	}
@@ -137,6 +149,12 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 	}
 	public JLabel vrniLabel() {
 		return this.label;
+	}
+	public String vrniTransactionCategory() {
+		return this.transactionCategory;
+	}
+	public void setTransactionCategory(String transactionCategory) {
+		this.transactionCategory = transactionCategory;
 	}
 
 	@Override

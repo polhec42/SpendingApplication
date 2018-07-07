@@ -48,26 +48,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 				
 		this.state = States.BALANCE;
 		
-		/*
-		 * Dodajanje BalancePlosca na vsebinsko plosco.
-		 * 
-		 * 
-		 */
-		this.balancePlosca = new BalancePlosca(this.x, this.y, this.width, this.height, color, this.test);
-		this.balancePlosca.nastaviVelikost(this.width/2, this.height);
 		
-		this.balancePlosca.setLayout(new GridLayout(6, 2));
-		this.balancePlosca.add(this.balancePlosca.vrniButton());
-		this.balancePlosca.add(new JLabel());
-		this.balancePlosca.add(this.balancePlosca.vrniWalletBalance());
-		this.balancePlosca.add(new JLabel());
-		this.balancePlosca.add(this.balancePlosca.vrniBankBalance());
-		this.balancePlosca.add(new JLabel());
-		this.balancePlosca.add(this.balancePlosca.vrniCryptoBalance());
-
-		for(int i = 0; i < 5; i++) {
-	        	this.balancePlosca.add(new JLabel());
-	    }
 		/*
 		 * Test za Layoute
 		 * 
@@ -88,6 +69,24 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 	    seznamTransakcij.setBorder(new CompoundBorder(border, margin));
 		this.seznamTransakcij.add(this.seznamTransakcij.vrniScroll(), BorderLayout.CENTER);
 		this.seznamTransakcij.add(this.seznamTransakcij.vrniLabel(), BorderLayout.NORTH);
+		
+		/*
+		 * Dodajanje BalancePlosca na vsebinsko plosco.
+		 * 
+		 * 
+		 */
+		this.balancePlosca = new BalancePlosca(this.x, this.y, this.width, this.height, color, this.test, this.seznamTransakcij);
+		this.balancePlosca.nastaviVelikost(this.width/2, this.height);
+		
+		this.balancePlosca.setLayout(new GridLayout(6, 1));
+		this.balancePlosca.add(new JLabel());
+		this.balancePlosca.add(this.balancePlosca.vrniWalletBalance());
+		this.balancePlosca.add(this.balancePlosca.vrniBankBalance());
+		this.balancePlosca.add(this.balancePlosca.vrniCryptoBalance());
+
+		for(int i = 0; i < 2; i++) {
+	        	this.balancePlosca.add(new JLabel());
+	    }
 		
 		this.addPlosca = new AddPlosca(this.x, this.y, this.width, this.height, color, okno, this.test, this.seznamTransakcij);
         this.addPlosca.nastaviVelikost(this.width, this.height);

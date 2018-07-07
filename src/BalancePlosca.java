@@ -1,11 +1,15 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.plaf.synth.SynthInternalFrameUI;
 
-public class BalancePlosca extends JPanel{
+public class BalancePlosca extends JPanel implements ActionListener{
 	
 	private int x;
 	private int y;
@@ -13,26 +17,45 @@ public class BalancePlosca extends JPanel{
 	private int height;
 	
 	private JButton button;
-	private JLabel walletBalance;
-	private JLabel bankBalance;
-	private JLabel cryptoBalance;
+	private JButton walletBalance;
+	private JButton bankBalance;
+	private JButton cryptoBalance;
 	
 	private Test test;
+	private SeznamTransakcij seznamTransakcij;
 	
-	public BalancePlosca(int x, int y, int width, int height, Color color, Test test) {
+	public BalancePlosca(int x, int y, int width, int height, Color color, Test test, SeznamTransakcij seznamTransakcij) {
 		this.x = x;
 		this.y = y; 
 		this.width = width;
 		this.height = height;
 		this.test = test;
+		this.seznamTransakcij = seznamTransakcij;
 		
 		setBackground(color);
 		this.button = new JButton("Deluje");
 		//JLabel() ima tudi konstruktor, ki omogoèa aligment teksta
-		this.walletBalance = new JLabel("Wallet Balance", SwingConstants.CENTER);
-		this.bankBalance = new JLabel("Bank Balance", SwingConstants.CENTER);
-		this.cryptoBalance = new JLabel("Crypto Balance", SwingConstants.CENTER);
+		this.walletBalance = new JButton("Wallet Balance");
+		this.bankBalance = new JButton("Bank Balance");
+		this.cryptoBalance = new JButton("Crypto Balance");
+		
+		nastaviGumb(this.walletBalance, color);
+		nastaviGumb(this.bankBalance, color);
+		nastaviGumb(this.cryptoBalance, color);
+		
 		izpisIzBaze();
+		
+		this.walletBalance.addActionListener(this);
+		this.bankBalance.addActionListener(this);
+		this.cryptoBalance.addActionListener(this);
+	}
+	
+	 public void nastaviGumb(JButton button, Color color) {
+			button.setPreferredSize(new Dimension(this.width/2,70)); //nastavimo Å¡irino
+			button.setBackground(color); //nastavimo barvo
+			button.setBorder(null); //znebimo se obrobe gumba
+			button.setFocusable(false); //znebimo se obrobe button icon
+			//button.addActionListener(this);
 	}
 	
 	public void izpisIzBaze() {
@@ -94,14 +117,53 @@ public class BalancePlosca extends JPanel{
 	public JButton vrniButton() {
 		return this.button;
 	}
-	public JLabel vrniWalletBalance() {
+	public JButton vrniWalletBalance() {
 		return this.walletBalance;
 	}
-	public JLabel vrniBankBalance() {
+	public JButton vrniBankBalance() {
 		return this.bankBalance;
 	}
-	public JLabel vrniCryptoBalance() {
+	public JButton vrniCryptoBalance() {
 		return this.cryptoBalance;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == this.walletBalance) {
+			LineBorder border = new LineBorder(Color.RED, 2);
+			this.walletBalance.setBorder(border);
+			this.walletBalance.setBorderPainted(true);
+			
+			this.bankBalance.setBorderPainted(false);
+			this.cryptoBalance.setBorderPainted(false);
+			
+			this.seznamTransakcij.setTransactionCategory("Wallet");
+			this.seznamTransakcij.posodobiTransakcije();
+		}
+		if(e.getSource() == this.bankBalance) {
+			LineBorder border = new LineBorder(Color.RED, 2);
+			this.bankBalance.setBorder(border);
+			this.bankBalance.setBorderPainted(true);
+			
+			this.walletBalance.setBorderPainted(false);
+			this.cryptoBalance.setBorderPainted(false);
+			
+			this.seznamTransakcij.setTransactionCategory("Bank");
+			this.seznamTransakcij.posodobiTransakcije();
+		}
+		if(e.getSource() == this.cryptoBalance) {
+			LineBorder border = new LineBorder(Color.RED, 2);
+			this.cryptoBalance.setBorder(border);
+			this.cryptoBalance.setBorderPainted(true);
+
+			this.walletBalance.setBorderPainted(false);
+			this.bankBalance.setBorderPainted(false);
+			
+			this.seznamTransakcij.setTransactionCategory("Crypto");
+			this.seznamTransakcij.posodobiTransakcije();
+
+		}
 	}
 	
 }
