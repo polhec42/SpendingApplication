@@ -89,16 +89,19 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
         this.addPlosca.setLayout(new GridLayout(6, 2));
         this.addPlosca.add(this.addPlosca.vrniExpenseButton());
         this.addPlosca.add(this.addPlosca.vrniIncomeButton());
-        this.addPlosca.add(this.addPlosca.vrniList());
+        this.addPlosca.add(this.addPlosca.vrniCategoriesList());
         this.addPlosca.add(this.addPlosca.vrniCategoryButton());
         this.addPlosca.add(this.addPlosca.vrniAmountField());
         this.addPlosca.add(this.addPlosca.vrniCurrencyField());
         this.addPlosca.add(this.addPlosca.vrniDateField());
+        this.addPlosca.add(this.addPlosca.vrniAccountsList());
         //This chunk of code is used to fill addPlosca with empty elements
         //it has fixed the layout issues
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 2; i++) {
         	this.addPlosca.add(new JLabel());
         }
+        this.addPlosca.add(this.addPlosca.vrniDescriptionArea());
+        this.addPlosca.add(this.addPlosca.vrniAddButton());
         
         //this.addPlosca.add(this.addPlosca.vrniAdd());
         this.addPlosca.setBorder(BorderFactory.createLineBorder(Color.BLACK));

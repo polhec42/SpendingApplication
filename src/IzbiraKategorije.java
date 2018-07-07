@@ -93,8 +93,8 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener, A
 			 * Uporabno bo, ko bom dodal možnost, da uporabnik dodaja svoje kategorije
 			 * - pri tem moram poskrbeti da se nova kategorija zapiše v bazo
 			 * */
-			this.addPlosca.vrniList().addItem(this.novaKategorija.getText());
-			this.addPlosca.vrniList().setSelectedItem(this.novaKategorija.getText());
+			this.addPlosca.vrniCategoriesList().addItem(this.novaKategorija.getText());
+			this.addPlosca.vrniCategoriesList().setSelectedItem(this.novaKategorija.getText());
 			
 			//dodaj funkcionalnosti za dodajanje kategorije v bazo
 		}

@@ -32,7 +32,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 	
 	private JScrollPane vertical;
 	
-	private String transactionCategory = "Wallet";
+	private String transactionCategory = "Bank";
 	
 	public SeznamTransakcij(int x, int y, int width, int height, Test test) {
 		this.x = x;

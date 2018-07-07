@@ -12,12 +12,8 @@ import java.util.Locale.Category;
 public class Test {
 	
     public static String url = "jdbc:sqlite:C:\\Users\\Uporabnik\\Documents\\Dokumenti DELL XPS13\\Eclipse_Workspace\\SpendingApp\\resources\\test.db";
-
-    /**
-     * Connect to a sample database
-     *
-     * @param fileName the database file name
-     */
+    
+    //Create new Database, only for first use
     public static void createNewDatabase(String fileName) {
  
         String url = "jdbc:sqlite:C:\\Users\\Uporabnik\\Documents\\Dokumenti DELL XPS13\\Eclipse_Workspace\\SpendingApp\\resources\\" + fileName;
@@ -35,15 +31,9 @@ public class Test {
     }
     
     public static void createNewTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS transactions (\n"
+        String sql = "CREATE TABLE IF NOT EXISTS accounts (\n"
                 + "	id integer PRIMARY KEY,\n"
-                + "	description text NOT NULL,\n"
-                + "	date text NOT NULL,\n"
-                + " account text NOT NULL,\n"
-                + " amount real NOT NULL,\n"
-                + " currency text NOT NULL, \n"
-                + " category text NOT NULL, \n"
-                + " type text NOT NULL \n"
+                + "	description text NOT NULL"
                 + ");";
         
         try (Connection conn = DriverManager.getConnection(url);
@@ -130,6 +120,7 @@ public class Test {
         }
     }
     
+    //Update transacation's amount and description
     public void update(int id, String description, double amount) {
         String sql = "UPDATE transactions SET description = ? , "
                 + "amount = ? "
@@ -171,6 +162,8 @@ public class Test {
             System.out.println(e.getMessage());
         }
     }
+    
+    //Delete any row from any table
     public void deleteData(String table, int id) {
         String sql = "DELETE FROM '"+table+"' WHERE id = ?";
  
@@ -187,6 +180,7 @@ public class Test {
         }
     }
     
+    //Delete any table
     public void deleteTable(String tableName) {
     	
     	String sql = "DROP TABLE IF EXISTS '"+ tableName +"'"; //popravi ta del z '' in ""
@@ -204,6 +198,7 @@ public class Test {
         }
     }
     
+    //Return every transactions from given account
     public ArrayList<Transakcija> vrniTransakcijeIzRacuna(String account){
         String sql = "SELECT id, description, date, account, amount, currency, category, type FROM transactions WHERE account = ?";
         ArrayList<Transakcija> transakcije = new ArrayList<>();
@@ -232,8 +227,38 @@ public class Test {
         }
         return transakcije;
     }
- 
+    
+    public void printAccounts() {
+    	 String sql = "SELECT id, description FROM accounts";
+         
+         try (Connection conn = this.connect();
+              Statement stmt  = conn.createStatement();
+              ResultSet rs    = stmt.executeQuery(sql)){
+             
+             // loop through the result set
+             while (rs.next()) {
+                 System.out.println(rs.getInt("id") +  " " + 
+                                    rs.getString("description"));
+             }
+         } catch (SQLException e) {
+             System.out.println(e.getMessage());
+         }
+    }
+   
+    public void newAccount(String description) {
+    	String sql = "INSERT INTO accounts(description) VALUES(?)";
+   	 
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, description);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
     /*
+     *	Test main method for testing database implementation
+     * 
     public static void main(String[] args) {
         //createNewDatabase("test.db");
     	/*
@@ -250,4 +275,11 @@ public class Test {
     	
     }
 	*/
+    public static void main(String args[]) {
+    	Test test = new Test();
+    	//test.newAccount("Wallet");
+    	//test.newAccount("Bank");
+    	
+    	test.printAccounts();
+    }
 }

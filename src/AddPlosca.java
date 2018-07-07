@@ -1,5 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,7 +12,7 @@ import javax.swing.plaf.ColorUIResource;
 
 import java.awt.*;
 
-public class AddPlosca extends JPanel implements ActionListener{
+public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 	
 	private int x;
 	private int y;
@@ -19,14 +21,17 @@ public class AddPlosca extends JPanel implements ActionListener{
 	
 	private JButton expenseButton;
 	private JButton incomeButton;
-    private JButton add;
     private JButton categoryButton;
+    private JButton addButton;
     
     private JTextField amountField;
     private JTextField currencyField;
     private JTextField dateField;
+        
+    private JComboBox categories;
+    private JComboBox accounts;
     
-    private JComboBox list;
+    private JTextArea descriptionArea;
     
     private Okno okno;
     private Test test;
@@ -53,26 +58,37 @@ public class AddPlosca extends JPanel implements ActionListener{
         this.categoryButton = new JButton("Category");
         nastaviGumb(this.categoryButton, color);
         
+        this.addButton = new JButton("Add");
+        nastaviGumb(this.addButton, color);
+        
         /*
          * Drop down menu
          * */
-        String[] options = {"Technology", "Gift", "Food"};
-        this.list = new JComboBox(options);
-        this.list.setSelectedIndex(0);
-        this.list.addActionListener(this);
-        //
+        String[] optionsCategories = {"Technology", "Gift", "Food"};
+        this.categories = new JComboBox(optionsCategories);
+        this.categories.setSelectedIndex(0);
+        this.categories.addActionListener(this);
         
-        this.amountField = new JTextField(20);
-        this.currencyField = new JTextField(10);
-        this.dateField = new JTextField(20);
+        String[] optionsAccounts = {"Wallet", "Crypto", "Bank"};
+        this.accounts = new JComboBox(optionsAccounts);
+        this.accounts.setSelectedIndex(0);
+        this.accounts.addActionListener(this);
+        
+        this.amountField = new JTextField("Enter amount", 20);
+        this.currencyField = new JTextField("Enter currency", 10);
+        this.dateField = new JTextField("Enter date: DD.MM.LLLL", 20);
+        
+        this.descriptionArea = new JTextArea("Enter description of your transaction");
+        
+        this.amountField.addFocusListener(this);
+        this.currencyField.addFocusListener(this);
+        this.dateField.addFocusListener(this);
+        this.descriptionArea.addFocusListener(this);
         
         this.categoryButton.addActionListener(this);
         this.expenseButton.addActionListener(this);
         this.incomeButton.addActionListener(this);
-        
-        this.amountField.addActionListener(this);
-        this.currencyField.addActionListener(this);
-        this.dateField.addActionListener(this);
+        this.addButton.addActionListener(this);
 	}
     
     public void nastaviGumb(JButton button, Color color) {
@@ -105,11 +121,11 @@ public class AddPlosca extends JPanel implements ActionListener{
     public JButton vrniIncomeButton(){
         return this.incomeButton;
     }
-    public JComboBox vrniList(){
-        return this.list;
+    public JComboBox vrniCategoriesList(){
+        return this.categories;
     }
-    public JButton vrniAdd(){
-        return this.add;
+    public JButton vrniAddButton(){
+        return this.addButton;
     }
     public JButton vrniCategoryButton() {
     	return this.categoryButton;
@@ -122,6 +138,12 @@ public class AddPlosca extends JPanel implements ActionListener{
     }
     public JTextField vrniDateField() {
     	return this.dateField;
+    }
+    public JComboBox vrniAccountsList() {
+    	return this.accounts;
+    }
+    public JTextArea vrniDescriptionArea() {
+    	return this.descriptionArea;
     }
     
 	@Override
@@ -145,10 +167,6 @@ public class AddPlosca extends JPanel implements ActionListener{
 			izbiraKategorije.add(izbiraKategorije.vrniScroll(), BorderLayout.CENTER);
 			izbiraKategorije.add(izbiraKategorije.vrniButton(), BorderLayout.PAGE_END);
 			izbiraKategorije.add(izbiraKategorije.vrniTextField(), BorderLayout.PAGE_START);
-			
-			/*for(int i = 0; i < 3; i++) {
-		        	izbiraKategorije.add(new JLabel());
-		    }*/
 			
 		    izbiraKategorije.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		    /*
@@ -185,6 +203,39 @@ public class AddPlosca extends JPanel implements ActionListener{
 				this.incomeButton.setBorderPainted(false);
 			}
 		}
+		//Dodane funkcionalnosti vpisa transakcije v podatkovno bazo
+		if(e.getSource() == this.addButton && (isExpenseClicked != false || isIncomeClicked != false)) {
+			String description = this.descriptionArea.getText();
+			String date = this.dateField.getText();
+			String category = (String)this.categories.getSelectedItem();
+			double amount = Double.parseDouble(this.amountField.getText());
+			String account = (String)this.accounts.getSelectedItem();
+			String currency = this.currencyField.getText();
+			String type = (isExpenseClicked) ? "Expense" : "Income";
+			
+			//this.test.insert(description, date, account, amount, currency, category, type);
+			System.out.printf("%s %s %s %.2f %s %s %s", description, date, category, amount,
+					account, currency, type);
+		}
+	}
+	//When focus is gained, we delete placeholder
+	public void focusGained(FocusEvent e) {
+		if(e.getSource() == this.amountField) {
+			this.amountField.setText("");
+		}
+		if(e.getSource() == this.currencyField) {
+			this.currencyField.setText("");
+		} 
+		if(e.getSource() == this.dateField) {
+			this.dateField.setText("");
+		}
+		if(e.getSource() == this.descriptionArea) {
+			this.descriptionArea.setText("");
+		}
+	}
+
+	@Override
+	public void focusLost(FocusEvent arg0) {
 		
 	}
     
