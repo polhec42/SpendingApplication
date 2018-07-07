@@ -37,27 +37,42 @@ public class BalancePlosca extends JPanel{
 	
 	public void izpisIzBaze() {
 		/*
-		Test.createNewTable();
-    	
     	test.insert("Kosilo", "4.5.2018", "Wallet", 1.86, "Euro", "Hrana", "Expense");
     	test.insert("Zdravilo", "5.5.2018", "Wallet", 5.00, "Euro", "Zdavje", "Expense");
-
-    	test.selectAll();
     	*/
-    	double znesek = 0;
+    	double znesekWallet = 0;
     	
     	ArrayList<Transakcija> list = test.vrniTransakcijeIzRacuna("Wallet");
     	for(int i = 0; i < list.size(); i++) {
-    		znesek += list.get(i).getAmount();
-    		System.out.printf("%s: %f\n", list.get(i).getDescription(), list.get(i).getAmount());
+    		if(list.get(i).getType().equals("Income")) {
+    			znesekWallet += list.get(i).getAmount();
+        		System.out.printf("Income: %s: %f\n", list.get(i).getDescription(), list.get(i).getAmount());
+    		}else if(list.get(i).getType().equals("Expense")) {
+    			znesekWallet -= list.get(i).getAmount();
+        		System.out.printf("Expense: %s: %f\n", list.get(i).getDescription(), list.get(i).getAmount());
+    		}
     	}
-    	//test.deleteTable("transactions");
+    	nastaviWalletBalance(Double.toString(znesekWallet));
     	
-    	nastaviWalletBalance(Double.toString(znesek));
+    	double znesekBank = 0;
+    	ArrayList<Transakcija> listBank = test.vrniTransakcijeIzRacuna("Bank");
+    	for(int i = 0; i < listBank.size(); i++) {
+    		if(listBank.get(i).getType().equals("Income")) {
+    			znesekBank += listBank.get(i).getAmount();
+        		System.out.printf("Income: %s: %f\n", listBank.get(i).getDescription(), listBank.get(i).getAmount());
+    		}else if(listBank.get(i).getType().equals("Expense")) {
+    			znesekBank -= listBank.get(i).getAmount();
+        		System.out.printf("Expense: %s: %f\n", listBank.get(i).getDescription(), listBank.get(i).getAmount());
+    		}
+    	}
+    	nastaviBankBalance(Double.toString(znesekBank));
 	}
 	
 	public void nastaviWalletBalance(String text) {
-		this.walletBalance.setText("Wallet: " + text);
+		this.walletBalance.setText("Wallet: " + text + " €");
+	}
+	public void nastaviBankBalance(String text) {
+		this.bankBalance.setText("Bank: " + text + " €");
 	}
 	
 	public void nastaviVelikost(int w, int h){

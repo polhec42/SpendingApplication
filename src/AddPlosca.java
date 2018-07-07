@@ -35,17 +35,19 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
     
     private Okno okno;
     private Test test;
+    private SeznamTransakcij seznamTransakcij;
     
     private boolean isExpenseClicked = false;
     private boolean isIncomeClicked = false;
     
-	public AddPlosca(int x, int y, int width, int height, Color color, Okno okno, Test test) {
+	public AddPlosca(int x, int y, int width, int height, Color color, Okno okno, Test test, SeznamTransakcij seznamTransakcij) {
 		this.x = x;
 		this.y = y; 
 		this.width = width;
 		this.height = height;
 		this.okno = okno;
 		this.test = test;
+		this.seznamTransakcij = seznamTransakcij;
 		
 		setBackground(color);
         
@@ -213,9 +215,11 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 			String currency = this.currencyField.getText();
 			String type = (isExpenseClicked) ? "Expense" : "Income";
 			
-			//this.test.insert(description, date, account, amount, currency, category, type);
+			this.test.insert(description, date, account, amount, currency, category, type);
 			System.out.printf("%s %s %s %.2f %s %s %s", description, date, category, amount,
 					account, currency, type);
+			//Posodobim JList pri Balance tako, da imam tudi najnovejšo transakcijo
+			this.seznamTransakcij.vrniDefaultListModel().addElement(description);
 		}
 	}
 	//When focus is gained, we delete placeholder

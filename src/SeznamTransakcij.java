@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -31,6 +32,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 	private JLabel label;
 	
 	private JScrollPane vertical;
+	private DefaultListModel listModel;
 	
 	private String transactionCategory = "Bank";
 	
@@ -44,12 +46,18 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		//this.setBounds(this.x, this.y, this.width, this.height);
 		
 		ArrayList<Transakcija> kategorije = test.vrniTransakcijeIzRacuna(transactionCategory);
+		/*
+		 * Uporabljam DefaultListModel, saj je tako najlažje posodabljati data za
+		 * JList -> to rabim zato, ker želim, da se po dodani transakciji avtomatsko
+		 * doda na seznam transakcij, ki je viden pri Balance plošèi
+		 * */
+		this.listModel=new DefaultListModel();
 		
-		String[] data = new String[kategorije.size()];
 		for(int i = 0; i < kategorije.size(); i++) {
-			data[i] = kategorije.get(i).getDescription();
+			this.listModel.addElement(kategorije.get(i).getDescription());
 		}
-		this.area = new JList<String>(data);
+		this.area = new JList(this.listModel);
+		
 		this.area.setPreferredSize(new Dimension(this.width, 60));
 		this.vertical = new JScrollPane(area);
 		vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -76,6 +84,9 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		// TODO Auto-generated method stub
 		return new Dimension(this.width, this.height);
 	}*/
+	public DefaultListModel vrniDefaultListModel() {
+		return this.listModel;
+	}
 	
 	public JButton vrniIzberiButton() {
 		return this.izberiButton;

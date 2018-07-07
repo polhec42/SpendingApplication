@@ -9,6 +9,11 @@ import javax.swing.border.EmptyBorder;
 
 public class VsebinskaPlosca extends JPanel implements Runnable{
 	
+	/**
+	 * Shranim referenco na trenutni objekt, saj ga lahko tako uporabim znotraj metode run,
+	 * ki je klicana z objektom Thread (znotraj tiste metode tako pod referenco this nastopa
+	 * Thread in ne VsebinskaPlosca).
+	 */
 	public final VsebinskaPlosca self = this;
 	
 	private int x;
@@ -84,7 +89,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		this.seznamTransakcij.add(this.seznamTransakcij.vrniScroll(), BorderLayout.CENTER);
 		this.seznamTransakcij.add(this.seznamTransakcij.vrniLabel(), BorderLayout.NORTH);
 		
-		this.addPlosca = new AddPlosca(this.x, this.y, this.width, this.height, color, okno, this.test);
+		this.addPlosca = new AddPlosca(this.x, this.y, this.width, this.height, color, okno, this.test, this.seznamTransakcij);
         this.addPlosca.nastaviVelikost(this.width, this.height);
         this.addPlosca.setLayout(new GridLayout(6, 2));
         this.addPlosca.add(this.addPlosca.vrniExpenseButton());
@@ -129,15 +134,20 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		
 		running = true;
 		while(running) {
+			//Balance plošèa
 			if(state == States.BALANCE && (previous == null || previous == States.ADD)) {
 				previous = States.BALANCE;
 				self.removeAll(); //odstranimo prejsnje komponente
                 self.setLayout(new GridLayout(1,2));
                 self.add(self.balancePlosca);
                 self.add(self.seznamTransakcij);
+                //da se ob morebitni dodani transakciji posodobi stanje
+                self.balancePlosca.izpisIzBaze(); 
                 self.okno.validate();
                 self.okno.repaint();
-			}else if(state == States.ADD && previous == States.BALANCE){
+			}
+			//Add plošèa
+			else if(state == States.ADD && previous == States.BALANCE){
 				previous = States.ADD;
                 self.removeAll(); //odstranimo prejsnje komponente 
 				self.add(self.addPlosca);
