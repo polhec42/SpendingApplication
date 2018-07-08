@@ -11,12 +11,13 @@ import java.util.Locale.Category;
 
 public class Test {
 	
-    public static String url = "jdbc:sqlite:C:\\Users\\Uporabnik\\Documents\\Dokumenti DELL XPS13\\Eclipse_Workspace\\SpendingApp\\resources\\test.db";
-    
+    //public static String url = "jdbc:sqlite:C:\\Users\\Uporabnik\\Documents\\Dokumenti DELL XPS13\\Eclipse_Workspace\\SpendingApp\\resources\\test.db";
+    public static String url = "jdbc:sqlite:/resources/test.db";
+
     //Create new Database, only for first use
     public static void createNewDatabase(String fileName) {
  
-        String url = "jdbc:sqlite:C:\\Users\\Uporabnik\\Documents\\Dokumenti DELL XPS13\\Eclipse_Workspace\\SpendingApp\\resources\\" + fileName;
+        String url = "jdbc:sqlite:C:/resources/" + fileName;
  
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
