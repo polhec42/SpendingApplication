@@ -22,13 +22,13 @@ public class MenijskaPlosca extends JPanel implements ActionListener{
 		//setPreferredSize(new Dimension(this.sirina, this.visina));
 		setBackground(color);
 		
-		this.balance = new JButton(new ImageIcon("/resources/euro-currency-symbol.png"));
+		this.balance = new JButton(new ImageIcon("resources/euro-currency-symbol.png"));
 		
         //Mac OS X verzija
         //this.balance = new JButton("Balance");
         nastaviGumb(this.balance, color);
 		
-		this.add = new JButton(new ImageIcon("/resources/add.png"));
+		this.add = new JButton(new ImageIcon("resources/add.png"));
         
         //Mac OS X verzija
         //this.add = new JButton("Add");

@@ -1,4 +1,5 @@
 import java.awt.List;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -12,7 +13,7 @@ import java.util.Locale.Category;
 public class Test {
 	
     //public static String url = "jdbc:sqlite:C:\\Users\\Uporabnik\\Documents\\Dokumenti DELL XPS13\\Eclipse_Workspace\\SpendingApp\\resources\\test.db";
-    public static String url = "jdbc:sqlite:/resources/test.db";
+    public static String url = "jdbc:sqlite:resources/test.db";
 
     //Create new Database, only for first use
     public static void createNewDatabase(String fileName) {
@@ -93,7 +94,9 @@ public class Test {
     
     private Connection connect() {
         // SQLite connection string
-        String url = "jdbc:sqlite:C:\\Users\\Uporabnik\\Documents\\Dokumenti DELL XPS13\\Eclipse_Workspace\\SpendingApp\\resources\\test.db";
+    	//File file = new File(url);
+        //String url = file.getAbsolutePath();
+        //System.out.println(url);
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
@@ -275,12 +278,12 @@ public class Test {
     	test.selectAll();
     	
     }
-	*/
+	*//*
     public static void main(String args[]) {
     	Test test = new Test();
     	//test.newAccount("Wallet");
     	//test.newAccount("Bank");
     	
     	test.printAccounts();
-    }
+    }*/
 }

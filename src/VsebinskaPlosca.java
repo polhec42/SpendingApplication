@@ -1,8 +1,5 @@
 import java.awt.*;
-import java.awt.Taskbar.State;
-
 import javax.swing.*;
-import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
