@@ -19,8 +19,8 @@ Java SE 9+
 #### Windows version
 
 1. Download ```windows``` folder inside ```deployment``` folder with all of its content.
-2. Put ```Spending.jar```, ```resources``` folder and ```run.bat``` in the same folder.
-3. Double click on ```run.bat```.
+2. Put ```Spending.jar``` and ```resources``` folder  in the same folder.
+3. Double click on ```Spending.jar```.
 
 #### Mac version
 
