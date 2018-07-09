@@ -45,6 +45,8 @@ public class Main{
 		
 		stranskiMeni.add(stranskiMeni.vrniBalance());
 		stranskiMeni.add(stranskiMeni.vrniAdd());
+		stranskiMeni.add(stranskiMeni.vrniGraphs());
+		stranskiMeni.add(stranskiMeni.vrniSettings());
 		vsebina.setBorder(new EmptyBorder(10, 15, 10, 10));
 		//tko RES nevem zakaj je tuki treba 15
 		okno.add(stranskiMeni, BorderLayout.WEST);

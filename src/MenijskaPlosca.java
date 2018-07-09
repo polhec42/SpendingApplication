@@ -9,9 +9,13 @@ public class MenijskaPlosca extends JPanel implements ActionListener{
 	private int y;
 	private int width;
 	private int height;
+	
 	private VsebinskaPlosca vsebinskaPlosca;
+	
 	private JButton balance = null;
 	private JButton add = null;
+	private JButton graphs;
+	private JButton settings;
 	
 	public MenijskaPlosca(int x, int y, int width, int height, Color color, VsebinskaPlosca vsebinskaPlosca) {
 		this.x = x;
@@ -23,16 +27,16 @@ public class MenijskaPlosca extends JPanel implements ActionListener{
 		setBackground(color);
 		
 		this.balance = new JButton(new ImageIcon("resources/euro-currency-symbol.png"));
-		
-        //Mac OS X verzija
-        //this.balance = new JButton("Balance");
         nastaviGumb(this.balance, color);
 		
 		this.add = new JButton(new ImageIcon("resources/add.png"));
-        
-        //Mac OS X verzija
-        //this.add = new JButton("Add");
 		nastaviGumb(this.add, color);
+		
+		this.graphs = new JButton(new ImageIcon("resources/investment.png"));
+		nastaviGumb(this.graphs, color);
+		
+		this.settings = new JButton(new ImageIcon("resources/settings.png"));
+		nastaviGumb(this.settings, color);
 		 
 		//potrebno je dodati actionListener -> ob pritisku se spremeni stanje
 		//this.add = new JButton(new ImageIcon("resources/add.png"));
@@ -78,5 +82,11 @@ public class MenijskaPlosca extends JPanel implements ActionListener{
 	}
 	public JButton vrniAdd() {
 		return this.add;
+	}
+	public JButton vrniGraphs() {
+		return this.graphs;
+	}
+	public JButton vrniSettings() {
+		return this.settings;
 	}
 }
