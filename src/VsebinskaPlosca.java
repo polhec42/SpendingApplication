@@ -1,5 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -28,8 +29,8 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 	private BalancePlosca balancePlosca;
     private AddPlosca addPlosca;
 	private SeznamTransakcij seznamTransakcij;
-    private JPanel panel;
-    
+	private GraphsPlosca graphsPlosca;
+	
 	private Okno okno;
 	private Test test;
 	
@@ -103,10 +104,15 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
         }
         this.addPlosca.add(this.addPlosca.vrniDescriptionArea());
         this.addPlosca.add(this.addPlosca.vrniAddButton());
-        
-        //this.addPlosca.add(this.addPlosca.vrniAdd());
         this.addPlosca.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.balancePlosca.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        //
+        //GraphsPlosca
+        this.graphsPlosca = new GraphsPlosca(0, 0, this.width, this.height, color, this.test);
+        this.graphsPlosca.nastaviVelikost(this.width, this.height);
+        this.graphsPlosca.setLayout(new BorderLayout());
+        this.graphsPlosca.add(this.graphsPlosca.vrniLabel(), BorderLayout.NORTH);
+        //
 		/*
 		* Starting learning threads -> I will be using two threads:
 		* - Main thread
@@ -131,7 +137,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		running = true;
 		while(running) {
 			//Balance plošèa
-			if(state == States.BALANCE && (previous == null || previous == States.ADD)) {
+			if(state == States.BALANCE && (previous == null || previous == States.ADD || previous == States.GRAPHS)) {
 				previous = States.BALANCE;
 				self.removeAll(); //odstranimo prejsnje komponente
                 self.setLayout(new GridLayout(1,2));
@@ -143,12 +149,19 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
                 self.okno.repaint();
 			}
 			//Add plošèa
-			else if(state == States.ADD && previous == States.BALANCE){
+			else if(state == States.ADD && (previous == States.BALANCE || previous == States.ADD || previous == States.GRAPHS)){
 				previous = States.ADD;
                 self.removeAll(); //odstranimo prejsnje komponente 
 				self.add(self.addPlosca);
 				//Po spremembi GUI-ja je potrebno okno validatat in znova repaintat
 				//Spremembe so tako uveljavljene
+				self.okno.validate();
+				self.okno.repaint();
+			}
+			else if(state == States.GRAPHS && (previous == States.BALANCE || previous == States.ADD)) {
+				previous = States.GRAPHS;
+				self.removeAll();
+				self.add(self.graphsPlosca);
 				self.okno.validate();
 				self.okno.repaint();
 			}

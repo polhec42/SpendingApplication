@@ -58,10 +58,12 @@ public class MenijskaPlosca extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == balance) {
+		if(e.getSource() == this.balance) {
 			this.vsebinskaPlosca.setState(States.BALANCE);
-		}else if(e.getSource() == add) {
+		}else if(e.getSource() == this.add) {
 			this.vsebinskaPlosca.setState(States.ADD);
+		}else if(e.getSource() == this.graphs) {
+			this.vsebinskaPlosca.setState(States.GRAPHS);
 		}
 	}
 	
