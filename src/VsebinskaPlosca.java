@@ -30,6 +30,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
     private AddPlosca addPlosca;
 	private SeznamTransakcij seznamTransakcij;
 	private GraphsPlosca graphsPlosca;
+	private Legenda legenda;
 	
 	private Okno okno;
 	private Test test;
@@ -108,10 +109,12 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
         this.balancePlosca.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         //
         //GraphsPlosca
-        this.graphsPlosca = new GraphsPlosca(0, 0, this.width, this.height, color, this.test);
-        this.graphsPlosca.nastaviVelikost(this.width, this.height);
+        this.graphsPlosca = new GraphsPlosca(0, 0, this.width/2, this.height, color, this.test);
+        this.graphsPlosca.nastaviVelikost(this.width/2, this.height);
         this.graphsPlosca.setLayout(new BorderLayout());
-        this.graphsPlosca.add(this.graphsPlosca.vrniLabel(), BorderLayout.NORTH);
+        
+		this.legenda = new Legenda(width/2, 0, width/2, height, Color.BLACK, 5);
+		
         //
 		/*
 		* Starting learning threads -> I will be using two threads:
@@ -162,6 +165,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 				previous = States.GRAPHS;
 				self.removeAll();
 				self.add(self.graphsPlosca);
+				self.add(self.legenda);
 				self.okno.validate();
 				self.okno.repaint();
 			}

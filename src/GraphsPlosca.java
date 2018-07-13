@@ -20,6 +20,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	
 	private JLabel label;
 	private Test test;
+	private Legenda legenda;
 	
 	private final int POLMER = 200;
 	
@@ -31,8 +32,6 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		this.test = test;
 		
 		setBackground(color);				
-	
-		this.label = new JLabel("Text");
 		
 	}
 	
@@ -57,8 +56,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 			g.setColor(colors[i]);
 			g.fillArc(this.x + this.width/2 - POLMER/2, this.y + this.height/2 - POLMER/2, POLMER, POLMER, zacetniKot, kot);
 			zacetniKot += kot;
-			
-			System.out.println(i + " " + podatki[i] +  " " + zacetniKot + " " +  ((double)podatki[i]/vsota)*100 + " %");
+
 		}
 		/*
 		 * fillArc(...., zacetniKot, kot) -> polni od zacetnegaKota za kot =>
@@ -90,6 +88,9 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	}
 	public JLabel vrniLabel() {
 		return this.label;
+	}
+	public Legenda vrniLegenda() {
+		return this.legenda;
 	}
 	
 	/*
