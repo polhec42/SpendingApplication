@@ -28,8 +28,6 @@ public class Legenda extends JPanel{
 		this.graphsPlosca = graphsPlosca;
 		
 		setBackground(this.color);
-		LineBorder border = new LineBorder(Color.BLACK);
-		this.setBorder(border);
 		nastavi();
 	}
 	/*
@@ -44,26 +42,18 @@ public class Legenda extends JPanel{
 		int stStolpcev = this.steviloPolj/8 + 1;
 		
 		this.setLayout(new GridLayout(stVrstic, stStolpcev));
-		/*
-		for(int i = 0; i < this.steviloPolj; i++) {
-			JLabel jLabel= new JLabel(Integer.toString(i));
-			LineBorder border = new LineBorder(Color.RED);  
-			jLabel.setBorder(border);
-			this.add(jLabel);
-		}
-		*/
 		
 		Color[] barve = this.graphsPlosca.getColors();
-		int[] podatki = this.graphsPlosca.getPodatki();
+		double[] podatki = this.graphsPlosca.getPodatki();
 		
 		LegendData[] legendDatas = new LegendData[this.steviloPolj];
 		
-		for(int i = 0; i < 5; i++) {
+		for(int i = 0; i < this.steviloPolj; i++) {
 			/*
 			 * Dodajati moram "0 + i*this.height/stVrstic", ker se drugaèe preslikajo na isto mesto
 			 * saj to niso standardizirane Swing komponente
 			 * */
-			legendDatas[i] = new LegendData(0, 0 + i*this.height/stVrstic, this.width/stStolpcev, this.height/stVrstic, this.color, barve[i], Integer.toString(podatki[i]));
+			legendDatas[i] = new LegendData(0, 0 + i*this.height/stVrstic, this.width/stStolpcev, this.height/stVrstic, this.color, barve[i], this.graphsPlosca.getKategorije().get(i));
 			this.add(legendDatas[i]);
 		}
 		

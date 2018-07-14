@@ -260,6 +260,67 @@ public class Test {
         }
     }
     /*
+     * Tip: Expense/Income
+     * */
+    public ArrayList<Transakcija> vrniTipTransakcij(String tip) {
+    	String sql = "SELECT id, description, date, account, amount, currency, category, type FROM transactions WHERE type = ?";
+        ArrayList<Transakcija> transakcije = new ArrayList<>();
+        try (Connection conn = this.connect();
+        	PreparedStatement pstmt  = conn.prepareStatement(sql)){
+     
+        	// set the value
+        	pstmt.setString(1, tip);
+        	//
+        	ResultSet rs  = pstmt.executeQuery();
+        	
+        	// loop through the result set
+        	while (rs.next()) {
+        		Transakcija transakcija = new Transakcija(rs.getInt("id"), 
+        				rs.getString("description"), rs.getString("date"), 
+        				rs.getString("account"), rs.getDouble("amount"), 
+        				rs.getString("currency"), rs.getString("category"), 
+        				rs.getString("type"));
+                transakcije.add(transakcija);
+            }
+        } 
+        catch (SQLException e) {
+        	System.out.println(e.getMessage());
+        }
+        return transakcije;
+    	
+    }
+    
+    //Vrne seznam transakcij, ki spadajo v doloèeno kategorijo
+    public ArrayList<Transakcija> vrniTransakcijeIzKategorije(String category){
+    	String sql = "SELECT id, description, date, account, amount, currency, category, type FROM transactions WHERE category = ?";
+        ArrayList<Transakcija> transakcije = new ArrayList<>();
+        try (Connection conn = this.connect();
+        	PreparedStatement pstmt  = conn.prepareStatement(sql)){
+     
+        	// set the value
+        	pstmt.setString(1, category);
+        	//
+        	ResultSet rs  = pstmt.executeQuery();
+        	
+        	// loop through the result set
+        	while (rs.next()) {
+        		Transakcija transakcija = new Transakcija(rs.getInt("id"), 
+        				rs.getString("description"), rs.getString("date"), 
+        				rs.getString("account"), rs.getDouble("amount"), 
+        				rs.getString("currency"), rs.getString("category"), 
+        				rs.getString("type"));
+                transakcije.add(transakcija);
+            }
+        	
+        	
+        } 
+        catch (SQLException e) {
+        	System.out.println(e.getMessage());
+        }
+        return transakcije;
+    }
+    
+    /*
      *	Test main method for testing database implementation
      * 
     public static void main(String[] args) {
@@ -283,6 +344,10 @@ public class Test {
     	//test.newAccount("Wallet");
     	//test.newAccount("Bank");
     	
-    	test.printAccounts();
+    	ArrayList<Transakcija> list = test.vrniTransakcijeIzKategorije("Technology");
+    	for(Transakcija x : list) {
+    		System.out.println(x);
+    	}
+    	
     }*/
 }

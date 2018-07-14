@@ -22,10 +22,11 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	private Test test;
 	private Legenda legenda;
 	
-	private final int POLMER = 200;
+	private final int POLMER = 300;
 	
 	private Color[] colors;
-	private int[] podatki;
+	private double[] podatki;
+	private ArrayList<String> kategorije;
 	
 	public GraphsPlosca(int x, int y, int width, int height, Color color, Test test) {
 		this.x = x;
@@ -40,21 +41,54 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		 *Podatki in barve se morajo že tukaj inicilializirati, ker èe se šele v paint()
 		 *bo prepozno, ker paint() se sproži ko se naloži GUI 
 		 * */
-		this.podatki = new int[]{5, 12, 4, 16, 25};
-		this.colors = naborBarv(5);
+		//this.podatki = new double[]{5, 12, 4, 16, 25};
+		this.podatki = dobiPodatke();
+		this.colors = naborBarv(this.podatki.length);
+	}
+	
+	public double[] dobiPodatke() {	
+		
+		ArrayList<String> kategorije = this.test.vrniKategorije();
+		double[] podatki = new double[kategorije.size()];
+		
+		for(int i = 0; i < kategorije.size(); i++) {
+			ArrayList<Transakcija> transakcijeIzKategorije = this.test.vrniTransakcijeIzKategorije(kategorije.get(i));
+			for(Transakcija x : transakcijeIzKategorije) {
+				podatki[i] += x.getAmount();
+			}
+		}
+		//Urejanje kategorij po njihovi porabi
+		for(int i = 0; i < kategorije.size() - 1; i++) {
+			for(int j = i+1; j < kategorije.size(); j++) {
+				if(podatki[i] < podatki[j]) {
+					//Uredimo številke
+					double a = podatki[i];
+					podatki[i] = podatki[j];
+					podatki[j] = a;
+					
+					//Uredimo kategorije
+					String kat = kategorije.get(i);
+					kategorije.set(i, kategorije.get(j));
+					kategorije.set(j, kat);
+
+				}
+			}
+		}
+
+		this.kategorije = kategorije;
+		
+		return podatki;
 	}
 	
 	public void paint(Graphics g) {
 		g.setColor(Color.BLACK);
 		
-		int vsota = 0;
+		double vsota = 0;
 		
-		for(int x : podatki) {
+		for(double x : podatki) {
 			vsota+=x;
 		}
-		
 		double mera = 360./vsota;
-		
 		int zacetniKot = 0;
 		
 		for(int i = 0; i < podatki.length; i++) {
@@ -62,7 +96,6 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 			g.setColor(colors[i]);
 			g.fillArc(this.x + this.width/2 - POLMER/2, this.y + this.height/2 - POLMER/2, POLMER, POLMER, zacetniKot, kot);
 			zacetniKot += kot;
-
 		}
 		/*
 		 * fillArc(...., zacetniKot, kot) -> polni od zacetnegaKota za kot =>
@@ -104,11 +137,17 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	public Color[] getColors() {
 		return this.colors;
 	}
-	public void setPodatki(int[] podatki) {
+	public void setPodatki(double[] podatki) {
 		this.podatki = podatki;
 	}
-	public int[] getPodatki() {
+	public double[] getPodatki() {
 		return this.podatki;
+	}
+	public ArrayList<String> getKategorije(){
+		return this.kategorije;
+	}
+	public void setKategorije(ArrayList<String> kategorije) {
+		this.kategorije = kategorije;
 	}
 	/*
 	 * Metoda, ki bo vrnila nabor med seboj dovolj razliènih barv, ki bodo uporabljene

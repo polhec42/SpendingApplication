@@ -57,12 +57,6 @@ public class LegendData extends JPanel{
 		legendColorSquare.setPreferredSize(new Dimension(this.width*3/RAZMERJE, this.height));
 		this.add(legendColorSquare);
 		this.add(legendaText);
-		//this.setBorder(new LineBorder(Color.BLACK));
-		/*Border empty = new EmptyBorder(10, 10, 10, 10);
-		Border margin = new LineBorder(Color.BLACK);
-		CompoundBorder compoundBorder = new CompoundBorder(empty, margin);
-		this.setBorder(compoundBorder);
-		*/
 	}
 	
 	
