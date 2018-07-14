@@ -24,6 +24,9 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	
 	private final int POLMER = 200;
 	
+	private Color[] colors;
+	private int[] podatki;
+	
 	public GraphsPlosca(int x, int y, int width, int height, Color color, Test test) {
 		this.x = x;
 		this.y = y; 
@@ -33,14 +36,17 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		
 		setBackground(color);				
 		
+		/*
+		 *Podatki in barve se morajo že tukaj inicilializirati, ker èe se šele v paint()
+		 *bo prepozno, ker paint() se sproži ko se naloži GUI 
+		 * */
+		this.podatki = new int[]{5, 12, 4, 16, 25};
+		this.colors = naborBarv(5);
 	}
 	
 	public void paint(Graphics g) {
 		g.setColor(Color.BLACK);
 		
-		int[] podatki = {5, 12, 4, 16, 25};
-		//Color[] colors = {Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE, Color.BLACK};
-		Color[] colors = naborBarv(5);
 		int vsota = 0;
 		
 		for(int x : podatki) {
@@ -92,7 +98,18 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	public Legenda vrniLegenda() {
 		return this.legenda;
 	}
-	
+	public void setColors(Color[] colors) {
+		this.colors = colors;
+	}
+	public Color[] getColors() {
+		return this.colors;
+	}
+	public void setPodatki(int[] podatki) {
+		this.podatki = podatki;
+	}
+	public int[] getPodatki() {
+		return this.podatki;
+	}
 	/*
 	 * Metoda, ki bo vrnila nabor med seboj dovolj razliènih barv, ki bodo uporabljene
 	 * na grafu

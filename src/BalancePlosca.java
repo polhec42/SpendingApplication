@@ -69,10 +69,10 @@ public class BalancePlosca extends JPanel implements ActionListener{
     	for(int i = 0; i < list.size(); i++) {
     		if(list.get(i).getType().equals("Income")) {
     			znesekWallet += list.get(i).getAmount();
-        		System.out.printf("Income: %s: %f\n", list.get(i).getDescription(), list.get(i).getAmount());
+        		//System.out.printf("Income: %s: %f\n", list.get(i).getDescription(), list.get(i).getAmount());
     		}else if(list.get(i).getType().equals("Expense")) {
     			znesekWallet -= list.get(i).getAmount();
-        		System.out.printf("Expense: %s: %f\n", list.get(i).getDescription(), list.get(i).getAmount());
+        		//System.out.printf("Expense: %s: %f\n", list.get(i).getDescription(), list.get(i).getAmount());
     		}
     	}
     	nastaviWalletBalance(Double.toString(znesekWallet));
@@ -82,10 +82,10 @@ public class BalancePlosca extends JPanel implements ActionListener{
     	for(int i = 0; i < listBank.size(); i++) {
     		if(listBank.get(i).getType().equals("Income")) {
     			znesekBank += listBank.get(i).getAmount();
-        		System.out.printf("Income: %s: %f\n", listBank.get(i).getDescription(), listBank.get(i).getAmount());
+        		//System.out.printf("Income: %s: %f\n", listBank.get(i).getDescription(), listBank.get(i).getAmount());
     		}else if(listBank.get(i).getType().equals("Expense")) {
     			znesekBank -= listBank.get(i).getAmount();
-        		System.out.printf("Expense: %s: %f\n", listBank.get(i).getDescription(), listBank.get(i).getAmount());
+        		//System.out.printf("Expense: %s: %f\n", listBank.get(i).getDescription(), listBank.get(i).getAmount());
     		}
     	}
     	nastaviBankBalance(Double.toString(znesekBank));

@@ -113,7 +113,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
         this.graphsPlosca.nastaviVelikost(this.width/2, this.height);
         this.graphsPlosca.setLayout(new BorderLayout());
         
-		this.legenda = new Legenda(width/2, 0, width/2, height, Color.BLACK, 5);
+		this.legenda = new Legenda(width/2, 0, width/2, height, color, 5, this.graphsPlosca);
 		
         //
 		/*
