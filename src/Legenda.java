@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Arrays;
 
@@ -58,6 +59,9 @@ public class Legenda extends JPanel{
 		}
 		
 	}
+	public void nastaviVelikost(int w, int h){
+        this.setPreferredSize(new Dimension(w, h));
+    }
 	
 	public int getX() {
 		return x;

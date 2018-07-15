@@ -4,6 +4,7 @@ import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 public class VsebinskaPlosca extends JPanel implements Runnable{
 	
@@ -109,13 +110,16 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
         this.balancePlosca.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         //
         //GraphsPlosca
-        this.graphsPlosca = new GraphsPlosca(0, 0, this.width/2, this.height, color, this.test);
-        this.graphsPlosca.nastaviVelikost(this.width/2, this.height);
-        this.graphsPlosca.setLayout(new BorderLayout());
-        
-		this.legenda = new Legenda(width/2, 0, width/2, height, color, this.graphsPlosca.getPodatki().length, this.graphsPlosca);
-		
-        //
+        this.graphsPlosca = new GraphsPlosca(0, 0, 2*this.width/3, this.height, color, this.test);
+        this.graphsPlosca.nastaviVelikost(2*this.width/3, this.height);
+		this.legenda = new Legenda(2*this.width/3, 10, this.width/3, this.height, color, this.graphsPlosca.getPodatki().length, this.graphsPlosca);
+		/*
+		 * Pri y je 10, ker želim, da je odmaknjeno od roba (mogoèe bo kdaj potem problem s height)
+		 * bo treba takrat dati -10.
+		 * Imam pa malo težavo v Layoutih -> nekoè bo treba malo pokrpat
+		 * */
+        this.legenda.nastaviVelikost(this.width/3, this.height);
+		//
 		/*
 		* Starting learning threads -> I will be using two threads:
 		* - Main thread
@@ -164,12 +168,18 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 			else if(state == States.GRAPHS && (previous == States.BALANCE || previous == States.ADD)) {
 				previous = States.GRAPHS;
 				self.removeAll();
-				self.add(self.graphsPlosca);
-				self.add(self.legenda);
+				self.setLayout(new BorderLayout());
+				self.add(self.graphsPlosca, BorderLayout.CENTER);
+				self.add(self.legenda, BorderLayout.EAST);
 				self.okno.validate();
 				self.okno.repaint();
 			}
-			
+			/*
+			 * Ta pack() ne vem, kdaj naj uporabim, tukaj ga pustim, ker poskrbi
+			 * da vse komponente v Layoutu imajo svoje željene velikosti
+			 * */
+            //self.okno.pack();
+            
 			if(Thread.interrupted()) {
 				return;
 			}

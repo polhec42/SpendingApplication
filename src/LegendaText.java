@@ -33,6 +33,7 @@ public class LegendaText extends JPanel{
 		this.text.setHorizontalAlignment(SwingConstants.CENTER);
 		this.text.setVerticalAlignment(SwingConstants.CENTER);
 		this.add(this.text);
+		
 	}
 	
 	

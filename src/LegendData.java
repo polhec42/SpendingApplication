@@ -57,6 +57,7 @@ public class LegendData extends JPanel{
 		legendColorSquare.setPreferredSize(new Dimension(this.width*3/RAZMERJE, this.height));
 		this.add(legendColorSquare);
 		this.add(legendaText);
+		
 	}
 	
 	

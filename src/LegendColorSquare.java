@@ -29,7 +29,6 @@ public class LegendColorSquare extends JPanel{
 		this.height = height;
 		this.background = background;
 		this.data = data;
-		
 	}
 	
 	private int smaller() {
@@ -39,9 +38,18 @@ public class LegendColorSquare extends JPanel{
 	public void paint(Graphics g) {
 		super.paint(g);
 		g.setColor(this.data);
-		g.fillRect(this.width/2 - smaller()/4, this.height/4, smaller()/2, smaller()/2);
+		//g.fillRect(this.width/4 - smaller()/4, this.height/4 + this.height/8, smaller()/2, smaller()/2);
+		//g.fillRect(this.width/3, this.height/3, smaller()/2, smaller()/2);
+		/*
+		 * To razvij 
+		 */
+		if(height > width) {
+			g.fillRect(this.width/4, this.height/4 + width/8, width/2, width/2);
+		}else {
+			g.fillRect(this.width/4 + height/8, this.height/4, height/2, height/2);
+	
+		}
 	}
-
 
 	public int getX() {
 		return x;

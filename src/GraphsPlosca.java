@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -36,6 +37,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		this.test = test;
 		
 		setBackground(color);				
+		
 		
 		/*
 		 *Podatki in barve se morajo že tukaj inicilializirati, ker èe se šele v paint()
@@ -81,6 +83,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	}
 	
 	public void paint(Graphics g) {
+		super.paint(g);
 		g.setColor(Color.BLACK);
 		
 		double vsota = 0;
