@@ -48,8 +48,8 @@ public class Legenda extends JPanel{
 		double[] podatki = this.graphsPlosca.getPodatki();
 		
 		LegendData[] legendDatas = new LegendData[this.steviloPolj];
-		
-		for(int i = 0; i < this.steviloPolj; i++) {
+
+		for(int i = 0; i < this.steviloPolj; i++) {			
 			/*
 			 * Dodajati moram "0 + i*this.height/stVrstic", ker se drugaèe preslikajo na isto mesto
 			 * saj to niso standardizirane Swing komponente
@@ -57,7 +57,7 @@ public class Legenda extends JPanel{
 			legendDatas[i] = new LegendData(0, 0 + i*this.height/stVrstic, this.width/stStolpcev, this.height/stVrstic, this.color, barve[i], this.graphsPlosca.getKategorije().get(i));
 			this.add(legendDatas[i]);
 		}
-		
+
 	}
 	public void nastaviVelikost(int w, int h){
         this.setPreferredSize(new Dimension(w, h));

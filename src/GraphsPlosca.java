@@ -44,11 +44,11 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		 *bo prepozno, ker paint() se sproži ko se naloži GUI 
 		 * */
 		//this.podatki = new double[]{5, 12, 4, 16, 25};
-		this.podatki = dobiPodatke();
+		dobiPodatke();
 		this.colors = naborBarv(this.podatki.length);
 	}
 	
-	public double[] dobiPodatke() {	
+	public void dobiPodatke() {	
 		
 		ArrayList<String> kategorije = this.test.vrniKategorije();
 		double[] podatki = new double[kategorije.size()];
@@ -78,8 +78,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		}
 
 		this.kategorije = kategorije;
-		
-		return podatki;
+		this.podatki = podatki;
 	}
 	
 	public void paint(Graphics g) {

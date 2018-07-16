@@ -10,20 +10,36 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Test {
-	
+		
+	public  String databaseName = "test.db";
+	 
     //public static String url = "jdbc:sqlite:C:\\Users\\Uporabnik\\Documents\\Dokumenti DELL XPS13\\Eclipse_Workspace\\SpendingApp\\resources\\test.db";
-    public static String url = "jdbc:sqlite:resources/test.db";
-
+    public  String url = "jdbc:sqlite:resources/" + databaseName;
+    
+   
+    
+    public  String getDatabaseName() {
+    	return this.databaseName;
+    }
+    public  void setDatabaseName(String name) {
+    	this.databaseName = name;
+    	this.url = "jdbc:sqlite:resources/" + this.databaseName;
+    }
+    	
     //Create new Database, only for first use
-    public static void createNewDatabase(String fileName) {
+    public  void createNewDatabase(String fileName) {
  
-        String url = "jdbc:sqlite:C:/resources/" + fileName;
+        String url = "jdbc:sqlite:resources/" + fileName;
  
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
                 System.out.println("The driver name is " + meta.getDriverName());
                 System.out.println("A new database has been created.");
+                setDatabaseName(fileName);
+                url = "jdbc:sqlite:resources/" + databaseName;
+                System.out.println(databaseName + " " + url);
+               
             }
  
         } catch (SQLException e) {
@@ -31,11 +47,32 @@ public class Test {
         }
     }
     
-    public static void createNewTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS accounts (\n"
+    public void createNewTableCategories() {
+    	String sql = "CREATE TABLE IF NOT EXISTS categories (\n"
                 + "	id integer PRIMARY KEY,\n"
-                + "	description text NOT NULL"
+                + "	description text NOT NULL \n"
                 + ");";
+
+    	try (Connection conn = DriverManager.getConnection(url);
+    			Statement stmt = conn.createStatement()) {
+    				// create a new table
+    			stmt.execute(sql);
+    	} catch (SQLException e) {
+    			System.out.println(e.getMessage());
+    	}
+    }
+    
+    public void createNewTableTransactions() {
+    	String sql = "CREATE TABLE IF NOT EXISTS transactions (\n"
+    			                + "	id integer PRIMARY KEY,\n"
+    			                + "	description text NOT NULL,\n"
+    			                + "	date text NOT NULL,\n"
+    			                + " account text NOT NULL,\n"
+    			                + " amount real NOT NULL,\n"
+    			                + " currency text NOT NULL, \n"
+    			                + " category text NOT NULL, \n"
+    			                + " type text NOT NULL \n"
+    			                + ");";
         
         try (Connection conn = DriverManager.getConnection(url);
                 Statement stmt = conn.createStatement()) {
@@ -46,7 +83,7 @@ public class Test {
         }
     }
     
-    public static void createTableCategory() {
+    public void createTableCategory() {
     	String sql = "CREATE TABLE IF NOT EXISTS categories (\n"
                 + "	id integer PRIMARY KEY,\n"
                 + "	description text NOT NULL \n"
@@ -203,7 +240,8 @@ public class Test {
     
     //Return every transactions from given account
     public ArrayList<Transakcija> vrniTransakcijeIzRacuna(String account){
-        String sql = "SELECT id, description, date, account, amount, currency, category, type FROM transactions WHERE account = ?";
+    	System.out.println("A " + url);
+    	String sql = "SELECT id, description, date, account, amount, currency, category, type FROM transactions WHERE account = ?";
         ArrayList<Transakcija> transakcije = new ArrayList<>();
         try (Connection conn = this.connect();
         	PreparedStatement pstmt  = conn.prepareStatement(sql)){

@@ -64,6 +64,8 @@ public class MenijskaPlosca extends JPanel implements ActionListener{
 			this.vsebinskaPlosca.setState(States.ADD);
 		}else if(e.getSource() == this.graphs) {
 			this.vsebinskaPlosca.setState(States.GRAPHS);
+		}else if(e.getSource() == this.settings) {
+			this.vsebinskaPlosca.setState(States.SETTINGS);
 		}
 	}
 	

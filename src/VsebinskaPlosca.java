@@ -32,6 +32,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 	private SeznamTransakcij seznamTransakcij;
 	private GraphsPlosca graphsPlosca;
 	private Legenda legenda;
+	private SettingsPlosca settingsPlosca;
 	
 	private Okno okno;
 	private Test test;
@@ -120,7 +121,13 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		 * */
         this.legenda.nastaviVelikost(this.width/3, this.height);
 		//
-		/*
+        /*
+         * Settings
+         * */
+        this.settingsPlosca = new SettingsPlosca(0, 0, this.width, this.height, color, this.test);
+		
+        
+        /*
 		* Starting learning threads -> I will be using two threads:
 		* - Main thread
 		* - VsebinskaPlosca thread
@@ -144,11 +151,12 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		running = true;
 		while(running) {
 			//Balance plošèa
-			if(state == States.BALANCE && (previous == null || previous == States.ADD || previous == States.GRAPHS)) {
+			if(state == States.BALANCE && previous != States.BALANCE) {
 				previous = States.BALANCE;
 				self.removeAll(); //odstranimo prejsnje komponente
                 self.setLayout(new GridLayout(1,2));
                 self.add(self.balancePlosca);
+                self.seznamTransakcij.posodobiTransakcije(); //posodobim transakcije èe ustvarim novo .db
                 self.add(self.seznamTransakcij);
                 //da se ob morebitni dodani transakciji posodobi stanje
                 self.balancePlosca.izpisIzBaze(); 
@@ -156,7 +164,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
                 self.okno.repaint();
 			}
 			//Add plošèa
-			else if(state == States.ADD && (previous == States.BALANCE || previous == States.ADD || previous == States.GRAPHS)){
+			else if(state == States.ADD && previous != States.ADD){
 				previous = States.ADD;
                 self.removeAll(); //odstranimo prejsnje komponente 
 				self.add(self.addPlosca);
@@ -165,12 +173,22 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 				self.okno.validate();
 				self.okno.repaint();
 			}
-			else if(state == States.GRAPHS && (previous == States.BALANCE || previous == States.ADD)) {
+			else if(state == States.GRAPHS && previous != States.GRAPHS) {
 				previous = States.GRAPHS;
 				self.removeAll();
+				self.legenda.removeAll(); //Ob novi .db drugaèe ostane legenda gor, ker ne nekaj novega èez napiše
 				self.setLayout(new BorderLayout());
+				self.graphsPlosca.dobiPodatke();
+				self.legenda.setSteviloPolj(self.graphsPlosca.getPodatki().length); //ob novi .db drugaèe ostanejo stari podatki (ArrayIndexOutOfBorder)
+				self.legenda.nastavi();
 				self.add(self.graphsPlosca, BorderLayout.CENTER);
 				self.add(self.legenda, BorderLayout.EAST);
+				self.okno.validate();
+				self.okno.repaint();
+			}else if(state == States.SETTINGS && previous != States.SETTINGS) {
+				previous = States.SETTINGS;
+				self.removeAll();
+				self.add(self.settingsPlosca);
 				self.okno.validate();
 				self.okno.repaint();
 			}
