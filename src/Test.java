@@ -240,7 +240,6 @@ public class Test {
     
     //Return every transactions from given account
     public ArrayList<Transakcija> vrniTransakcijeIzRacuna(String account){
-    	System.out.println("A " + url);
     	String sql = "SELECT id, description, date, account, amount, currency, category, type FROM transactions WHERE account = ?";
         ArrayList<Transakcija> transakcije = new ArrayList<>();
         try (Connection conn = this.connect();
