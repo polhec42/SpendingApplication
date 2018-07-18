@@ -22,6 +22,8 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener, A
 	private int width;
 	private int height;
 	
+	private ArrayList<String> kategorije;
+	
 	private JButton button;
 	private JList<String> area;
 	private JLabel label;
@@ -54,12 +56,12 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener, A
 		//test.newCategory("Gift");
 		//test.newCategory("Technology");
 		
-		ArrayList<String> kategorije = test.vrniKategorije();
-		System.out.println(kategorije);
+		this.kategorije = test.vrniKategorije();
+		System.out.println(this.kategorije);
 		
-		String[] data = new String[kategorije.size()];
-		for(int i = 0; i < kategorije.size(); i++) {
-			data[i] = kategorije.get(i);
+		String[] data = new String[this.kategorije.size()];
+		for(int i = 0; i < this.kategorije.size(); i++) {
+			data[i] = this.kategorije.get(i);
 		}
 		
 		this.area = new JList<String>(data);
@@ -96,6 +98,17 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener, A
 			this.addPlosca.vrniCategoriesList().addItem(this.novaKategorija.getText());
 			this.addPlosca.vrniCategoriesList().setSelectedItem(this.novaKategorija.getText());
 			
+			boolean zeObstaja = false;
+			for(int i = 0; i < this.kategorije.size(); i++) {
+				if(this.kategorije.get(i).equals(this.novaKategorija.getText())) {
+					zeObstaja = true;
+					break;
+				}
+			}
+			if(!zeObstaja) {
+				this.test.newCategory(this.novaKategorija.getText());
+			}
+
 			//dodaj funkcionalnosti za dodajanje kategorije v bazo
 		}
 	}
