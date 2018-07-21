@@ -188,6 +188,8 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 			}else if(state == States.SETTINGS && previous != States.SETTINGS) {
 				previous = States.SETTINGS;
 				self.removeAll();
+				self.settingsPlosca.getNovaBaza().posodobiDatabases(); 
+				//posodobimo databases ob novem prihodu na settings meni
 				self.add(self.settingsPlosca);
 				self.okno.validate();
 				self.okno.repaint();

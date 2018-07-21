@@ -30,6 +30,8 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 	private Color color;
 	
 	private Test test;
+	private NovaBaza  novaBaza;
+	private PomoznoOkno pomoznoOkno;
 	
 	private JPanel databaseSettings;
 	private JPanel appearanceSettings;
@@ -51,6 +53,10 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 		this.test = test;
 		this.color = color;
 		
+		//Tuki sta zaradi inicializacije in NullPointerja
+		this.pomoznoOkno = new PomoznoOkno("New database");
+		this.novaBaza = new NovaBaza(0, 0, this.pomoznoOkno.getWidth(), this.pomoznoOkno.getHeight(), this.color, this.test, this);
+
 		setBackground(color);
 		
 		this.databaseSettings = new JPanel();
@@ -123,6 +129,9 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 	public void setnovaDatabase(JButton novaDatabase) {
 		this.novaDatabase = novaDatabase;
 	}
+	public NovaBaza getNovaBaza() {
+		return novaBaza;
+	}
 
 	
 	@Override
@@ -132,8 +141,6 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 			/*
 			 * Zaèetek postopka kreiranja nove podatkovne baze
 			 * */
-			PomoznoOkno pomoznoOkno = new PomoznoOkno("New database");
-			NovaBaza novaBaza = new NovaBaza(0, 0, pomoznoOkno.getWidth(), pomoznoOkno.getHeight(), this.color, this.test, this);
 			pomoznoOkno.add(novaBaza);
 			pomoznoOkno.pack();
 			pomoznoOkno.setVisible(true);
