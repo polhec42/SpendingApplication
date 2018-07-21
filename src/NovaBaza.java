@@ -74,6 +74,12 @@ public class NovaBaza extends JPanel implements ActionListener{
 			
 			String novoIme = this.vnosnoPolje.getText().concat(".db");
 			
+			/*
+			 * V datoteki config spremenimo zapis za ime baze
+			 * */
+			Init init = new Init();
+			init.modify("database", novoIme);
+			
 			this.test.createNewDatabase(novoIme);
 			this.settingsPlosca.getPodatkiODatabase().setText(novoIme.toUpperCase());
 			this.test.setDatabaseName(novoIme);

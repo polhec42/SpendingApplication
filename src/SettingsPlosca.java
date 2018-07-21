@@ -33,10 +33,12 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 	
 	private JPanel databaseSettings;
 	private JPanel appearanceSettings;
+	private JPanel aboutPanel;
 	private JTabbedPane tabbedPane;
 	
 	private String database = "Database Settings";
 	private String appearance = "Appearance Settings";
+	private String about = "About";
 	
 	private JLabel podatkiODatabase;
 	private JButton novaDatabase;
@@ -53,6 +55,7 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 		
 		this.databaseSettings = new JPanel();
 		this.appearanceSettings = new JPanel();
+		this.aboutPanel = new JPanel();
 		
 		this.setLayout(new BorderLayout());
 		/*
@@ -61,7 +64,7 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 		this.tabbedPane = new JTabbedPane();
 		this.tabbedPane.addTab(database, this.databaseSettings);
 		this.tabbedPane.addTab(appearance, this.appearanceSettings);
-	
+		this.tabbedPane.addTab(about, aboutPanel);
 		//this.mainPanel.add(this.tabbedPane, BorderLayout.CENTER);
 		this.add(this.tabbedPane);
 		this.setBorder(new LineBorder(Color.GREEN));

@@ -12,8 +12,11 @@ public class Main{
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		Init init = new Init();
 		Okno okno = new Okno("Spending app");
 		Test test = new Test();
+		test.setDatabaseName(init.read("database"));
 		VsebinskaPlosca vsebina = new VsebinskaPlosca(
 				okno.getX(), 
 				okno.getY(),
@@ -53,7 +56,6 @@ public class Main{
 		okno.add(vsebina, BorderLayout.CENTER);
 		okno.pack();
 		okno.setVisible(true);
-		
 		
 		
 		
