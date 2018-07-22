@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.awt.MultipleGradientPaint.ColorSpaceType;
+import java.lang.reflect.Field;
+
 import javax.swing.*;
 import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.border.Border;
@@ -19,9 +22,11 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 	private int y;
 	private int width;
 	private int height;
-	
+	private Color color;
 	private JButton balance;
 	
+	private Init init; 
+
 	States state;
 	States previous;
 	
@@ -44,11 +49,14 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		this.height = height;
 		this.okno = okno;
 		this.test = test;
+		this.color = color;
 		
 		setBackground(color);
 				
 		this.state = States.BALANCE;
 		
+		this.init = new Init();
+
 		
 		/*
 		 * Test za Layoute
@@ -124,8 +132,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
         /*
          * Settings
          * */
-        this.settingsPlosca = new SettingsPlosca(0, 0, this.width, this.height, color, this.test);
-		
+        this.settingsPlosca = new SettingsPlosca(0, 0, this.width, this.height, color, this.test, this);
         
         /*
 		* Starting learning threads -> I will be using two threads:
@@ -151,6 +158,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		running = true;
 		while(running) {
 			//Balance plošèa
+			
 			if(state == States.BALANCE && previous != States.BALANCE) {
 				previous = States.BALANCE;
 				self.removeAll(); //odstranimo prejsnje komponente
@@ -199,7 +207,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 			 * da vse komponente v Layoutu imajo svoje željene velikosti
 			 * */
             //self.okno.pack();
-            
+
 			if(Thread.interrupted()) {
 				return;
 			}

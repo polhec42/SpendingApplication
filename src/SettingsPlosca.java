@@ -32,6 +32,7 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 	private Test test;
 	private NovaBaza  novaBaza;
 	private PomoznoOkno pomoznoOkno;
+	private VsebinskaPlosca vsebinskaPlosca;
 	
 	private JPanel databaseSettings;
 	private JPanel appearanceSettings;
@@ -45,14 +46,16 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 	private JLabel podatkiODatabase;
 	private JButton novaDatabase;
 
-	public SettingsPlosca(int x, int y, int width, int height, Color color, Test test) {
+	private JButton newColor;
+	
+	public SettingsPlosca(int x, int y, int width, int height, Color color, Test test, VsebinskaPlosca vsebinskaPlosca) {
 		this.x = x;
 		this.y = y; 
 		this.width = width;
 		this.height = height;
 		this.test = test;
 		this.color = color;
-		
+		this.vsebinskaPlosca = vsebinskaPlosca;
 		//Tuki sta zaradi inicializacije in NullPointerja
 		this.pomoznoOkno = new PomoznoOkno("New database");
 		this.novaBaza = new NovaBaza(0, 0, this.pomoznoOkno.getWidth(), this.pomoznoOkno.getHeight(), this.color, this.test, this);
@@ -70,12 +73,14 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 		this.tabbedPane = new JTabbedPane();
 		this.tabbedPane.addTab(database, this.databaseSettings);
 		this.tabbedPane.addTab(appearance, this.appearanceSettings);
-		this.tabbedPane.addTab(about, aboutPanel);
+		this.tabbedPane.addTab(about, this.aboutPanel);
 		//this.mainPanel.add(this.tabbedPane, BorderLayout.CENTER);
 		this.add(this.tabbedPane);
 		this.setBorder(new LineBorder(Color.GREEN));
 		
 		onDatabaseSettings();
+		onAboutSettings();
+		onAppearanceSettings();
 	}
 	
 	public void onDatabaseSettings() {
@@ -90,6 +95,30 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 		
 		for(int i = 0; i < 10; i++) {
 			this.databaseSettings.add(new JLabel());
+		}
+	}
+	public void onAboutSettings() {
+		JLabel ime = new JLabel("Spending Application", SwingConstants.CENTER);
+		JLabel avtor = new JLabel("Author: Žan Magerl", SwingConstants.CENTER);
+		Init init = new Init();
+		JLabel verzija = new JLabel(init.read("version"), SwingConstants.CENTER);
+		
+		this.aboutPanel.setLayout(new GridLayout(3, 1));
+		this.aboutPanel.add(ime);
+		this.aboutPanel.add(avtor);
+		this.aboutPanel.add(verzija);
+	}
+	public void onAppearanceSettings() {
+		JLabel background = new JLabel("Background color: ");
+		this.newColor = new JButton("New color");
+		nastaviGumb(newColor, this.color);
+		
+		
+		this.appearanceSettings.setLayout(new GridLayout(5, 2));
+		this.appearanceSettings.add(background);
+		this.appearanceSettings.add(this.newColor);
+		for(int i = 0; i < 8; i++) {
+			this.appearanceSettings.add(new JLabel());
 		}
 	}
 	
@@ -144,6 +173,14 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 			pomoznoOkno.add(novaBaza);
 			pomoznoOkno.pack();
 			pomoznoOkno.setVisible(true);
+		}
+		if(e.getSource() == this.newColor) {
+			ColorPicker colorPicker = new ColorPicker(0, 0, width, height, color, this.vsebinskaPlosca);
+			colorPicker.setPreferredSize(new Dimension(200, 300));
+			PomoznoOkno pomoznoOkno2 = new PomoznoOkno("Color Picker");
+			pomoznoOkno2.add(colorPicker);
+			pomoznoOkno2.pack();
+			pomoznoOkno2.setVisible(true);
 		}
 	}
 	

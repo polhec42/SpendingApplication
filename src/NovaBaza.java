@@ -74,7 +74,6 @@ public class NovaBaza extends JPanel implements ActionListener, ListSelectionLis
 			this.listModel.addElement(databases.get(i));
 		}
 		this.area = new JList<String>(this.listModel);
-		this.area.setPreferredSize(new Dimension(this.width, 60));
 		this.vertical = new JScrollPane(area);
 		vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		this.area.addListSelectionListener(this);
@@ -95,11 +94,12 @@ public class NovaBaza extends JPanel implements ActionListener, ListSelectionLis
 		//To je quick fix -> enkrat bolj natanèno preglej
 		this.area.removeListSelectionListener(this);
 		this.listModel.removeAllElements();
-		this.area.addListSelectionListener(this);
 		
 		for(int i = 0; i < this.databases.size(); i++) {
 			this.listModel.addElement(this.databases.get(i));
 		}
+		this.area.addListSelectionListener(this);
+
 	}
 	
 	public void nastaviVelikost(int w, int h){

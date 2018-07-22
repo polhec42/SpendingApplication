@@ -21,7 +21,7 @@ public class Init {
 			String line;
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(this.file));
 			while((line = bufferedReader.readLine()) != null && !line.contains(atribute)) {
-				System.out.println(line);
+
 			}
 			bufferedReader.close();
 			String[] array = line.split("=");

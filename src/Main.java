@@ -16,6 +16,10 @@ public class Main{
 		Init init = new Init();
 		Okno okno = new Okno("Spending app");
 		Test test = new Test();
+		
+		//(Color)Class.forName("java.awt.color").getField(init.read("background-color")).get(obj),
+
+		
 		test.setDatabaseName(init.read("database"));
 		VsebinskaPlosca vsebina = new VsebinskaPlosca(
 				okno.getX(), 
