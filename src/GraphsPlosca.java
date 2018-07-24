@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -21,7 +22,8 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	
 	private JLabel label;
 	private Test test;
-	private Legenda legenda;
+	private VsebinskaPlosca vsebinskaPlosca;
+	
 	
 	private final int POLMER = 300;
 	
@@ -29,12 +31,15 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	private double[] podatki;
 	private ArrayList<String> kategorije;
 	
-	public GraphsPlosca(int x, int y, int width, int height, Color color, Test test) {
+	private JComboBox comboBox;
+	
+	public GraphsPlosca(int x, int y, int width, int height, Color color, Test test, VsebinskaPlosca vsebinskaPlosca) {
 		this.x = x;
 		this.y = y; 
 		this.width = width;
 		this.height = height;
 		this.test = test;
+		this.vsebinskaPlosca = vsebinskaPlosca;
 		
 		setBackground(color);				
 		
@@ -46,13 +51,44 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		//this.podatki = new double[]{5, 12, 4, 16, 25};
 		dobiPodatke();
 		
+		String[] data = {"Categories", "Income/Expense"};
+		this.comboBox = new JComboBox(data);
+		this.comboBox.addActionListener(this);
+		this.add(this.comboBox);
+	}
+	
+	public void dobiIncomeExpensePodatke() {
+		ArrayList<Transakcija> expense = this.test.vrniTipTransakcij("Expense");
+		ArrayList<Transakcija> income = this.test.vrniTipTransakcij("Income");
+		
+		double[] podatki = new double[2];
+		
+		for(Transakcija transakcija : expense) {
+			podatki[0] += transakcija.getAmount();
+		}
+		for(Transakcija transakcija : income) {
+			podatki[1] += transakcija.getAmount();
+		}
+		
+		this.kategorije.clear();
+		this.kategorije.add("Expense");
+		this.kategorije.add("Income");
+		this.colors = naborBarv(2);
+		this.podatki = podatki;
 	}
 	
 	public void dobiPodatke() {	
 		
-		
-		
 		ArrayList<String> kategorije = this.test.vrniKategorije();
+		/*
+		 * Zbrišemo zaèasno kategorijo "Income" iz 
+		 * obravnave, saj predstavlja Income.
+		 * */
+		for(int i = 0; i < kategorije.size(); i++) {
+			if(kategorije.get(i).equals("Income")) {
+				kategorije.remove(i);
+			}
+		}
 		double[] podatki = new double[kategorije.size()];
 		
 		for(int i = 0; i < kategorije.size(); i++) {
@@ -134,9 +170,8 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	public JLabel vrniLabel() {
 		return this.label;
 	}
-	public Legenda vrniLegenda() {
-		return this.legenda;
-	}
+
+
 	public void setColors(Color[] colors) {
 		this.colors = colors;
 	}
@@ -185,7 +220,24 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if(e.getSource() == this.comboBox) {
+			if(this.comboBox.getSelectedItem() == "Income/Expense") {
+				dobiIncomeExpensePodatke();
+				this.vsebinskaPlosca.getLegenda().removeAll();
+				this.vsebinskaPlosca.getLegenda().setSteviloPolj(this.podatki.length); //ob novi .db drugaèe ostanejo stari podatki (ArrayIndexOutOfBorder)
+				this.vsebinskaPlosca.getLegenda().nastavi();
+				this.revalidate();
+				this.repaint();
+				
+			}else if(this.comboBox.getSelectedItem() == "Categories") {
+				dobiPodatke();
+				this.vsebinskaPlosca.getLegenda().removeAll();
+				this.vsebinskaPlosca.getLegenda().setSteviloPolj(this.podatki.length); //ob novi .db drugaèe ostanejo stari podatki (ArrayIndexOutOfBorder)
+				this.vsebinskaPlosca.getLegenda().nastavi();
+				this.revalidate();
+				this.repaint();
+			}
+		}
 	}
 	
 }

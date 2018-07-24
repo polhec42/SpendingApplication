@@ -119,7 +119,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
         this.balancePlosca.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         //
         //GraphsPlosca
-        this.graphsPlosca = new GraphsPlosca(0, 0, 2*this.width/3, this.height, color, this.test);
+        this.graphsPlosca = new GraphsPlosca(0, 0, 2*this.width/3, this.height, color, this.test, this);
         this.graphsPlosca.nastaviVelikost(2*this.width/3, this.height);
 		this.legenda = new Legenda(2*this.width/3, 10, this.width/3, this.height, color, this.graphsPlosca.getPodatki().length, this.graphsPlosca);
 		/*
@@ -238,6 +238,42 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 	}
 	public JButton vrniBalance() {
 		return this.balance;
+	}
+	public BalancePlosca getBalancePlosca() {
+		return balancePlosca;
+	}
+	public void setBalancePlosca(BalancePlosca balancePlosca) {
+		this.balancePlosca = balancePlosca;
+	}
+	public AddPlosca getAddPlosca() {
+		return addPlosca;
+	}
+	public void setAddPlosca(AddPlosca addPlosca) {
+		this.addPlosca = addPlosca;
+	}
+	public SeznamTransakcij getSeznamTransakcij() {
+		return seznamTransakcij;
+	}
+	public void setSeznamTransakcij(SeznamTransakcij seznamTransakcij) {
+		this.seznamTransakcij = seznamTransakcij;
+	}
+	public GraphsPlosca getGraphsPlosca() {
+		return graphsPlosca;
+	}
+	public void setGraphsPlosca(GraphsPlosca graphsPlosca) {
+		this.graphsPlosca = graphsPlosca;
+	}
+	public Legenda getLegenda() {
+		return legenda;
+	}
+	public void setLegenda(Legenda legenda) {
+		this.legenda = legenda;
+	}
+	public SettingsPlosca getSettingsPlosca() {
+		return settingsPlosca;
+	}
+	public void setSettingsPlosca(SettingsPlosca settingsPlosca) {
+		this.settingsPlosca = settingsPlosca;
 	}
 
 }

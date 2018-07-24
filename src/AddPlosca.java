@@ -57,7 +57,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
         this.incomeButton = new JButton("Income");
         nastaviGumb(this.incomeButton, color);    
         
-        this.categoryButton = new JButton("Category");
+        this.categoryButton = new JButton("Other Category");
         nastaviGumb(this.categoryButton, color);
         
         this.addButton = new JButton("Add");
@@ -76,8 +76,8 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
         this.accounts.setSelectedIndex(0);
         this.accounts.addActionListener(this);
         
-        this.amountField = new JTextField("Enter amount", 20);
-        this.currencyField = new JTextField("Enter currency", 10);
+        this.amountField = new JTextField("Enter amount: 1.20", 20);
+        this.currencyField = new JTextField("Enter currency (Euro)", 10);
         this.dateField = new JTextField("Enter date: DD.MM.LLLL", 20);
         
         this.descriptionArea = new JTextArea("Enter description of your transaction");

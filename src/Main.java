@@ -26,7 +26,7 @@ public class Main{
 				okno.getY(),
 				(RAZMERJE-3)*okno.getWidth()/RAZMERJE, 
 				(RAZMERJE-3)*okno.getHeight()/RAZMERJE,
-				Color.LIGHT_GRAY,
+				new Color(Integer.parseInt(init.read("background-color"))),
 				okno, 
 				test
 		);

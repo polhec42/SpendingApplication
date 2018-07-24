@@ -44,9 +44,9 @@ public class LegendColorSquare extends JPanel{
 		 * To razvij 
 		 */
 		if(height > width) {
-			g.fillRect(this.width/4, this.height/4 + width/8, width/2, width/2);
+			g.fillRect(this.width/4, (this.height - this.width/2) / 2, width/2, width/2);
 		}else {
-			g.fillRect(this.width/4 + height/8, this.height/4, height/2, height/2);
+			g.fillRect((this.width - this.height/2) / 2, this.height/4, height/2, height/2);
 	
 		}
 	}
