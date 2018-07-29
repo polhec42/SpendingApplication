@@ -4,7 +4,13 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -26,6 +32,8 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	
 	
 	private final int POLMER = 300;
+	
+	private boolean histogram = false;
 	
 	private Color[] colors;
 	private double[] podatki;
@@ -51,7 +59,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		//this.podatki = new double[]{5, 12, 4, 16, 25};
 		dobiPodatke();
 		
-		String[] data = {"Categories", "Income/Expense"};
+		String[] data = {"Categories", "Income/Expense", "Expense per Month"};
 		this.comboBox = new JComboBox(data);
 		this.comboBox.addActionListener(this);
 		this.add(this.comboBox);
@@ -121,28 +129,118 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		this.colors = naborBarv(this.podatki.length);
 	}
 	
+	public String[] urediMesece() {
+		String[] meseci = {"Januar", "Februar", "March",
+				"April", "May", "June", "July", "August",
+				"September", "October", "November", "December"};
+		LocalDate localDate = LocalDate.now();
+		int trenuntiMesec = localDate.getMonthValue() - 1;
+		
+		String[] praviMeseci = new String[12];
+		
+		for(int i = 0; i < 12; i++) {
+			
+			praviMeseci[(12-(trenuntiMesec+1)+i) % 12] = meseci[i];
+		}
+		meseci = praviMeseci;
+		return meseci;
+	}
+	
+	public double[] porabaPoMesecih() {
+		
+		LocalDate localDate = LocalDate.now();
+		String datum = localDate.toString();
+		
+		int trenutniMesec = Integer.parseInt(datum.substring(5, 7));
+		int trenutnoLeto = Integer.parseInt(datum.substring(0, 4));
+				
+		ArrayList<Transakcija> transakcije= this.test.vrniTipTransakcij("Expense");
+		double[] amountPerMonth = new double[12];
+		/*
+		 * Izbira tistih transakcij, ki so prave za obravnavo
+		 * -> torej tiste ki so se zgodile v tem obdobju
+		 * */
+		for(int i = 0; i < transakcije.size(); i++) {
+			int mesec = Integer.parseInt(transakcije.get(i).getDate().substring(3,5));
+			int leto = Integer.parseInt(transakcije.get(i).getDate().substring(6,10));
+			
+			if(leto == trenutnoLeto || (leto == trenutnoLeto - 1 && mesec > trenutniMesec)) {
+				//it is okay
+				amountPerMonth[(12-(trenutniMesec+1)+mesec) % 12] += transakcije.get(i).getAmount();
+			}else {
+				transakcije.remove(i);
+			}
+		}
+		
+		return amountPerMonth;
+	}
+	
+	
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.setColor(Color.BLACK);
 		
-		double vsota = 0;
+		if(histogram == true) {
+			String[] oznake = urediMesece();
+			double[] vrednosti = porabaPoMesecih();
+			
+			int odmikOdRoba = 15;
+			
+			g.drawLine(odmikOdRoba, this.height - odmikOdRoba, this.width - odmikOdRoba, this.height - odmikOdRoba);
+			g.drawLine(odmikOdRoba, this.height - odmikOdRoba, odmikOdRoba, 3*odmikOdRoba);
+			
+			int enotaDolzine = (this.width - odmikOdRoba) / 12;
+			
+			for(int i = 0; i < 12; i++) {
+				g.drawLine(odmikOdRoba + i*enotaDolzine, this.height - odmikOdRoba, odmikOdRoba + i*enotaDolzine, this.height - 30);
+				int widthOfText = g.getFontMetrics().stringWidth(oznake[i].substring(0, 3));
+				g.drawString(oznake[i].substring(0, 3), ((odmikOdRoba + i*enotaDolzine) + enotaDolzine / 2) - widthOfText/2, this.height - odmikOdRoba/5);
+			}
+			
+			int visinaGrafa = this.height - 2*odmikOdRoba;
+			
+			double max = 0;
+			//Izlušèimo max za mero in 
+			for(int i = 0; i < 12; i++) {
+				if(vrednosti[i] > max) {
+					max = vrednosti[i];
+				}
+			}
+			
+			double[] delezi = new double[12];
+			//Izraèunamo deleže za izris grafa in ga izrišemo
+			
+			for(int i = 0; i < 12; i++) {
+				delezi[i] = vrednosti[i]/max;
+				g.setColor(Color.BLACK);
+				g.drawRect(odmikOdRoba + i*enotaDolzine, this.height - odmikOdRoba - (int)(delezi[i]*visinaGrafa), enotaDolzine, (int)(delezi[i]*visinaGrafa));
+				g.setColor(Color.ORANGE);
+				g.fillRect(odmikOdRoba + i*enotaDolzine, this.height - odmikOdRoba - (int)(delezi[i]*visinaGrafa), enotaDolzine, (int)(delezi[i]*visinaGrafa));
+			
+			}
+
+		}else {
+					
+		 double vsota = 0;
 		
-		for(double x : podatki) {
-			vsota+=x;
+		 for(double x : podatki) {
+		 	 vsota+=x;
+		 }
+		 double mera = 360./vsota;
+		 int zacetniKot = 0;
+		
+		 for(int i = 0; i < podatki.length; i++) {
+			 int kot = (int)Math.round(podatki[i]*mera);
+			 g.setColor(colors[i]);
+			 g.fillArc(this.x + this.width/2 - POLMER/2, this.y + this.height/2 - POLMER/2, POLMER, POLMER, zacetniKot, kot);
+			 zacetniKot += kot;
+		 }
+		 /*
+		  * fillArc(...., zacetniKot, kot) -> polni od zacetnegaKota za kot =>
+		  * torej ne smemo notri dati konènega kota  
+		  **/
 		}
-		double mera = 360./vsota;
-		int zacetniKot = 0;
 		
-		for(int i = 0; i < podatki.length; i++) {
-			int kot = (int)Math.round(podatki[i]*mera);
-			g.setColor(colors[i]);
-			g.fillArc(this.x + this.width/2 - POLMER/2, this.y + this.height/2 - POLMER/2, POLMER, POLMER, zacetniKot, kot);
-			zacetniKot += kot;
-		}
-		/*
-		 * fillArc(...., zacetniKot, kot) -> polni od zacetnegaKota za kot =>
-		 * torej ne smemo notri dati konènega kota  
-		 * */
+		
 	}
 	
 	public void nastaviGumb(JButton button, Color color) {
@@ -223,17 +321,27 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		if(e.getSource() == this.comboBox) {
 			if(this.comboBox.getSelectedItem() == "Income/Expense") {
 				dobiIncomeExpensePodatke();
+				histogram = false;
 				this.vsebinskaPlosca.getLegenda().removeAll();
 				this.vsebinskaPlosca.getLegenda().setSteviloPolj(this.podatki.length); //ob novi .db drugaèe ostanejo stari podatki (ArrayIndexOutOfBorder)
 				this.vsebinskaPlosca.getLegenda().nastavi();
+				this.vsebinskaPlosca.getLegenda().setVisible(true);
 				this.revalidate();
 				this.repaint();
 				
 			}else if(this.comboBox.getSelectedItem() == "Categories") {
 				dobiPodatke();
+				histogram = false;
 				this.vsebinskaPlosca.getLegenda().removeAll();
 				this.vsebinskaPlosca.getLegenda().setSteviloPolj(this.podatki.length); //ob novi .db drugaèe ostanejo stari podatki (ArrayIndexOutOfBorder)
 				this.vsebinskaPlosca.getLegenda().nastavi();
+				this.vsebinskaPlosca.getLegenda().setVisible(true);
+				this.revalidate();
+				this.repaint();
+			}else if(this.comboBox.getSelectedItem() == "Expense per Month") {
+				histogram = true;
+				this.vsebinskaPlosca.getLegenda().removeAll();
+				this.vsebinskaPlosca.getLegenda().setVisible(false);
 				this.revalidate();
 				this.repaint();
 			}
