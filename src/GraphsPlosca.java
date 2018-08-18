@@ -196,7 +196,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 				g.drawString(oznake[i].substring(0, 3), ((odmikOdRoba + i*enotaDolzine) + enotaDolzine / 2) - widthOfText/2, this.height - odmikOdRoba/5);
 			}
 			
-			int visinaGrafa = this.height - 2*odmikOdRoba;
+			int visinaGrafa = this.height - 4*odmikOdRoba;
 			
 			double max = 0;
 			//Izlušèimo max za mero in 
@@ -321,7 +321,12 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		if(e.getSource() == this.comboBox) {
 			if(this.comboBox.getSelectedItem() == "Income/Expense") {
 				dobiIncomeExpensePodatke();
-				histogram = false;
+				
+				if(this.histogram == true) {
+					this.histogram = false;
+					this.width -= this.vsebinskaPlosca.getLegenda().getWidth();
+				}
+				
 				this.vsebinskaPlosca.getLegenda().removeAll();
 				this.vsebinskaPlosca.getLegenda().setSteviloPolj(this.podatki.length); //ob novi .db drugaèe ostanejo stari podatki (ArrayIndexOutOfBorder)
 				this.vsebinskaPlosca.getLegenda().nastavi();
@@ -331,7 +336,10 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 				
 			}else if(this.comboBox.getSelectedItem() == "Categories") {
 				dobiPodatke();
-				histogram = false;
+				if(this.histogram == true) {
+					this.histogram = false;
+					this.width -= this.vsebinskaPlosca.getLegenda().getWidth();
+				}
 				this.vsebinskaPlosca.getLegenda().removeAll();
 				this.vsebinskaPlosca.getLegenda().setSteviloPolj(this.podatki.length); //ob novi .db drugaèe ostanejo stari podatki (ArrayIndexOutOfBorder)
 				this.vsebinskaPlosca.getLegenda().nastavi();
@@ -339,7 +347,11 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 				this.revalidate();
 				this.repaint();
 			}else if(this.comboBox.getSelectedItem() == "Expense per Month") {
-				histogram = true;
+				
+				if(this.histogram == false) {
+					this.width += this.vsebinskaPlosca.getLegenda().getWidth();
+					this.histogram = true;
+				}
 				this.vsebinskaPlosca.getLegenda().removeAll();
 				this.vsebinskaPlosca.getLegenda().setVisible(false);
 				this.revalidate();

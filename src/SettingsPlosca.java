@@ -76,7 +76,6 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 		this.tabbedPane.addTab(about, this.aboutPanel);
 		//this.mainPanel.add(this.tabbedPane, BorderLayout.CENTER);
 		this.add(this.tabbedPane);
-		this.setBorder(new LineBorder(Color.GREEN));
 		
 		onDatabaseSettings();
 		onAboutSettings();

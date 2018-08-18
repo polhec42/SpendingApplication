@@ -72,10 +72,12 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		this.seznamTransakcij.setLayout(new BorderLayout());
 		this.seznamTransakcij.add(this.seznamTransakcij.vrniIzberiButton(), BorderLayout.SOUTH);
 
-		this.seznamTransakcij.setBorder(BorderFactory.createLineBorder(Color.RED));
+		/*For debugging
+		 * 
+		 * this.seznamTransakcij.setBorder(BorderFactory.createLineBorder(Color.RED));
 		Border border = seznamTransakcij.getBorder();
 	    Border margin = new EmptyBorder(10,10,10,10);
-	    seznamTransakcij.setBorder(new CompoundBorder(border, margin));
+	    seznamTransakcij.setBorder(new CompoundBorder(border, margin));*/
 		this.seznamTransakcij.add(this.seznamTransakcij.vrniScroll(), BorderLayout.CENTER);
 		this.seznamTransakcij.add(this.seznamTransakcij.vrniLabel(), BorderLayout.NORTH);
 		
@@ -115,8 +117,10 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
         }
         this.addPlosca.add(this.addPlosca.vrniDescriptionArea());
         this.addPlosca.add(this.addPlosca.vrniAddButton());
-        this.addPlosca.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        /*For debugging
+         * this.addPlosca.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         this.balancePlosca.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        */
         //
         //GraphsPlosca
         this.graphsPlosca = new GraphsPlosca(0, 0, 2*this.width/3, this.height, color, this.test, this);
