@@ -75,7 +75,7 @@ public class BalancePlosca extends JPanel implements ActionListener{
         		//System.out.printf("Expense: %s: %f\n", list.get(i).getDescription(), list.get(i).getAmount());
     		}
     	}
-    	nastaviWalletBalance(Double.toString(znesekWallet));
+    	nastaviWalletBalance(String.format("%.2f", znesekWallet));
     	
     	double znesekBank = 0;
     	ArrayList<Transakcija> listBank = test.vrniTransakcijeIzRacuna("Bank");
@@ -88,7 +88,7 @@ public class BalancePlosca extends JPanel implements ActionListener{
         		//System.out.printf("Expense: %s: %f\n", listBank.get(i).getDescription(), listBank.get(i).getAmount());
     		}
     	}
-    	nastaviBankBalance(Double.toString(znesekBank));
+    	nastaviBankBalance(String.format("%.2f", znesekBank));
 	}
 	
 	public void nastaviWalletBalance(String text) {

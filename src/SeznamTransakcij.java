@@ -5,6 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.sound.sampled.Control;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.LineListener;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Control.Type;
+import javax.sound.sampled.Line.Info;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -12,11 +18,14 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 public class SeznamTransakcij extends JPanel implements ListSelectionListener,ActionListener{
 	
@@ -30,9 +39,11 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 	private JList<String> area;
 	private JButton izberiButton;
 	private JLabel label;
+	private JTable table;
 	
 	private JScrollPane vertical;
 	private DefaultListModel listModel;
+	private DefaultTableModel tableModel;
 	
 	private String transactionCategory = "Bank";
 	
@@ -51,6 +62,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		 * JList -> to rabim zato, ker želim, da se po dodani transakciji avtomatsko
 		 * doda na seznam transakcij, ki je viden pri Balance plošèi
 		 * */
+		/*
 		this.listModel=new DefaultListModel();
 		
 		for(int i = 0; i < kategorije.size(); i++) {
@@ -62,10 +74,38 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		this.vertical = new JScrollPane(area);
 		vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		//vertical.setBounds(0, 0, this.width, this.height);
+		 */
+		
+		String[] header = {"Description", "Amount"};
+		
+		Object[][] data = new Object[kategorije.size()][2];
+		
+		for(int i = 0; i < kategorije.size(); i++) {
+			Object[] object = {kategorije.get(i).getDescription(), kategorije.get(i).getAmount()};
+			data[i] = object;
+		}
+		/*
+		 * Overridamo funkcijo isCellEditable tako, da vedno vrne False
+		 * tako vedno ko bi želel kdo spremeniti table cell, bi aplikacija pogledala
+		 * èe je to možno in bi dobila nazaj False
+		 * */
+		this.tableModel = new DefaultTableModel(data, header) {
+
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
+		
+		this.table = new JTable(this.tableModel);
+		table.setBorder(new LineBorder(Color.RED));
+		this.add(table);
+		
 		this.izberiButton = new JButton("Izberi");
 		nastaviGumb(this.izberiButton, Color.LIGHT_GRAY);
 		this.label = new JLabel("Izbira: ");
-		area.addListSelectionListener(this);
+		//area.addListSelectionListener(this);
 		izberiButton.addActionListener(this);
 	}
 	
@@ -86,14 +126,35 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 	}*/
 	
 	public void posodobiTransakcije() {
-		
+		/*
 		ArrayList<Transakcija> kategorije = test.vrniTransakcijeIzRacuna(transactionCategory);
 		//Spraznimo ves data in ga znova spišimo
-		this.listModel.removeAllElements();
+		
+		this.tableModel = new DefaultTableModel(1, kategorije.size());
 		
 		for(int i = 0; i < kategorije.size(); i++) {
-			this.listModel.addElement(kategorije.get(i).getDescription());
+			
+			this.tableModel.addRow(new Object[] {kategorije.get(i).getDescription(), kategorije.get(i).getAmount()});
 		}
+		*/
+		ArrayList<Transakcija> kategorije = test.vrniTransakcijeIzRacuna(transactionCategory);
+		
+		String[] header = {"Description", "Amount"};
+		
+		Object[][] data = new Object[kategorije.size()][2];
+		
+		for(int i = 0; i < kategorije.size(); i++) {
+			Object[] object = {kategorije.get(i).getDescription(), kategorije.get(i).getAmount()};
+			data[i] = object;
+		}
+		this.tableModel.setRowCount(0); //Simpl trik, ki "zbriše" prejšnje elemente
+		for(int i = 0; i < kategorije.size(); i++) {
+			tableModel.addRow(data[i]);
+		}
+		this.table.setModel(this.tableModel);
+	}
+	public JTable vrniTable() {
+		return this.table;
 	}
 	
 	public DefaultListModel vrniDefaultListModel() {
@@ -178,12 +239,21 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		// TODO Auto-generated method stub
 		if(e.getSource() == this.izberiButton) {
 			PomoznoOkno okence = new PomoznoOkno("Podrobnosti");
-			PodrobnostiTransakcije podrobnostiTransakcije = new PodrobnostiTransakcije(
+			/*PodrobnostiTransakcije podrobnostiTransakcije = new PodrobnostiTransakcije(
 					0, 0, okence.getWidth(), okence.getHeight(),
 					this.test,
 					this.area.getSelectedIndex(),
 					transactionCategory
+			);*/
+			PodrobnostiTransakcije podrobnostiTransakcije = new PodrobnostiTransakcije(
+					0, 0, okence.getWidth(), okence.getHeight(),
+					this.test,
+					this.table.getSelectedRow(),
+					transactionCategory
 			);
+			
+			
+
 			
 			podrobnostiTransakcije.setLayout(new BorderLayout());
 			podrobnostiTransakcije.add(podrobnostiTransakcije.getTable(), BorderLayout.CENTER);

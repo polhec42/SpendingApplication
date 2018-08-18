@@ -219,7 +219,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 			System.out.printf("%s %s %s %.2f %s %s %s", description, date, category, amount,
 					account, currency, type);
 			//Posodobim JList pri Balance tako, da imam tudi najnovejšo transakcijo
-			this.seznamTransakcij.vrniDefaultListModel().addElement(description);
+			//this.seznamTransakcij.vrniDefaultListModel().addElement(description);
 		}
 	}
 	//When focus is gained, we delete placeholder

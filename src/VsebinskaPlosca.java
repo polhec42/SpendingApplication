@@ -78,7 +78,8 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		Border border = seznamTransakcij.getBorder();
 	    Border margin = new EmptyBorder(10,10,10,10);
 	    seznamTransakcij.setBorder(new CompoundBorder(border, margin));*/
-		this.seznamTransakcij.add(this.seznamTransakcij.vrniScroll(), BorderLayout.CENTER);
+		//this.seznamTransakcij.add(this.seznamTransakcij.vrniScroll(), BorderLayout.CENTER);
+		this.seznamTransakcij.add(this.seznamTransakcij.vrniTable());
 		this.seznamTransakcij.add(this.seznamTransakcij.vrniLabel(), BorderLayout.NORTH);
 		
 		/*
