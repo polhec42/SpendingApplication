@@ -77,7 +77,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
         this.accounts.addActionListener(this);
         
         this.amountField = new JTextField("Enter amount: 1.20", 20);
-        this.currencyField = new JTextField("Enter currency (Euro)", 10);
+        this.currencyField = new JTextField("Euro", 10);
         this.dateField = new JTextField("Enter date: DD.MM.LLLL", 20);
         
         this.descriptionArea = new JTextArea("Enter description of your transaction");
@@ -204,6 +204,9 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 			}else {
 				this.incomeButton.setBorderPainted(false);
 			}
+			//Èe je income potem je samo ena možna kategorija: Income
+			this.categories.addItem("Income");
+			this.categories.setSelectedItem("Income");			
 		}
 		//Dodane funkcionalnosti vpisa transakcije v podatkovno bazo
 		if(e.getSource() == this.addButton && (isExpenseClicked != false || isIncomeClicked != false)) {

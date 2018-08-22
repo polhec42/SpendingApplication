@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import javax.sound.sampled.Line.Info;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -26,6 +29,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 public class SeznamTransakcij extends JPanel implements ListSelectionListener,ActionListener{
 	
@@ -104,7 +108,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		
 		this.izberiButton = new JButton("Izberi");
 		nastaviGumb(this.izberiButton, Color.LIGHT_GRAY);
-		this.label = new JLabel("Izbira: ");
+		this.label = new JLabel("Seznam transakcij: ");
 		//area.addListSelectionListener(this);
 		izberiButton.addActionListener(this);
 	}
@@ -153,6 +157,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		}
 		this.table.setModel(this.tableModel);
 	}
+	
 	public JTable vrniTable() {
 		return this.table;
 	}

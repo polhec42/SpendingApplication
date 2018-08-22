@@ -1,0 +1,1 @@
+java -cp Spending.jar Main

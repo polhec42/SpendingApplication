@@ -11,7 +11,7 @@ These instructions will get you a copy of the project up and running on your loc
 Software requirements:
 
 ```
-Java SE 9+
+Java SE 10+
 ```
 
 ### Installing
@@ -20,7 +20,7 @@ Java SE 9+
 
 1. Download ```windows``` folder inside ```deployment``` folder with all of its content.
 2. Put ```Spending.jar``` and ```resources``` folder  in the same folder.
-3. Double click on ```Spending.jar```.
+3. Run ```run.bat```.
 
 #### Mac version
 
@@ -35,7 +35,7 @@ Java SE 9+
 ## Versioning
 
 I use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/polhec42/SpendingApplication/tags). 
-Current version: 1.0.0
+Current version: v1.0.2
 
 ## Authors
 
