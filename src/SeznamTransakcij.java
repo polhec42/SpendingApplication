@@ -254,7 +254,8 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 					0, 0, okence.getWidth(), okence.getHeight(),
 					this.test,
 					this.table.getSelectedRow(),
-					transactionCategory
+					transactionCategory,
+					this
 			);
 			
 			
@@ -264,6 +265,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 			podrobnostiTransakcije.add(podrobnostiTransakcije.getTable(), BorderLayout.CENTER);
 		    Border border = new EmptyBorder(10,10,10,10);
 		    podrobnostiTransakcije.setBorder(border);
+		    podrobnostiTransakcije.add(podrobnostiTransakcije.getEditButton(), BorderLayout.SOUTH);
 			okence.add(podrobnostiTransakcije);
 			okence.pack();
 			okence.setVisible(true);

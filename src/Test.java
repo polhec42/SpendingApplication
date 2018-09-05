@@ -180,6 +180,35 @@ public class Test {
         }
     }
     
+    public void update(int id, String description, String date, String account, String amount, String currency, String category, String type) {
+        String sql = "UPDATE transactions SET description = ? , "
+        		+ "date = ? ,"
+        		+ "account = ? ,"
+                + "amount = ? ,"
+        		+ "currency = ? ,"
+                + "category = ? ,"
+        		+ "type = ?"
+                + "WHERE id = ?";
+ 
+        try (Connection conn = this.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+ 
+            // set the corresponding param
+            pstmt.setString(1, description);
+            pstmt.setString(2, date);
+            pstmt.setString(3, account);
+            pstmt.setDouble(4, Double.parseDouble(amount));
+            pstmt.setString(5, currency);
+            pstmt.setString(6, category);
+            pstmt.setString(7, type);
+            pstmt.setInt(8, id);
+            // update 
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public void selectAll(){
         String sql = "SELECT id, description, date, account, amount, currency, category, type FROM transactions";
         

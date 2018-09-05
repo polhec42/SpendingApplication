@@ -46,7 +46,7 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener, A
 		this.label = new JLabel("Empty", SwingConstants.CENTER);
 		this.label.setPreferredSize(new Dimension(this.width, 50));
 		
-		this.button = new JButton("Gumb");
+		this.button = new JButton("Izbira");
 		this.nastaviGumb(this.button, Color.LIGHT_GRAY);
 		/*
 		 * Testing ground for categories
