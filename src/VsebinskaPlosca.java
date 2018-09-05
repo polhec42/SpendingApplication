@@ -103,8 +103,15 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		this.addPlosca = new AddPlosca(this.x, this.y, this.width, this.height, color, okno, this.test, this.seznamTransakcij);
         this.addPlosca.nastaviVelikost(this.width, this.height);
         this.addPlosca.setLayout(new GridLayout(6, 2));
+        
+        JPanel merge = new JPanel();
+        merge.setLayout(new BorderLayout());
+
+        merge.add(this.addPlosca.vrniTransferButton(), BorderLayout.WEST);
+        merge.add(this.addPlosca.vrniIncomeButton(), BorderLayout.EAST);
+        
+        this.addPlosca.add(merge);
         this.addPlosca.add(this.addPlosca.vrniExpenseButton());
-        this.addPlosca.add(this.addPlosca.vrniIncomeButton());
         this.addPlosca.add(this.addPlosca.vrniCategoriesList());
         this.addPlosca.add(this.addPlosca.vrniCategoryButton());
         this.addPlosca.add(this.addPlosca.vrniAmountField());

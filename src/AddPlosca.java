@@ -21,6 +21,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 	
 	private JButton expenseButton;
 	private JButton incomeButton;
+	private JButton transferButton;
     private JButton categoryButton;
     private JButton addButton;
     
@@ -39,6 +40,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
     
     private boolean isExpenseClicked = false;
     private boolean isIncomeClicked = false;
+    private boolean isTransferClicked = false;
     
 	public AddPlosca(int x, int y, int width, int height, Color color, Okno okno, Test test, SeznamTransakcij seznamTransakcij) {
 		this.x = x;
@@ -55,7 +57,10 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
         nastaviGumb(this.expenseButton, color);
         
         this.incomeButton = new JButton("Income");
-        nastaviGumb(this.incomeButton, color);    
+        nastaviGumb(this.incomeButton, color, 2);   
+        
+        this.transferButton = new JButton("Transfer");
+        nastaviGumb(this.transferButton, color, 2);
         
         this.categoryButton = new JButton("Other Category");
         nastaviGumb(this.categoryButton, color);
@@ -90,11 +95,20 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
         this.categoryButton.addActionListener(this);
         this.expenseButton.addActionListener(this);
         this.incomeButton.addActionListener(this);
+        this.transferButton.addActionListener(this);
         this.addButton.addActionListener(this);
 	}
     
     public void nastaviGumb(JButton button, Color color) {
 		button.setPreferredSize(new Dimension(this.width/2,70)); //nastavimo širino
+		button.setBackground(color); //nastavimo barvo
+		button.setBorder(null); //znebimo se obrobe gumba
+		button.setFocusable(false); //znebimo se obrobe button icon
+		//button.addActionListener(this);
+	}
+    
+    public void nastaviGumb(JButton button, Color color, int faktor) {
+		button.setPreferredSize(new Dimension(this.width/(2*faktor),70)); //nastavimo širino
 		button.setBackground(color); //nastavimo barvo
 		button.setBorder(null); //znebimo se obrobe gumba
 		button.setFocusable(false); //znebimo se obrobe button icon
@@ -147,6 +161,9 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
     public JTextArea vrniDescriptionArea() {
     	return this.descriptionArea;
     }
+    public JButton vrniTransferButton() {
+    	return this.transferButton;
+    }
     
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -183,7 +200,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 			pomoznoOkno.setVisible(true);
 		
 		}
-		if(e.getSource() == this.expenseButton && !isIncomeClicked) {
+		if(e.getSource() == this.expenseButton && !isIncomeClicked && !isTransferClicked) {
 			
 			isExpenseClicked = !isExpenseClicked;
 			
@@ -194,7 +211,20 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 				this.expenseButton.setBorderPainted(false);
 			}
 		}
-		if(e.getSource() == this.incomeButton && !isExpenseClicked) {
+		if(e.getSource() == this.transferButton && !isIncomeClicked && !isExpenseClicked) {
+			
+			isTransferClicked = !isTransferClicked;
+			
+			if(isTransferClicked) {
+				this.transferButton.setBorder(new LineBorder(Color.RED, 2));
+				this.transferButton.setBorderPainted(true);
+			}else {
+				this.transferButton.setBorderPainted(false);
+			}
+			this.categories.addItem("Transfer");
+			this.categories.setSelectedItem("Transfer");	
+		}
+		if(e.getSource() == this.incomeButton && !isExpenseClicked && !isTransferClicked) {
 			
 			isIncomeClicked = !isIncomeClicked;
 			
@@ -209,14 +239,21 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 			this.categories.setSelectedItem("Income");			
 		}
 		//Dodane funkcionalnosti vpisa transakcije v podatkovno bazo
-		if(e.getSource() == this.addButton && (isExpenseClicked != false || isIncomeClicked != false)) {
+		if(e.getSource() == this.addButton && (isExpenseClicked != false || isIncomeClicked != false || isTransferClicked != false)) {
 			String description = this.descriptionArea.getText();
 			String date = this.dateField.getText();
 			String category = (String)this.categories.getSelectedItem();
 			double amount = Double.parseDouble(this.amountField.getText());
 			String account = (String)this.accounts.getSelectedItem();
 			String currency = this.currencyField.getText();
-			String type = (isExpenseClicked) ? "Expense" : "Income";
+			String type = "";
+			if(isExpenseClicked) {
+				type = "Expense";
+			}else if(isIncomeClicked) {
+				type = "Income";
+			}else {
+				type = "Transfer";
+			}
 			
 			this.test.insert(description, date, account, amount, currency, category, type);
 			System.out.printf("%s %s %s %.2f %s %s %s", description, date, category, amount,

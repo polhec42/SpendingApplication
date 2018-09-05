@@ -85,7 +85,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		Object[][] data = new Object[kategorije.size()][2];
 		
 		for(int i = 0; i < kategorije.size(); i++) {
-			Object[] object = {kategorije.get(i).getDescription(), kategorije.get(i).getAmount()};
+			Object[] object = {kategorije.get(i).getDescription(), (kategorije.get(i).getType().equals("Expense") ? "-" : " ") + kategorije.get(i).getAmount()};
 			data[i] = object;
 		}
 		/*
@@ -148,7 +148,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		Object[][] data = new Object[kategorije.size()][2];
 		
 		for(int i = 0; i < kategorije.size(); i++) {
-			Object[] object = {kategorije.get(i).getDescription(), kategorije.get(i).getAmount()};
+			Object[] object = {kategorije.get(i).getDescription(), (kategorije.get(i).getType().equals("Expense") ? "-" : " ") + kategorije.get(i).getAmount()};
 			data[i] = object;
 		}
 		this.tableModel.setRowCount(0); //Simpl trik, ki "zbriše" prejšnje elemente
