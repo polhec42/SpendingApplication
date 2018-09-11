@@ -88,8 +88,8 @@ public class BalancePlosca extends JPanel implements ActionListener{
     		}else if(listBank.get(i).getType().equals("Expense")) {
     			znesekBank -= listBank.get(i).getAmount();
         		//System.out.printf("Expense: %s: %f\n", listBank.get(i).getDescription(), listBank.get(i).getAmount());
-    		}else if(list.get(i).getType().equals("Transfer")) {
-    			znesekWallet += list.get(i).getAmount();
+    		}else if(listBank.get(i).getType().equals("Transfer")) {
+    			znesekBank += listBank.get(i).getAmount();
     		}
     	}
     	nastaviBankBalance(String.format("%.2f", znesekBank));

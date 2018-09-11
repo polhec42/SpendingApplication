@@ -13,7 +13,6 @@ public class Init {
 	public Init(){
 		
 		this.file = new File("resources/config.txt");
-		
 	}
 	
 	public String read(String atribute) {
