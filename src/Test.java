@@ -16,8 +16,6 @@ public class Test {
     //public static String url = "jdbc:sqlite:C:\\Users\\Uporabnik\\Documents\\Dokumenti DELL XPS13\\Eclipse_Workspace\\SpendingApp\\resources\\test.db";
     public  String url = "jdbc:sqlite:resources/" + databaseName;
     
-   
-    
     public  String getDatabaseName() {
     	return this.databaseName;
     }

@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 public class MenijskaPlosca extends JPanel implements ActionListener{
 	
@@ -28,6 +29,7 @@ public class MenijskaPlosca extends JPanel implements ActionListener{
 		
 		this.balance = new JButton(new ImageIcon("resources/euro-currency-symbol.png"));
         nastaviGumb(this.balance, color);
+        //this.balance.setBackground(Color.LIGHT_GRAY);
 		
 		this.add = new JButton(new ImageIcon("resources/add.png"));
 		nastaviGumb(this.add, color);
@@ -58,6 +60,7 @@ public class MenijskaPlosca extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
 		if(e.getSource() == this.balance) {
 			this.vsebinskaPlosca.setState(States.BALANCE);
 		}else if(e.getSource() == this.add) {

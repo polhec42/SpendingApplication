@@ -69,6 +69,7 @@ public class PodrobnostiTransakcije extends JPanel implements ActionListener{
 		button.setBackground(color); //nastavimo barvo
 		button.setBorder(null); //znebimo se obrobe gumba
 		button.setFocusable(false); //znebimo se obrobe button icon
+		button.setOpaque(true);
 	}
 	
 	public JTable getTable() {
@@ -129,7 +130,7 @@ public class PodrobnostiTransakcije extends JPanel implements ActionListener{
 				int column = 1;
 				this.test.update(this.id, (String)table.getValueAt(0, column), 
 						(String)table.getValueAt(1, column), (String)table.getValueAt(2, column),
-						Double.toString((Double)table.getValueAt(3, column)),
+						(String)(table.getValueAt(3, column)),
 						"Euro", (String)table.getValueAt(4, column), (String)table.getValueAt(5, column));
 				
 				//Posodobim seznam transakcij

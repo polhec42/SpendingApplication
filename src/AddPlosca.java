@@ -104,6 +104,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 		button.setBackground(color); //nastavimo barvo
 		button.setBorder(null); //znebimo se obrobe gumba
 		button.setFocusable(false); //znebimo se obrobe button icon
+		button.setOpaque(true);
 		//button.addActionListener(this);
 	}
     

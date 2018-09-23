@@ -1,13 +1,11 @@
 import java.awt.*;
-import java.awt.MultipleGradientPaint.ColorSpaceType;
-import java.lang.reflect.Field;
 
 import javax.swing.*;
-import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
 
 public class VsebinskaPlosca extends JPanel implements Runnable{
 	
@@ -94,8 +92,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		this.balancePlosca.add(new JLabel());
 		this.balancePlosca.add(this.balancePlosca.vrniWalletBalance());
 		this.balancePlosca.add(this.balancePlosca.vrniBankBalance());
-		this.balancePlosca.add(this.balancePlosca.vrniCryptoBalance());
-
+		this.balancePlosca.add(this.balancePlosca.vrniDrawerBalance());
 		for(int i = 0; i < 2; i++) {
 	        	this.balancePlosca.add(new JLabel());
 	    }
@@ -225,7 +222,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 			}
 			
 			try {
-				Thread.sleep(420);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

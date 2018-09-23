@@ -19,7 +19,7 @@ public class BalancePlosca extends JPanel implements ActionListener{
 	private JButton button;
 	private JButton walletBalance;
 	private JButton bankBalance;
-	private JButton cryptoBalance;
+	private JButton drawerBalance;
 	
 	private Test test;
 	private SeznamTransakcij seznamTransakcij;
@@ -37,17 +37,17 @@ public class BalancePlosca extends JPanel implements ActionListener{
 		//JLabel() ima tudi konstruktor, ki omogoèa aligment teksta
 		this.walletBalance = new JButton("Wallet Balance");
 		this.bankBalance = new JButton("Bank Balance");
-		this.cryptoBalance = new JButton("Crypto Balance");
+		this.drawerBalance = new JButton("Crypto Balance");
 		
 		nastaviGumb(this.walletBalance, color);
 		nastaviGumb(this.bankBalance, color);
-		nastaviGumb(this.cryptoBalance, color);
+		nastaviGumb(this.drawerBalance, color);
 		
 		izpisIzBaze();
 		
 		this.walletBalance.addActionListener(this);
 		this.bankBalance.addActionListener(this);
-		this.cryptoBalance.addActionListener(this);
+		this.drawerBalance.addActionListener(this);
 	}
 	
 	 public void nastaviGumb(JButton button, Color color) {
@@ -55,6 +55,8 @@ public class BalancePlosca extends JPanel implements ActionListener{
 			button.setBackground(color); //nastavimo barvo
 			button.setBorder(null); //znebimo se obrobe gumba
 			button.setFocusable(false); //znebimo se obrobe button icon
+			button.setOpaque(true);
+
 			//button.addActionListener(this);
 	}
 	
@@ -93,6 +95,21 @@ public class BalancePlosca extends JPanel implements ActionListener{
     		}
     	}
     	nastaviBankBalance(String.format("%.2f", znesekBank));
+    	
+    	double znesekDrawer = 0;
+    	ArrayList<Transakcija> listDrawer = test.vrniTransakcijeIzRacuna("Drawer");
+    	for(int i = 0; i < listDrawer.size(); i++) {
+    		if(listDrawer.get(i).getType().equals("Income")) {
+    			znesekDrawer += listDrawer.get(i).getAmount();
+        		//System.out.printf("Income: %s: %f\n", listBank.get(i).getDescription(), listBank.get(i).getAmount());
+    		}else if(listDrawer.get(i).getType().equals("Expense")) {
+    			znesekDrawer -= listDrawer.get(i).getAmount();
+        		//System.out.printf("Expense: %s: %f\n", listBank.get(i).getDescription(), listBank.get(i).getAmount());
+    		}else if(listDrawer.get(i).getType().equals("Transfer")) {
+    			znesekDrawer += listDrawer.get(i).getAmount();
+    		}
+    	}
+    	nastaviDrawerBalance(String.format("%.2f", znesekDrawer));
 	}
 	
 	public void nastaviWalletBalance(String text) {
@@ -100,6 +117,9 @@ public class BalancePlosca extends JPanel implements ActionListener{
 	}
 	public void nastaviBankBalance(String text) {
 		this.bankBalance.setText("Bank: " + text + " €");
+	}
+	public void nastaviDrawerBalance(String text) {
+		this.drawerBalance.setText("Drawer: " + text + " €");
 	}
 	
 	public void nastaviVelikost(int w, int h){
@@ -127,8 +147,8 @@ public class BalancePlosca extends JPanel implements ActionListener{
 	public JButton vrniBankBalance() {
 		return this.bankBalance;
 	}
-	public JButton vrniCryptoBalance() {
-		return this.cryptoBalance;
+	public JButton vrniDrawerBalance() {
+		return this.drawerBalance;
 	}
 
 	@Override
@@ -140,7 +160,7 @@ public class BalancePlosca extends JPanel implements ActionListener{
 			this.walletBalance.setBorderPainted(true);
 			
 			this.bankBalance.setBorderPainted(false);
-			this.cryptoBalance.setBorderPainted(false);
+			this.drawerBalance.setBorderPainted(false);
 			
 			this.seznamTransakcij.setTransactionCategory("Wallet");
 			this.seznamTransakcij.posodobiTransakcije();
@@ -151,20 +171,20 @@ public class BalancePlosca extends JPanel implements ActionListener{
 			this.bankBalance.setBorderPainted(true);
 			
 			this.walletBalance.setBorderPainted(false);
-			this.cryptoBalance.setBorderPainted(false);
+			this.drawerBalance.setBorderPainted(false);
 			
 			this.seznamTransakcij.setTransactionCategory("Bank");
 			this.seznamTransakcij.posodobiTransakcije();
 		}
-		if(e.getSource() == this.cryptoBalance) {
+		if(e.getSource() == this.drawerBalance) {
 			LineBorder border = new LineBorder(Color.RED, 2);
-			this.cryptoBalance.setBorder(border);
-			this.cryptoBalance.setBorderPainted(true);
+			this.drawerBalance.setBorder(border);
+			this.drawerBalance.setBorderPainted(true);
 
 			this.walletBalance.setBorderPainted(false);
 			this.bankBalance.setBorderPainted(false);
 			
-			this.seznamTransakcij.setTransactionCategory("Crypto");
+			this.seznamTransakcij.setTransactionCategory("Drawer");
 			this.seznamTransakcij.posodobiTransakcije();
 
 		}

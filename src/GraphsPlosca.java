@@ -230,9 +230,13 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		
 		 for(int i = 0; i < podatki.length; i++) {
 			 int kot = (int)Math.round(podatki[i]*mera);
+			 if(i == podatki.length - 1) {
+				 kot = 360 - zacetniKot;
+			 }
 			 g.setColor(colors[i]);
 			 g.fillArc(this.x + this.width/2 - POLMER/2, this.y + this.height/2 - POLMER/2, POLMER, POLMER, zacetniKot, kot);
 			 zacetniKot += kot;
+			
 		 }
 		 /*
 		  * fillArc(...., zacetniKot, kot) -> polni od zacetnegaKota za kot =>

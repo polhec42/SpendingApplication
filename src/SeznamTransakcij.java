@@ -118,6 +118,8 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		button.setBackground(color); //nastavimo barvo
 		button.setBorder(null); //znebimo se obrobe gumba
 		button.setFocusable(false); //znebimo se obrobe button icon
+		button.setOpaque(true);
+
 	}
 	public void nastaviVelikost(int w, int h){
         this.setPreferredSize(new Dimension(w, h));
