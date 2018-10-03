@@ -76,7 +76,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
         this.categories.setSelectedIndex(0);
         this.categories.addActionListener(this);
         
-        String[] optionsAccounts = {"Wallet", "Crypto", "Bank"};
+        String[] optionsAccounts = {"Wallet", "Bank", "Drawer"};
         this.accounts = new JComboBox(optionsAccounts);
         this.accounts.setSelectedIndex(0);
         this.accounts.addActionListener(this);
@@ -169,7 +169,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(this.categoryButton == e.getSource()) {
-			PomoznoOkno pomoznoOkno = new PomoznoOkno("Izbira kategorije");
+			PomoznoOkno pomoznoOkno = new PomoznoOkno("Categories");
 			IzbiraKategorije izbiraKategorije = new IzbiraKategorije(
 					0,
 					0,
@@ -184,7 +184,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 					pomoznoOkno.getHeight());
 			
 			izbiraKategorije.setLayout(new BorderLayout());
-			izbiraKategorije.add(izbiraKategorije.vrniScroll(), BorderLayout.CENTER);
+			izbiraKategorije.add(izbiraKategorije.vrniTable(), BorderLayout.CENTER);
 			izbiraKategorije.add(izbiraKategorije.vrniButton(), BorderLayout.PAGE_END);
 			izbiraKategorije.add(izbiraKategorije.vrniTextField(), BorderLayout.PAGE_START);
 			

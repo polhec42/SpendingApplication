@@ -37,14 +37,14 @@ public class BalancePlosca extends JPanel implements ActionListener{
 		//JLabel() ima tudi konstruktor, ki omogoèa aligment teksta
 		this.walletBalance = new JButton("Wallet Balance");
 		this.bankBalance = new JButton("Bank Balance");
-		this.drawerBalance = new JButton("Crypto Balance");
+		this.drawerBalance = new JButton("Drawer Balance");
 		
 		nastaviGumb(this.walletBalance, color);
 		nastaviGumb(this.bankBalance, color);
 		nastaviGumb(this.drawerBalance, color);
 		
 		izpisIzBaze();
-		
+
 		this.walletBalance.addActionListener(this);
 		this.bankBalance.addActionListener(this);
 		this.drawerBalance.addActionListener(this);

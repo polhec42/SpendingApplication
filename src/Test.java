@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Test {
 		
@@ -124,6 +125,26 @@ public class Test {
         }
         
         return kategorije;
+    }
+    
+    public void updateCategories(ArrayList<String> kategorije) {
+    	 String sql = "UPDATE categories SET description = ? "
+                 + "WHERE id = ?";
+    	 
+    	 for(int i = 0; i < kategorije.size(); i++) {
+    		 try (Connection conn = this.connect();
+                     PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      
+                 // set the corresponding param
+                 pstmt.setString(1, kategorije.get(i));
+                 pstmt.setInt(2, i+1);
+                 // update 
+                 pstmt.executeUpdate();
+             } catch (SQLException e) {
+                 System.out.println(e.getMessage());
+             }
+    	 }
+         
     }
     
     private Connection connect() {

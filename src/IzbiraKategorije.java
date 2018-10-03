@@ -3,19 +3,24 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
-public class IzbiraKategorije extends JPanel implements ListSelectionListener, ActionListener{
+public class IzbiraKategorije extends JPanel implements ActionListener{
 	
 	private int x;
 	private int y;
@@ -28,6 +33,9 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener, A
 	private JList<String> area;
 	private JLabel label;
 	private JTextField novaKategorija;
+	
+	private JTable tabelaKategorij;
+	private DefaultTableModel tableModel;
 	
 	private JScrollPane vertical;
 	
@@ -46,7 +54,7 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener, A
 		this.label = new JLabel("Empty", SwingConstants.CENTER);
 		this.label.setPreferredSize(new Dimension(this.width, 50));
 		
-		this.button = new JButton("Izbira");
+		this.button = new JButton("Enter");
 		this.nastaviGumb(this.button, Color.LIGHT_GRAY);
 		/*
 		 * Testing ground for categories
@@ -59,19 +67,23 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener, A
 		this.kategorije = test.vrniKategorije();
 		System.out.println(this.kategorije);
 		
-		String[] data = new String[this.kategorije.size()];
-		for(int i = 0; i < this.kategorije.size(); i++) {
-			data[i] = this.kategorije.get(i);
-		}
+		Object[][] data = new Object[this.kategorije.size()][1];
 		
-		this.area = new JList<String>(data);
-		this.area.setPreferredSize(new Dimension(this.width, 60));
-		this.vertical = new JScrollPane(area);
-		vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		for(int i = 0; i < this.kategorije.size(); i++) {
+			Object[] object = {kategorije.get(i)};
+			data[i] = object;
+		}
+		System.out.println(Arrays.deepToString(data));
+
+		
+		this.tableModel = new DefaultTableModel(data, new String[]{"Category"});
+		
+		this.tabelaKategorij = new JTable(this.tableModel);
+		this.tabelaKategorij.setShowGrid(false);
+		
 		
 		this.novaKategorija = new JTextField(20);
 		
-		area.addListSelectionListener(this);
 		this.button.addActionListener(this);
 		this.novaKategorija.addActionListener(this);
 	}
@@ -89,12 +101,13 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener, A
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
 		if(e.getSource() == this.button) {
 			/*
 			 * To trenutno doda kategorijo med možnosti dropdown menija in jo tudi izbere
 			 * Uporabno bo, ko bom dodal možnost, da uporabnik dodaja svoje kategorije
 			 * - pri tem moram poskrbeti da se nova kategorija zapiše v bazo
-			 * */
+			 */
 			this.addPlosca.vrniCategoriesList().addItem(this.novaKategorija.getText());
 			this.addPlosca.vrniCategoriesList().setSelectedItem(this.novaKategorija.getText());
 			
@@ -108,26 +121,41 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener, A
 			if(!zeObstaja) {
 				this.test.newCategory(this.novaKategorija.getText());
 			}
-
-			//dodaj funkcionalnosti za dodajanje kategorije v bazo
+							
+			ArrayList<String> c = new ArrayList<>();
+			for(int i = 0; i < this.tabelaKategorij.getRowCount(); i++) {
+				c.add((String)this.tabelaKategorij.getValueAt(i, 0));
+			}
+			this.test.updateCategories(c);
+			//gremo èez vse transakcije in spremenimo kategorije
+			for(int i = 0; i < kategorije.size(); i++) {
+				if(!kategorije.get(i).equals(c.get(i))) {
+					ArrayList<Transakcija> vseTransakcijeTeKategorije = test.vrniTransakcijeIzKategorije(kategorije.get(i));
+					for(int j = 0; j < vseTransakcijeTeKategorije.size(); j++) {
+						this.test.update(vseTransakcijeTeKategorije.get(j).getId(), 
+								vseTransakcijeTeKategorije.get(j).getDescription(), 
+								vseTransakcijeTeKategorije.get(j).getDate(), 
+								vseTransakcijeTeKategorije.get(j).getAccount(), 
+								Double.toString(vseTransakcijeTeKategorije.get(j).getAmount()), 
+								vseTransakcijeTeKategorije.get(j).getCurrency(), 									c.get(i), 
+								vseTransakcijeTeKategorije.get(j).getType());
+					}
+				}
+			}
+				
+			this.kategorije = this.test.vrniKategorije();
+			for(int i = 0; i < this.kategorije.size(); i++) {
+				if(this.kategorije.get(i).equals("")) {
+					this.kategorije.remove(i);
+					this.test.deleteData("categories", i+1);
+				}
+			}
 		}
+		
+		
+		
 	}
 	
-	public void valueChanged(ListSelectionEvent e) {
-	    if (e.getValueIsAdjusting() == false) {
-
-	        if (this.area.getSelectedIndex() == -1) {
-	        //No selection, disable fire button.
-	            this.button.setEnabled(false);
-
-	        } else {
-	        //Selection, enable the fire button.
-	            this.button.setEnabled(true);
-	        }
-	        //Ko uporabnik izbere možnost, se ta enostavno zapiše v JTextField
-	        novaKategorija.setText(this.area.getSelectedValue().toString());
-	    }
-	}
 	public JLabel getLabel() {
 		return label;
 	}
@@ -166,8 +194,8 @@ public class IzbiraKategorije extends JPanel implements ListSelectionListener, A
 	public JList vrniArea() {
 		return this.area;
 	}
-	public JScrollPane vrniScroll() {
-		return this.vertical;
+	public JTable vrniTable() {
+		return this.tabelaKategorij;
 	}
 	public JTextField vrniTextField() {
 		return this.novaKategorija;

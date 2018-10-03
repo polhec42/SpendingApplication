@@ -49,7 +49,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 	private DefaultListModel listModel;
 	private DefaultTableModel tableModel;
 	
-	private String transactionCategory = "Bank";
+	private String transactionCategory = "Wallet";
 	
 	public SeznamTransakcij(int x, int y, int width, int height, Test test) {
 		this.x = x;
@@ -106,9 +106,9 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		table.setBorder(new LineBorder(Color.RED));
 		this.add(table);
 		
-		this.izberiButton = new JButton("Izberi");
+		this.izberiButton = new JButton("Choose");
 		nastaviGumb(this.izberiButton, Color.LIGHT_GRAY);
-		this.label = new JLabel("Seznam transakcij: ");
+		this.label = new JLabel("List of transactions: ");
 		//area.addListSelectionListener(this);
 		izberiButton.addActionListener(this);
 	}
@@ -245,7 +245,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource() == this.izberiButton) {
-			PomoznoOkno okence = new PomoznoOkno("Podrobnosti");
+			PomoznoOkno okence = new PomoznoOkno("Details");
 			/*PodrobnostiTransakcije podrobnostiTransakcije = new PodrobnostiTransakcije(
 					0, 0, okence.getWidth(), okence.getHeight(),
 					this.test,

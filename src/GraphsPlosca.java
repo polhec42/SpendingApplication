@@ -53,12 +53,13 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		
 		
 		/*
-		 *Podatki in barve se morajo že tukaj inicilializirati, ker èe se šele v paint()
-		 *bo prepozno, ker paint() se sproži ko se naloži GUI 
+		 *Podatki in barve se morajo ï¿½e tukaj inicilializirati, ker ï¿½e se ï¿½ele v paint()
+		 *bo prepozno, ker paint() se sproï¿½i ko se naloï¿½i GUI 
 		 * */
 		//this.podatki = new double[]{5, 12, 4, 16, 25};
 		dobiPodatke();
-		
+
+
 		String[] data = {"Categories", "Income/Expense", "Expense per Month"};
 		this.comboBox = new JComboBox(data);
 		this.comboBox.addActionListener(this);
@@ -89,7 +90,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		
 		ArrayList<String> kategorije = this.test.vrniKategorije();
 		/*
-		 * Zbrišemo zaèasno kategorijo "Income" iz 
+		 * Zbriï¿½emo zaï¿½asno kategorijo "Income" iz 
 		 * obravnave, saj predstavlja Income.
 		 * */
 		for(int i = 0; i < kategorije.size(); i++) {
@@ -98,7 +99,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 			}
 		}
 		double[] podatki = new double[kategorije.size()];
-		
+
 		for(int i = 0; i < kategorije.size(); i++) {
 			ArrayList<Transakcija> transakcijeIzKategorije = this.test.vrniTransakcijeIzKategorije(kategorije.get(i));
 			for(Transakcija x : transakcijeIzKategorije) {
@@ -109,7 +110,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		for(int i = 0; i < kategorije.size() - 1; i++) {
 			for(int j = i+1; j < kategorije.size(); j++) {
 				if(podatki[i] < podatki[j]) {
-					//Uredimo številke
+					//Uredimo ï¿½tevilke
 					double a = podatki[i];
 					podatki[i] = podatki[j];
 					podatki[j] = a;
@@ -125,8 +126,9 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 
 		this.kategorije = kategorije;
 		this.podatki = podatki;
-		
+
 		this.colors = naborBarv(this.podatki.length);
+
 	}
 	
 	public String[] urediMesece() {
@@ -199,7 +201,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 			int visinaGrafa = this.height - 4*odmikOdRoba;
 			
 			double max = 0;
-			//Izlušèimo max za mero in 
+			//Izluï¿½ï¿½imo max za mero in 
 			for(int i = 0; i < 12; i++) {
 				if(vrednosti[i] > max) {
 					max = vrednosti[i];
@@ -207,7 +209,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 			}
 			
 			double[] delezi = new double[12];
-			//Izraèunamo deleže za izris grafa in ga izrišemo
+			//Izraï¿½unamo deleï¿½e za izris grafa in ga izriï¿½emo
 			
 			for(int i = 0; i < 12; i++) {
 				delezi[i] = vrednosti[i]/max;
@@ -240,7 +242,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		 }
 		 /*
 		  * fillArc(...., zacetniKot, kot) -> polni od zacetnegaKota za kot =>
-		  * torej ne smemo notri dati konènega kota  
+		  * torej ne smemo notri dati konï¿½nega kota  
 		  **/
 		}
 		
@@ -293,30 +295,36 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		this.kategorije = kategorije;
 	}
 	/*
-	 * Metoda, ki bo vrnila nabor med seboj dovolj razliènih barv, ki bodo uporabljene
+	 * Metoda, ki bo vrnila nabor med seboj dovolj razliï¿½nih barv, ki bodo uporabljene
 	 * na grafu
 	 * */
 	public Color[] naborBarv(int stBarv) {
+
+
 		Color[] colors = new Color[stBarv];
 		Random random = new Random();
 		
 		for(int i = 0; i < colors.length; i++) {
 		
 			Color color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
-			boolean jePrava = true; //Za trackanje èe je barva prava ali ne
+			boolean jePrava = true; //Za trackanje ï¿½e je barva prava ali ne
 			
 			for(int j = 0; j < i; j++) {
-				if(Math.abs(color.getRed() - colors[j].getRed()) < 20 ||
-						Math.abs(color.getBlue() - colors[j].getBlue()) < 20 ||
-						Math.abs(color.getGreen() - colors[j].getGreen()) < 20) {
+				if(Math.abs(color.getRed() - colors[j].getRed()) < 10 ||
+						Math.abs(color.getBlue() - colors[j].getBlue()) < 10 ||
+						Math.abs(color.getGreen() - colors[j].getGreen()) < 10) {
+
+
 					i--;
 					jePrava = false;
 				}
 			}
 			if(jePrava == true) {
+
 				colors[i] = color;
 			}
 		}
+
 		return colors;
 	}
 
@@ -332,7 +340,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 				}
 				
 				this.vsebinskaPlosca.getLegenda().removeAll();
-				this.vsebinskaPlosca.getLegenda().setSteviloPolj(this.podatki.length); //ob novi .db drugaèe ostanejo stari podatki (ArrayIndexOutOfBorder)
+				this.vsebinskaPlosca.getLegenda().setSteviloPolj(this.podatki.length); //ob novi .db drugaï¿½e ostanejo stari podatki (ArrayIndexOutOfBorder)
 				this.vsebinskaPlosca.getLegenda().nastavi();
 				this.vsebinskaPlosca.getLegenda().setVisible(true);
 				this.revalidate();
@@ -345,7 +353,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 					this.width -= this.vsebinskaPlosca.getLegenda().getWidth();
 				}
 				this.vsebinskaPlosca.getLegenda().removeAll();
-				this.vsebinskaPlosca.getLegenda().setSteviloPolj(this.podatki.length); //ob novi .db drugaèe ostanejo stari podatki (ArrayIndexOutOfBorder)
+				this.vsebinskaPlosca.getLegenda().setSteviloPolj(this.podatki.length); //ob novi .db drugaï¿½e ostanejo stari podatki (ArrayIndexOutOfBorder)
 				this.vsebinskaPlosca.getLegenda().nastavi();
 				this.vsebinskaPlosca.getLegenda().setVisible(true);
 				this.revalidate();

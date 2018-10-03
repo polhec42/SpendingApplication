@@ -12,16 +12,13 @@ public class Main{
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		Init init = new Init();
-		Okno okno = new Okno("Spending app");
+        Init init = new Init();
+		Okno okno = new Okno("Spending Application");
 		Test test = new Test();
 		
-		//(Color)Class.forName("java.awt.color").getField(init.read("background-color")).get(obj),
-
-		
 		test.setDatabaseName(init.read("database"));
-		VsebinskaPlosca vsebina = new VsebinskaPlosca(
+
+        VsebinskaPlosca vsebina = new VsebinskaPlosca(
 				okno.getX(), 
 				okno.getY(),
 				(RAZMERJE-3)*okno.getWidth()/RAZMERJE, 
@@ -30,8 +27,8 @@ public class Main{
 				okno, 
 				test
 		);
-		
-		MenijskaPlosca stranskiMeni = new MenijskaPlosca(
+
+        MenijskaPlosca stranskiMeni = new MenijskaPlosca(
 				okno.getX(), 
 				okno.getY(),
 				okno.getWidth(), 
@@ -49,7 +46,7 @@ public class Main{
 				(RAZMERJE-2)*vsebina.vrniWidth()/RAZMERJE,
 				(RAZMERJE-2)*vsebina.vrniHeight()/RAZMERJE		
 		));*/
-		
+
 		stranskiMeni.add(stranskiMeni.vrniBalance());
 		stranskiMeni.add(stranskiMeni.vrniAdd());
 		stranskiMeni.add(stranskiMeni.vrniGraphs());
@@ -60,10 +57,10 @@ public class Main{
 		okno.add(vsebina, BorderLayout.CENTER);
 		okno.pack();
 		okno.setVisible(true);
-		
-		
-		
-		
-	}
+
+
+
+
+    }
 
 }

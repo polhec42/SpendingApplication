@@ -39,7 +39,7 @@ public class Legenda extends JPanel{
 		 * Nastavitev Layouta Legende -> da se njen Layout in razporeditev dinamièno
 		 * spreminja z številom podatkov
 		 * */
-		int stVrstic = this.steviloPolj > 8 ? 8 : this.steviloPolj % 8;
+		int stVrstic = this.steviloPolj >= 8 ? 8 : this.steviloPolj % 8;
 		int stStolpcev = this.steviloPolj/8 + 1;
 		
 		this.setLayout(new GridLayout(stVrstic, stStolpcev));

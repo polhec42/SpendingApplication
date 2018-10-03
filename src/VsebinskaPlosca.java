@@ -63,7 +63,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		this.panel.setPreferredSize(new Dimension(this.width/2, this.height));
 		this.panel.setBorder(BorderFactory.createLineBorder(Color.RED));
 		*/
-		//nevem zakaj moram višino poveèat za 35 -> I need to check this later
+		//nevem zakaj moram viï¿½ino poveï¿½at za 35 -> I need to check this later
 		this.seznamTransakcij = new SeznamTransakcij(this.x + this.width/6 - 10, 10, this.width/2, this.height, this.test);
 		this.seznamTransakcij.nastaviVelikost(this.width/2, this.height);
 		
@@ -127,23 +127,28 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
         this.balancePlosca.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         */
         //
-        //GraphsPlosca
-        this.graphsPlosca = new GraphsPlosca(0, 0, 2*this.width/3, this.height, color, this.test, this);
-        this.graphsPlosca.nastaviVelikost(2*this.width/3, this.height);
+
+		//GraphsPlosca
+		this.graphsPlosca = new GraphsPlosca(0, 0, 2*this.width/3, this.height, color, this.test, this);
+
+		this.graphsPlosca.nastaviVelikost(2*this.width/3, this.height);
+
 		this.legenda = new Legenda(2*this.width/3, 10, this.width/3, this.height, color, this.graphsPlosca.getPodatki().length, this.graphsPlosca);
+
 		/*
-		 * Pri y je 10, ker želim, da je odmaknjeno od roba (mogoèe bo kdaj potem problem s height)
+		 * Pri y je 10, ker ï¿½elim, da je odmaknjeno od roba (mogoï¿½e bo kdaj potem problem s height)
 		 * bo treba takrat dati -10.
-		 * Imam pa malo težavo v Layoutih -> nekoè bo treba malo pokrpat
+		 * Imam pa malo teï¿½avo v Layoutih -> nekoï¿½ bo treba malo pokrpat
 		 * */
         this.legenda.nastaviVelikost(this.width/3, this.height);
+
 		//
         /*
          * Settings
          * */
         this.settingsPlosca = new SettingsPlosca(0, 0, this.width, this.height, color, this.test, this);
-        
-        /*
+
+		/*
 		* Starting learning threads -> I will be using two threads:
 		* - Main thread
 		* - VsebinskaPlosca thread
@@ -153,7 +158,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		* and the update method running within this thread will change the content. 
 		*
 		*/
-		
+
 		Thread thread = new Thread(this);
 		thread.start();
 	}
@@ -166,21 +171,21 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 		
 		running = true;
 		while(running) {
-			//Balance plošèa
+			//Balance ploï¿½ï¿½a
 			
 			if(state == States.BALANCE && previous != States.BALANCE) {
 				previous = States.BALANCE;
 				self.removeAll(); //odstranimo prejsnje komponente
                 self.setLayout(new GridLayout(1,2));
                 self.add(self.balancePlosca);
-                self.seznamTransakcij.posodobiTransakcije(); //posodobim transakcije èe ustvarim novo .db
+                self.seznamTransakcij.posodobiTransakcije(); //posodobim transakcije ï¿½e ustvarim novo .db
                 self.add(self.seznamTransakcij);
                 //da se ob morebitni dodani transakciji posodobi stanje
                 self.balancePlosca.izpisIzBaze(); 
                 self.okno.validate();
                 self.okno.repaint();
 			}
-			//Add plošèa
+			//Add ploï¿½ï¿½a
 			else if(state == States.ADD && previous != States.ADD){
 				previous = States.ADD;
                 self.removeAll(); //odstranimo prejsnje komponente 
@@ -193,10 +198,10 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 			else if(state == States.GRAPHS && previous != States.GRAPHS) {
 				previous = States.GRAPHS;
 				self.removeAll();
-				self.legenda.removeAll(); //Ob novi .db drugaèe ostane legenda gor, ker ne nekaj novega èez napiše
+				self.legenda.removeAll(); //Ob novi .db drugaï¿½e ostane legenda gor, ker ne nekaj novega ï¿½ez napiï¿½e
 				self.setLayout(new BorderLayout());
 				self.graphsPlosca.dobiPodatke();
-				self.legenda.setSteviloPolj(self.graphsPlosca.getPodatki().length); //ob novi .db drugaèe ostanejo stari podatki (ArrayIndexOutOfBorder)
+				self.legenda.setSteviloPolj(self.graphsPlosca.getPodatki().length); //ob novi .db drugaï¿½e ostanejo stari podatki (ArrayIndexOutOfBorder)
 				self.legenda.nastavi();
 				self.add(self.graphsPlosca, BorderLayout.CENTER);
 				self.add(self.legenda, BorderLayout.EAST);
@@ -213,7 +218,7 @@ public class VsebinskaPlosca extends JPanel implements Runnable{
 			}
 			/*
 			 * Ta pack() ne vem, kdaj naj uporabim, tukaj ga pustim, ker poskrbi
-			 * da vse komponente v Layoutu imajo svoje željene velikosti
+			 * da vse komponente v Layoutu imajo svoje ï¿½eljene velikosti
 			 * */
             //self.okno.pack();
 

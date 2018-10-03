@@ -130,7 +130,7 @@ public class PodrobnostiTransakcije extends JPanel implements ActionListener{
 				int column = 1;
 				this.test.update(this.id, (String)table.getValueAt(0, column), 
 						(String)table.getValueAt(1, column), (String)table.getValueAt(2, column),
-						(String)(table.getValueAt(3, column)),
+						checkStringOrDouble((table.getValueAt(3, column))),
 						"Euro", (String)table.getValueAt(4, column), (String)table.getValueAt(5, column));
 				
 				//Posodobim seznam transakcij
@@ -139,7 +139,14 @@ public class PodrobnostiTransakcije extends JPanel implements ActionListener{
 		}
 		
 	}
-	
+	private String checkStringOrDouble(Object object) {
+
+		if(object instanceof Double) {
+			return Double.toString((double)object);
+		}else {
+			return (String)object;
+		}
+	}
 	
 	
 }
