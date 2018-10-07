@@ -47,6 +47,9 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 	private JButton novaDatabase;
 
 	private JButton newColor;
+	private JCheckBox checkBox;
+	
+	private Init init;
 	
 	public SettingsPlosca(int x, int y, int width, int height, Color color, Test test, VsebinskaPlosca vsebinskaPlosca) {
 		this.x = x;
@@ -77,6 +80,8 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 		//this.mainPanel.add(this.tabbedPane, BorderLayout.CENTER);
 		this.add(this.tabbedPane);
 		
+		this.init = new Init();
+		
 		onDatabaseSettings();
 		onAboutSettings();
 		onAppearanceSettings();
@@ -92,7 +97,15 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 		this.databaseSettings.add(this.podatkiODatabase);
 		this.databaseSettings.add(this.novaDatabase);
 		
-		for(int i = 0; i < 10; i++) {
+		this.checkBox = new JCheckBox("Show transfers");
+		checkBox.setSelected(Boolean.parseBoolean(this.init.read("transfers")));
+		this.checkBox.addActionListener(this);
+		JPanel panel = new JPanel();
+		panel.add(checkBox); //Dodam jih na JPanel zaradi alignmenta
+		this.databaseSettings.add(panel);
+		
+		
+		for(int i = 0; i < 9; i++) {
 			this.databaseSettings.add(new JLabel());
 		}
 	}
@@ -180,6 +193,10 @@ public class SettingsPlosca extends JPanel implements ActionListener{
 			pomoznoOkno2.add(colorPicker);
 			pomoznoOkno2.pack();
 			pomoznoOkno2.setVisible(true);
+		}
+		if(e.getSource() == this.checkBox) {
+			this.init.modify("transfers", Boolean.toString(this.checkBox.isSelected()));
+			this.vsebinskaPlosca.getSeznamTransakcij().setIncludeTransfers(this.checkBox.isSelected());
 		}
 	}
 	

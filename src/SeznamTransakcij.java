@@ -51,6 +51,11 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 	
 	private String transactionCategory = "Wallet";
 	
+	private Init init;
+	
+	private boolean includeTransfers;
+	
+	
 	public SeznamTransakcij(int x, int y, int width, int height, Test test) {
 		this.x = x;
 		this.y = y;
@@ -58,9 +63,17 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		this.height = height;
 		this.test = test;
 		
+		this.init = new Init();
+		this.includeTransfers = Boolean.parseBoolean(init.read("transfers"));
+		
 		//this.setBounds(this.x, this.y, this.width, this.height);
 		
 		ArrayList<Transakcija> kategorije = test.vrniTransakcijeIzRacuna(transactionCategory);
+		
+		if(!includeTransfers) {
+			cleanTransfers(kategorije);
+		}
+		
 		/*
 		 * Uporabljam DefaultListModel, saj je tako najlažje posodabljati data za
 		 * JList -> to rabim zato, ker želim, da se po dodani transakciji avtomatsko
@@ -144,7 +157,9 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		}
 		*/
 		ArrayList<Transakcija> kategorije = test.vrniTransakcijeIzRacuna(transactionCategory);
-		
+		if(!includeTransfers) {
+			cleanTransfers(kategorije);
+		}
 		String[] header = {"Description", "Amount"};
 		
 		Object[][] data = new Object[kategorije.size()][2];
@@ -224,6 +239,12 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 	public void setTransactionCategory(String transactionCategory) {
 		this.transactionCategory = transactionCategory;
 	}
+	public boolean getIncludeTransfers() {
+		return this.includeTransfers;
+	}
+	public void setIncludeTransfers(boolean includeTransfers) {
+		this.includeTransfers = includeTransfers;
+	}
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
@@ -239,6 +260,14 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 	        }
 	        label.setText(this.area.getSelectedValue().toString());
 	    }
+	}
+	
+	private void cleanTransfers(ArrayList<Transakcija> kategorije) {
+		for(int i = 0; i < kategorije.size(); i++) {
+			if(kategorije.get(i).getType().equals("Transfer")) {
+				kategorije.remove(kategorije.get(i));
+			}
+		}
 	}
 
 	@Override

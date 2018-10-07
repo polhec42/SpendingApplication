@@ -72,6 +72,30 @@ public class Init {
 				
 	}
 	
+	public void append(String atribute, String value) {
+		
+		try {
+			ArrayList<String> lines = new ArrayList();
+			String line;
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(this.file));
+			while((line = bufferedReader.readLine()) != null) {
+				
+				lines.add(line);
+			}
+			bufferedReader.close();
+			lines.add(atribute+"="+value);
+			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(this.file, false));
+			for(String l : lines) {
+				bufferedWriter.write(l);
+				bufferedWriter.write("\n");
+			}
+			bufferedWriter.flush();
+			bufferedWriter.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 
 }
