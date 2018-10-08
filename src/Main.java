@@ -58,8 +58,7 @@ public class Main{
 		okno.pack();
 		okno.setVisible(true);
 
-
-
+		System.out.println(RightFormat.amountFormat("12.0"));
 
     }
 

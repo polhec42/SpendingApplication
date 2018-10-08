@@ -241,26 +241,46 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 		}
 		//Dodane funkcionalnosti vpisa transakcije v podatkovno bazo
 		if(e.getSource() == this.addButton && (isExpenseClicked != false || isIncomeClicked != false || isTransferClicked != false)) {
-			String description = this.descriptionArea.getText();
-			String date = this.dateField.getText();
-			String category = (String)this.categories.getSelectedItem();
-			double amount = Double.parseDouble(this.amountField.getText());
-			String account = (String)this.accounts.getSelectedItem();
-			String currency = this.currencyField.getText();
-			String type = "";
-			if(isExpenseClicked) {
-				type = "Expense";
-			}else if(isIncomeClicked) {
-				type = "Income";
-			}else {
-				type = "Transfer";
-			}
 			
-			this.test.insert(description, date, account, amount, currency, category, type);
-			System.out.printf("%s %s %s %.2f %s %s %s", description, date, category, amount,
-					account, currency, type);
-			//Posodobim JList pri Balance tako, da imam tudi najnovejšo transakcijo
-			//this.seznamTransakcij.vrniDefaultListModel().addElement(description);
+			this.addButton.setBorder(null);
+			this.dateField.setBorder(null);
+			this.amountField.setBorder(null);
+			
+			if(RightFormat.dateFormat(this.dateField.getText())
+					&& RightFormat.amountFormat(this.amountField.getText())){
+				
+				String description = this.descriptionArea.getText();
+				String date = this.dateField.getText();
+				String category = (String)this.categories.getSelectedItem();
+				double amount = Double.parseDouble(this.amountField.getText());
+				String account = (String)this.accounts.getSelectedItem();
+				String currency = this.currencyField.getText();
+				String type = "";
+				if(isExpenseClicked) {
+					type = "Expense";
+				}else if(isIncomeClicked) {
+					type = "Income";
+				}else {
+					type = "Transfer";
+				}
+			
+				this.test.insert(description, date, account, amount, currency, category, type);
+				System.out.printf("%s %s %s %.2f %s %s %s", description, date, category, amount,
+						account, currency, type);
+				//Posodobim JList pri Balance tako, da imam tudi najnovejšo transakcijo
+				//this.seznamTransakcij.vrniDefaultListModel().addElement(description);
+				this.addButton.setBorder(new LineBorder(Color.GREEN, 2));
+			}else {
+				this.addButton.setBorder(new LineBorder(Color.RED, 2));
+				
+				if(!RightFormat.dateFormat(this.dateField.getText())) {
+					this.dateField.setBorder(new LineBorder(Color.RED, 2));
+				}
+				if(!RightFormat.dateFormat(this.amountField.getText())) {
+					this.amountField.setBorder(new LineBorder(Color.RED, 2));
+				}
+				
+			}
 		}
 	}
 	//When focus is gained, we delete placeholder
