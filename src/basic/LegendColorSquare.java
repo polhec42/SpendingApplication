@@ -1,15 +1,19 @@
-import java.awt.BorderLayout;
+package basic;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 
+import javax.sound.sampled.Control;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.LineListener;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Control.Type;
+import javax.sound.sampled.Line.Info;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-public class LegendaText extends JPanel{
+public class LegendColorSquare extends JPanel{
 	
 	private int x;
 	private int y;
@@ -17,34 +21,37 @@ public class LegendaText extends JPanel{
 	private int height;
 	
 	private Color background;
-	private String data;
-	private JLabel text;
-	
-	public LegendaText(int x, int y, int width, int height, Color background, String data) {
+	private Color data;
+
+	public LegendColorSquare(int x, int y, int width, int height, Color background, Color data) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.background = background;
 		this.data = data;
-		
-		this.text = new JLabel(this.data);
-		this.setLayout(new GridLayout(1,1));
-		this.text.setHorizontalAlignment(SwingConstants.CENTER);
-		this.text.setVerticalAlignment(SwingConstants.CENTER);
-		this.add(this.text);
-		
 	}
 	
+	private int smaller() {
+		return (this.width > this.height) ? this.height : this.width;
+	}
 	
-
-	/*
 	public void paint(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.drawString(this.data, this.x, this.height/4);
-	}
-	*/
+		super.paint(g);
+		g.setColor(this.data);
+		//g.fillRect(this.width/4 - smaller()/4, this.height/4 + this.height/8, smaller()/2, smaller()/2);
+		//g.fillRect(this.width/3, this.height/3, smaller()/2, smaller()/2);
+		/*
+		 * To razvij 
+		 */
+		if(height > width) {
+			g.fillRect(this.width/4, (this.height - this.width/2) / 2, width/2, width/2);
+		}else {
+			g.fillRect((this.width - this.height/2) / 2, this.height/4, height/2, height/2);
 	
+		}
+	}
+
 	public int getX() {
 		return x;
 	}
@@ -94,11 +101,11 @@ public class LegendaText extends JPanel{
 		this.background = background;
 	}
 
-	public String getData() {
+	public Color getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Color data) {
 		this.data = data;
 	}
 }

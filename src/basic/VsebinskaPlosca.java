@@ -1,3 +1,4 @@
+package basic;
 import java.awt.*;
 
 import javax.swing.*;

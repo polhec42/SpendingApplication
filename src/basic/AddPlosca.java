@@ -1,3 +1,4 @@
+package basic;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -271,7 +272,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 				if(!RightFormat.dateFormat(this.dateField.getText())) {
 					this.dateField.setBorder(new LineBorder(Color.RED, 2));
 				}
-				if(!RightFormat.dateFormat(this.amountField.getText())) {
+				if(!RightFormat.amountFormat(this.amountField.getText())) {
 					this.amountField.setBorder(new LineBorder(Color.RED, 2));
 				}
 				

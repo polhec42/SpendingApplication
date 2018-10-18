@@ -1,7 +1,13 @@
+package basic;
+
+import graphs.ColumnClicker;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
@@ -41,6 +47,10 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	
 	private JComboBox comboBox;
 	
+	private ArrayList<Shape> histogramColumns; 
+	
+	private ColumnClicker columnClicker;
+	
 	public GraphsPlosca(int x, int y, int width, int height, Color color, Test test, VsebinskaPlosca vsebinskaPlosca) {
 		this.x = x;
 		this.y = y; 
@@ -49,6 +59,11 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 		this.test = test;
 		this.vsebinskaPlosca = vsebinskaPlosca;
 		
+		this.histogramColumns = new ArrayList<>();
+		//V kontruktor mu passam referenco na sebe, da lahko izhaja iz 
+		//tega razreda
+		this.columnClicker = new ColumnClicker(this);
+
 		setBackground(color);				
 		
 		
@@ -137,7 +152,6 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 			}
 			noviPodatki[6] = other;
 			kategorije.add("Other");
-			System.out.println(kategorije.size());
 			podatki = noviPodatki;
 		}
 		
@@ -226,15 +240,21 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 			
 			double[] delezi = new double[12];
 			//Izraï¿½unamo deleï¿½e za izris grafa in ga izriï¿½emo
-			
+			Graphics2D graphics2d = (Graphics2D)g;
 			for(int i = 0; i < 12; i++) {
 				delezi[i] = vrednosti[i]/max;
-				g.setColor(Color.BLACK);
-				g.drawRect(odmikOdRoba + i*enotaDolzine, this.height - odmikOdRoba - (int)(delezi[i]*visinaGrafa), enotaDolzine, (int)(delezi[i]*visinaGrafa));
-				g.setColor(Color.ORANGE);
-				g.fillRect(odmikOdRoba + i*enotaDolzine, this.height - odmikOdRoba - (int)(delezi[i]*visinaGrafa), enotaDolzine, (int)(delezi[i]*visinaGrafa));
-			
+				graphics2d.setColor(Color.BLACK);
+				//g.drawRect(odmikOdRoba + i*enotaDolzine, this.height - odmikOdRoba - (int)(delezi[i]*visinaGrafa), enotaDolzine, (int)(delezi[i]*visinaGrafa));
+				Rectangle rectangle = new Rectangle(odmikOdRoba + i*enotaDolzine, this.height - odmikOdRoba - (int)(delezi[i]*visinaGrafa), enotaDolzine, (int)(delezi[i]*visinaGrafa));
+				graphics2d.draw(rectangle);
+				graphics2d.setColor(Color.ORANGE);
+				//g.fillRect(odmikOdRoba + i*enotaDolzine, this.height - odmikOdRoba - (int)(delezi[i]*visinaGrafa), enotaDolzine, (int)(delezi[i]*visinaGrafa));
+				graphics2d.fill(rectangle);
+				this.histogramColumns.add(rectangle);
 			}
+			
+			//Poženem columnClicker in hkrati ga posodobim, ko znova narišem graf
+			this.columnClicker.isClicked(this.histogramColumns); 
 
 		}else {
 
@@ -310,6 +330,14 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 	public void setKategorije(ArrayList<String> kategorije) {
 		this.kategorije = kategorije;
 	}
+	public ArrayList<Shape> getHistogramColumns() {
+		return histogramColumns;
+	}
+
+	public void setHistogramColumns(ArrayList<Shape> histogramColumns) {
+		this.histogramColumns = histogramColumns;
+	}
+
 	/*
 	 * Metoda, ki bo vrnila nabor med seboj dovolj razliï¿½nih barv, ki bodo uporabljene
 	 * na grafu

@@ -1,3 +1,4 @@
+package basic;
 
 public class Transakcija {
 	private int id;

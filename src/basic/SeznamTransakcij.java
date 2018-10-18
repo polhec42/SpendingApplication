@@ -1,3 +1,4 @@
+package basic;
 import java.awt.BorderLayout;
 import java.util.Collections;
 import java.awt.Color;
