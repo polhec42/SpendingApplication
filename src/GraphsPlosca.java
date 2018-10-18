@@ -98,6 +98,7 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 				kategorije.remove(i);
 			}
 		}
+		
 		double[] podatki = new double[kategorije.size()];
 
 		for(int i = 0; i < kategorije.size(); i++) {
@@ -123,10 +124,25 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 				}
 			}
 		}
+		if(podatki.length > 6) {
+			double[] noviPodatki = new double[7];
+			for(int i = 0; i < 7; i++) {
+				noviPodatki[i] = podatki[i];
+			}
+			double other = 0.0;
 
+			for(int i = 6; i < podatki.length; i++) {
+				other += podatki[i];
+				kategorije.remove(6);
+			}
+			noviPodatki[6] = other;
+			kategorije.add("Other");
+			System.out.println(kategorije.size());
+			podatki = noviPodatki;
+		}
+		
 		this.kategorije = kategorije;
 		this.podatki = podatki;
-
 		this.colors = naborBarv(this.podatki.length);
 
 	}
@@ -221,10 +237,10 @@ public class GraphsPlosca extends JPanel implements ActionListener{
 			}
 
 		}else {
-					
+
 		 double vsota = 0;
-		
 		 for(double x : podatki) {
+			 
 		 	 vsota+=x;
 		 }
 		 double mera = 360./vsota;

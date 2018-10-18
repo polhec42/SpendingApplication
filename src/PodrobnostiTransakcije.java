@@ -28,12 +28,15 @@ public class PodrobnostiTransakcije extends JPanel implements ActionListener{
 	private Test test;
 	private SeznamTransakcij seznamTransakcij;
 	
-	public PodrobnostiTransakcije(int x, int y, int width, int height, Test test, int selectedIndex, String transactionCategory, SeznamTransakcij seznamTrasakcij) {
+	private Transakcija transakcija;
+	
+	public PodrobnostiTransakcije(int x, int y, int width, int height, Test test, Transakcija transakcija,  SeznamTransakcij seznamTrasakcij) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.test = test;
+		this.transakcija = transakcija;
 		this.seznamTransakcij = seznamTrasakcij;
 		
 		String[] coloumnHeader = {"Atribut", "Vrednost"};
@@ -44,17 +47,16 @@ public class PodrobnostiTransakcije extends JPanel implements ActionListener{
 		 * 						v Balance oknu filtrirali transakcije
 		 * To dvoje rabim, da lahko sedaj prikažem in umestim podrobnost transakcije
 		 * */
-		ArrayList<Transakcija> transakcije = test.vrniTransakcijeIzRacuna(transactionCategory);
 		
 		Object[][] data = {
-				{"Opis", transakcije.get(selectedIndex).getDescription()},
-				{"Datum", transakcije.get(selectedIndex).getDate()},
-				{"Raèun", transakcije.get(selectedIndex).getAccount()},
-				{"Cena", transakcije.get(selectedIndex).getAmount()},
-				{"Kategorija", transakcije.get(selectedIndex).getCategory()},
-				{"Tip", transakcije.get(selectedIndex).getType()}
+				{"Opis", transakcija.getDescription()},
+				{"Datum", transakcija.getDate()},
+				{"Raèun", transakcija.getAccount()},
+				{"Cena", transakcija.getAmount()},
+				{"Kategorija", transakcija.getCategory()},
+				{"Tip", transakcija.getType()}
 		};
-		this.id = transakcije.get(selectedIndex).getId();
+		this.id = transakcija.getId();
 		
 		
 		this.table = new JTable(data, coloumnHeader);
@@ -135,6 +137,7 @@ public class PodrobnostiTransakcije extends JPanel implements ActionListener{
 				
 				//Posodobim seznam transakcij
 				this.seznamTransakcij.posodobiTransakcije();
+				
 			}		
 		}
 		

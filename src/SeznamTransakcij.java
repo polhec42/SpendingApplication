@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.util.Collections;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -31,6 +32,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+
 public class SeznamTransakcij extends JPanel implements ListSelectionListener,ActionListener{
 	
 	private int x;
@@ -50,7 +52,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 	private DefaultTableModel tableModel;
 	
 	private String transactionCategory = "Wallet";
-	
+	ArrayList<Transakcija> kategorije;
 	private Init init;
 	
 	private boolean includeTransfers;
@@ -68,12 +70,13 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		
 		//this.setBounds(this.x, this.y, this.width, this.height);
 		
-		ArrayList<Transakcija> kategorije = test.vrniTransakcijeIzRacuna(transactionCategory);
+		this.kategorije = test.vrniTransakcijeIzRacuna(transactionCategory);
 		
 		if(!includeTransfers) {
 			cleanTransfers(kategorije);
 		}
-		
+		Collections.reverse(kategorije);
+
 		/*
 		 * Uporabljam DefaultListModel, saj je tako najlažje posodabljati data za
 		 * JList -> to rabim zato, ker želim, da se po dodani transakciji avtomatsko
@@ -160,6 +163,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		if(!includeTransfers) {
 			cleanTransfers(kategorije);
 		}
+		Collections.reverse(kategorije);
 		String[] header = {"Description", "Amount"};
 		
 		Object[][] data = new Object[kategorije.size()][2];
@@ -284,8 +288,7 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 			PodrobnostiTransakcije podrobnostiTransakcije = new PodrobnostiTransakcije(
 					0, 0, okence.getWidth(), okence.getHeight(),
 					this.test,
-					this.table.getSelectedRow(),
-					transactionCategory,
+					this.kategorije.get(this.table.getSelectedRow()),
 					this
 			);
 			

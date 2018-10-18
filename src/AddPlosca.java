@@ -29,7 +29,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
     private JTextField currencyField;
     private JTextField dateField;
         
-    private JComboBox categories;
+    private JLabel categories;
     private JComboBox accounts;
     
     private JTextArea descriptionArea;
@@ -62,7 +62,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
         this.transferButton = new JButton("Transfer");
         nastaviGumb(this.transferButton, color, 2);
         
-        this.categoryButton = new JButton("Other Category");
+        this.categoryButton = new JButton("Choose a category");
         nastaviGumb(this.categoryButton, color);
         
         this.addButton = new JButton("Add");
@@ -71,10 +71,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
         /*
          * Drop down menu
          * */
-        String[] optionsCategories = {"Technology", "Gift", "Food"};
-        this.categories = new JComboBox(optionsCategories);
-        this.categories.setSelectedIndex(0);
-        this.categories.addActionListener(this);
+        this.categories = new JLabel("", SwingConstants.CENTER);
         
         String[] optionsAccounts = {"Wallet", "Bank", "Drawer"};
         this.accounts = new JComboBox(optionsAccounts);
@@ -138,7 +135,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
     public JButton vrniIncomeButton(){
         return this.incomeButton;
     }
-    public JComboBox vrniCategoriesList(){
+    public JLabel vrniCategoriesList(){
         return this.categories;
     }
     public JButton vrniAddButton(){
@@ -222,8 +219,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 			}else {
 				this.transferButton.setBorderPainted(false);
 			}
-			this.categories.addItem("Transfer");
-			this.categories.setSelectedItem("Transfer");	
+			this.categories.setText("Transfer");
 		}
 		if(e.getSource() == this.incomeButton && !isExpenseClicked && !isTransferClicked) {
 			
@@ -236,8 +232,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 				this.incomeButton.setBorderPainted(false);
 			}
 			//Èe je income potem je samo ena možna kategorija: Income
-			this.categories.addItem("Income");
-			this.categories.setSelectedItem("Income");			
+			this.categories.setText("Income");
 		}
 		//Dodane funkcionalnosti vpisa transakcije v podatkovno bazo
 		if(e.getSource() == this.addButton && (isExpenseClicked != false || isIncomeClicked != false || isTransferClicked != false)) {
@@ -251,7 +246,7 @@ public class AddPlosca extends JPanel implements ActionListener, FocusListener{
 				
 				String description = this.descriptionArea.getText();
 				String date = this.dateField.getText();
-				String category = (String)this.categories.getSelectedItem();
+				String category = (String)this.categories.getText();
 				double amount = Double.parseDouble(this.amountField.getText());
 				String account = (String)this.accounts.getSelectedItem();
 				String currency = this.currencyField.getText();

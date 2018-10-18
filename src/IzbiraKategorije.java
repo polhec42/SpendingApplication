@@ -108,8 +108,12 @@ public class IzbiraKategorije extends JPanel implements ActionListener{
 			 * Uporabno bo, ko bom dodal možnost, da uporabnik dodaja svoje kategorije
 			 * - pri tem moram poskrbeti da se nova kategorija zapiše v bazo
 			 */
-			this.addPlosca.vrniCategoriesList().addItem(this.novaKategorija.getText());
-			this.addPlosca.vrniCategoriesList().setSelectedItem(this.novaKategorija.getText());
+			if(!this.novaKategorija.getText().isEmpty()) {
+				this.addPlosca.vrniCategoriesList().setText(this.novaKategorija.getText());
+			}else {
+				this.novaKategorija.setText(this.tabelaKategorij.getValueAt(this.tabelaKategorij.getSelectedRow(), 0).toString());
+				this.addPlosca.vrniCategoriesList().setText(this.novaKategorija.getText());
+			}
 			
 			boolean zeObstaja = false;
 			for(int i = 0; i < this.kategorije.size(); i++) {
