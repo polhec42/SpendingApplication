@@ -1,4 +1,4 @@
-package basic;
+package legend;
 import java.awt.Color;
 import java.awt.Graphics;
 

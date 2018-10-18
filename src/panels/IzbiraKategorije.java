@@ -1,4 +1,4 @@
-package basic;
+package panels;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -20,6 +20,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+
+import database.Test;
+import database.Transakcija;
 
 public class IzbiraKategorije extends JPanel implements ActionListener{
 	

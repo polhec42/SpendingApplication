@@ -1,16 +1,16 @@
-package basic;
+package windows;
 import java.awt.*;
 
 import javax.swing.JFrame;
 
-public class Okno extends JFrame{
+public class PomoznoOkno extends JFrame{
 	
 	private int x;
 	private int y;
 	private int width;
 	private int height;
 	
-	public Okno(String ime) {
+	public PomoznoOkno(String ime) {
 		setTitle(ime);
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -21,12 +21,12 @@ public class Okno extends JFrame{
 		
 		setX(dSirina/5);
 		setY(dVisina/5);
-		setWidth(2*dSirina/3);
-		setHeight(2*dVisina/3);
+		setWidth(2*dSirina/4);
+		setHeight(2*dVisina/4);
 		
 		setBounds(x, y, width, height);
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		
 	}

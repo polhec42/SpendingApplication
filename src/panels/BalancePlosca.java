@@ -1,4 +1,4 @@
-package basic;
+package panels;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -9,6 +9,9 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.synth.SynthInternalFrameUI;
+
+import database.Test;
+import database.Transakcija;
 
 public class BalancePlosca extends JPanel implements ActionListener{
 	

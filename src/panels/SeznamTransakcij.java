@@ -1,4 +1,4 @@
-package basic;
+package panels;
 import java.awt.BorderLayout;
 import java.util.Collections;
 import java.awt.Color;
@@ -32,6 +32,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import basic.Init;
+import database.Test;
+import database.Transakcija;
+import windows.PomoznoOkno;
 
 
 public class SeznamTransakcij extends JPanel implements ListSelectionListener,ActionListener{

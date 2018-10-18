@@ -1,4 +1,4 @@
-package basic;
+package panels;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -20,6 +20,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import basic.Init;
+import database.Test;
 
 
 public class NovaBaza extends JPanel implements ActionListener, ListSelectionListener{

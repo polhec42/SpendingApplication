@@ -6,6 +6,12 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.border.EmptyBorder;
 
+import database.RightFormat;
+import database.Test;
+import panels.MenijskaPlosca;
+import panels.VsebinskaPlosca;
+import windows.Okno;
+
 public class Main{
 	
 	final static int RAZMERJE = 16;

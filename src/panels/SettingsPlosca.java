@@ -1,4 +1,4 @@
-package basic;
+package panels;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -20,6 +20,10 @@ import javax.sound.sampled.Line.Info;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+
+import basic.Init;
+import database.Test;
+import windows.PomoznoOkno;
 
 
 public class SettingsPlosca extends JPanel implements ActionListener{

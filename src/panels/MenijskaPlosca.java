@@ -1,9 +1,11 @@
-package basic;
+package panels;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
+import basic.States;
 
 public class MenijskaPlosca extends JPanel implements ActionListener{
 	

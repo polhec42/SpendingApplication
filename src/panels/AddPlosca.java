@@ -1,4 +1,4 @@
-package basic;
+package panels;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -10,6 +10,11 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.ColorUIResource;
+
+import database.RightFormat;
+import database.Test;
+import windows.Okno;
+import windows.PomoznoOkno;
 
 import java.awt.*;
 

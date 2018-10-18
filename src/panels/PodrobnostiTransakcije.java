@@ -1,4 +1,4 @@
-package basic;
+package panels;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -12,6 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import database.Test;
+import database.Transakcija;
 
 public class PodrobnostiTransakcije extends JPanel implements ActionListener{
 	

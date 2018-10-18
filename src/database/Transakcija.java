@@ -1,4 +1,4 @@
-package basic;
+package database;
 
 public class Transakcija {
 	private int id;

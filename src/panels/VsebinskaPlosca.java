@@ -1,4 +1,4 @@
-package basic;
+package panels;
 import java.awt.*;
 
 import javax.swing.*;
@@ -6,6 +6,12 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import basic.Init;
+import basic.States;
+import database.Test;
+import legend.Legenda;
+import windows.Okno;
 
 
 public class VsebinskaPlosca extends JPanel implements Runnable{

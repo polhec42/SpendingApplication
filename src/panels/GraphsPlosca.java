@@ -1,4 +1,4 @@
-package basic;
+package panels;
 
 import graphs.ColumnClicker;
 import java.awt.BorderLayout;
@@ -23,6 +23,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.ColorUIResource;
+
+import database.Test;
+import database.Transakcija;
+
 import java.util.Random;
 
 public class GraphsPlosca extends JPanel implements ActionListener{

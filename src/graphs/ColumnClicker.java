@@ -5,8 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-
-import basic.GraphsPlosca;
+import panels.GraphsPlosca;
 
 
 public class ColumnClicker {
