@@ -1,6 +1,7 @@
 package panels;
 import java.awt.BorderLayout;
 import java.util.Collections;
+import java.util.function.LongSupplier;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -71,6 +72,8 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		this.height = height;
 		this.test = test;
 		
+		
+		
 		this.init = new Init();
 		this.includeTransfers = Boolean.parseBoolean(init.read("transfers"));
 		
@@ -125,8 +128,9 @@ public class SeznamTransakcij extends JPanel implements ListSelectionListener,Ac
 		};
 		
 		this.table = new JTable(this.tableModel);
-		table.setBorder(new LineBorder(Color.RED));
-		this.add(table);
+		this.table.setBorder(new LineBorder(Color.RED));
+		this.vertical = new JScrollPane(this.table);
+		this.vertical.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
 		this.izberiButton = new JButton("Choose");
 		nastaviGumb(this.izberiButton, Color.LIGHT_GRAY);
